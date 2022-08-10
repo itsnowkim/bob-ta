@@ -5,6 +5,7 @@ import {
   useQuery,
 } from "@tanstack/react-query"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { IndexPage, Page404, TemplatePage, Create } from "./pages"
 
 const queryClient = new QueryClient()
 
@@ -13,7 +14,11 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div className="app">
         <BrowserRouter>
-          <Routes></Routes>
+          <Routes>
+            <Route path="/index" element={<IndexPage />} />
+            <Route path="/create" element={<Create />}></Route>
+            <Route path="*" element={<Page404 />} />
+          </Routes>
         </BrowserRouter>
       </div>
     </QueryClientProvider>
