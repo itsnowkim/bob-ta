@@ -27,7 +27,6 @@ const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   margin-bottom: 60px;
 `
 const RoundButtonLink = styled(Link)`

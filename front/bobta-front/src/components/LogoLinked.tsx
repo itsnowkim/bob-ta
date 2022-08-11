@@ -4,7 +4,7 @@ import { LogoStatic } from "../styles"
 
 export const LogoLinked = () => {
   return (
-    <A to="/">
+    <A to="/index">
       <LogoStatic />
     </A>
   )

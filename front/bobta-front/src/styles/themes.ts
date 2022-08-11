@@ -3,13 +3,12 @@ import { Link } from "react-router-dom"
 
 import * as colors from "./colors"
 export const RootContainer = styled.div`
-  max-width: 600px;
+  max-width: 500px;
   min-width: 200px;
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 20px;
   margin: auto;
 `
 
@@ -30,6 +29,7 @@ export const RoundButtonOutlined = styled.div`
   padding-bottom: 12px;
   border-radius: 24px;
   border-color: ${colors.primary};
+  border-width: 1px;
   border-style: solid;
   font-family: "Pretendard-Bold", sans-serif;
   font-size: 16px;
@@ -43,6 +43,7 @@ export const RoundButtonDisabled = styled.div`
   padding-bottom: 12px;
   border-radius: 24px;
   border-color: ${colors.gray300};
+  border-width: 1px;
   border-style: solid;
   font-family: "Pretendard-Bold", sans-serif;
   font-size: 16px;
