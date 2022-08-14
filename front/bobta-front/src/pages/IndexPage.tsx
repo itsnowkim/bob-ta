@@ -31,7 +31,7 @@ const TitleContainer = styled.div`
 `
 const RoundButtonLink = styled(Link)`
   text-decoration: none;
-  width: 80%;
+  width: 100%;
 `
 const H3 = styled.h3`
   font-family: "Pretendard-SemiBold", sans-serif;
