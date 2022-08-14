@@ -1,6 +1,5 @@
-import React, {useState, useCallback, useRef} from 'react'
-import {Link} from 'react-router-dom'
-import {useNavigate} from 'react-router-dom'
+import React, {useState, useCallback, useRef, useEffect} from 'react'
+import {useNavigate, useLocation} from 'react-router-dom'
 import styled from 'styled-components'
 
 import {RootContainer, RoundButtonDisabled, RoundButtonOutlined} from '../styles'
@@ -10,15 +9,42 @@ import {LogoLinked} from '../components'
 import AddIcon from '../static/images/Button/Add.png'
 import RemoveIcon from '../static/images/Button/Remove.png'
 
+type LabelType = {
+  name: string
+  image: string
+}
+
 export const Create = () => {
   // ******************** utils ********************
   const navigate = useNavigate()
+  const location = useLocation()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   // ******************** states ********************
+  const [labels, setLabels] = useState<LabelType>({
+    name: '',
+    image: '',
+  })
   const [name, setName] = useState<string>('') // 이름
   const [image, setImage] = useState<any>(null) // 시간표
   const [imageUri, setImageUri] = useState<string>('')
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const target = params.get('target')
+
+    if (target == 'me') {
+      setLabels({
+        name: '내 이름',
+        image: '내 시간표',
+      })
+    } else {
+      setLabels({
+        name: '친구 이름',
+        image: '친구 시간표',
+      })
+    }
+  }, [])
 
   // ******************** callbacks ********************
   const onNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,11 +77,11 @@ export const Create = () => {
     <RootContainer>
       <LogoLinked />
       <NameWrapper>
-        <Label>내 이름</Label>
+        <Label>{labels.name}</Label>
         <NameInput placeholder="이름을 입력해 주세요" value={name} onChange={onNameChange} />
       </NameWrapper>
       <TimeTableWrapper>
-        <Label>내 시간표</Label>
+        <Label>{labels.image}</Label>
         {imageUri == '' ? (
           <TimeTableInputWrapper>
             <FileInput type="file" accept="image/*" ref={fileInputRef} onChange={onUploadImage} />

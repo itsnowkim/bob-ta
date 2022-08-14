@@ -1,7 +1,7 @@
 import React from 'react'
 import {QueryClient, QueryClientProvider, useQuery} from '@tanstack/react-query'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import {IndexPage, Page404, TemplatePage, Create, Result} from './pages'
+import {IndexPage, Page404, Create, Result} from './pages'
 
 const KAKAO_APP_KEY = process.env.REACT_APP_KAKAO_KEY
 // @ts-ignore

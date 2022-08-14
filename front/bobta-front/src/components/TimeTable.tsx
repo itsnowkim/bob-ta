@@ -92,6 +92,7 @@ const Table = styled.table`
   border: solid;
   border-color: ${colors.gray300};
   border-radius: 8px;
+  border-width: 0.5px;
 `
 
 const Thead = styled.thead``
