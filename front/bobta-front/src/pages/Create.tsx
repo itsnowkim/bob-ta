@@ -5,11 +5,15 @@ import styled from "styled-components"
 import { RootContainer, RoundButtonDisabled } from "../styles"
 import * as colors from "../styles/colors"
 import { LogoStatic } from "../components"
+
 import AddIcon from "../static/images/Button/Add.png"
+import RemoveIcon from "../static/images/Button/Remove.png"
 
 export const Create = () => {
   // ******************** states ********************
-  const [name, setName] = useState<string>("")
+  const [name, setName] = useState<string>("") // 이름
+  const [image, setImage] = useState<any>(null) // 시간표
+  const [imageUri, setImageUri] = useState<string>("")
 
   // ******************** utils ********************
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -22,6 +26,22 @@ export const Create = () => {
   const onClickAddButton = useCallback(() => {
     fileInputRef.current?.click()
   }, [fileInputRef])
+
+  const onUploadImage = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!e.target.files) {
+        return
+      }
+      setImage(e.target.files[0])
+      setImageUri(URL.createObjectURL(e.target.files[0]))
+    },
+    []
+  )
+
+  const onClickRemoveButton = useCallback(() => {
+    setImage(null)
+    setImageUri("")
+  }, [])
 
   return (
     <RootContainer>
@@ -38,18 +58,56 @@ export const Create = () => {
       </NameWrapper>
       <TimeTableWrapper>
         <Label>내 시간표</Label>
-        <TimeeTableImageWrapper>
-          <FileInput type="file" accept="image/*" ref={fileInputRef} />
-          <AddButtonWrapper onClick={onClickAddButton}>
-            <AddButton src={AddIcon} />
-            <AddButtonText>시간표 업로드</AddButtonText>
-          </AddButtonWrapper>
-        </TimeeTableImageWrapper>
+        {imageUri == "" ? (
+          <TimeTableInputWrapper>
+            <FileInput
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={onUploadImage}
+            />
+            <AddButtonWrapper onClick={onClickAddButton}>
+              <AddButton src={AddIcon} />
+              <AddButtonText>시간표 업로드</AddButtonText>
+            </AddButtonWrapper>
+          </TimeTableInputWrapper>
+        ) : (
+          <TimeTableImageWrapper>
+            <RemoveButton type="button" onClick={onClickRemoveButton}>
+              <RemoveButtonImage src={RemoveIcon} />
+            </RemoveButton>
+
+            <TimeTableImage src={imageUri} />
+          </TimeTableImageWrapper>
+        )}
       </TimeTableWrapper>
       <SubmitButton>결과 보기</SubmitButton>
     </RootContainer>
   )
 }
+
+const TimeTableImageWrapper = styled.div`
+  position: relative;
+`
+
+const RemoveButtonImage = styled.img`
+  width: 36px;
+  height: 36px;
+`
+
+const RemoveButton = styled.button`
+  position: absolute;
+  right: -24px;
+  top: -15px;
+  background: none;
+  border: none;
+  cursor: pointer;
+`
+
+const TimeTableImage = styled.img`
+  width: 100%;
+  border-radius: 8px;
+`
 
 const AddButtonText = styled.span`
   font-family: "Pretendard-SemiBold", sans-serif;
@@ -80,7 +138,7 @@ const AddButton = styled.img`
   margin-bottom: 12px;
   cursor: pointer;
 `
-const TimeeTableImageWrapper = styled.div`
+const TimeTableInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
