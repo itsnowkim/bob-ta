@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
-import {LogoLinked, KakaoButton} from '../components'
+import {LogoLinked, KakaoButton, TimeTable} from '../components'
 import {RootContainer, RoundButtonOutlined} from '../styles'
 
 export const Result = () => {
@@ -9,14 +9,26 @@ export const Result = () => {
     <RootContainer>
       <LogoLinked />
       <Container>
+        <Title>진실님과의 밥약</Title>
+        <TimeTable />
         <ButtonContainer>
-          <KakaoButton label="친구에게 공유하기" />
+          <KakaoButton label="친구에게 추가 요청" />
           <AddSelfButton>직접 친구 시간표 추가하기</AddSelfButton>
         </ButtonContainer>
       </Container>
     </RootContainer>
   )
 }
+
+const Title = styled.h2`
+  margin-block-start: 0;
+  margin-block-end: 0;
+
+  font-family: 'Pretendard-Bold', sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+  margin-bottom: 24px;
+`
 
 const AddSelfButton = styled(RoundButtonOutlined)`
   width: 100%;
@@ -28,4 +40,6 @@ const Container = styled.div`
   flex-direction: column;
   flex: 1;
 `
-const ButtonContainer = styled.div``
+const ButtonContainer = styled.div`
+  margin-top: 24px;
+`
