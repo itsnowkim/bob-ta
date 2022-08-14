@@ -1,6 +1,6 @@
-import styled from "styled-components"
-import { Link } from "react-router-dom"
-import { LogoStatic } from "../styles"
+import styled from 'styled-components'
+import {Link} from 'react-router-dom'
+import {LogoStatic} from './LogoStatic'
 
 export const LogoLinked = () => {
   return (
@@ -12,4 +12,5 @@ export const LogoLinked = () => {
 
 const A = styled(Link)`
   text-decoration: none;
+  margin-bottom: 24px;
 `

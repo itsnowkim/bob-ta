@@ -1,8 +1,8 @@
-import React from "react"
-import styled from "styled-components"
-import { Link } from "react-router-dom"
-import { RootContainer, RoundButtonOutlined } from "../styles"
-import { LogoStatic } from "../components"
+import React from 'react'
+import styled from 'styled-components'
+import {Link} from 'react-router-dom'
+import {RootContainer, RoundButtonOutlined} from '../styles'
+import {LogoStatic} from '../components'
 
 export const IndexPage = () => {
   return (
@@ -12,11 +12,15 @@ export const IndexPage = () => {
         <LogoStatic />
       </TitleContainer>
       <RoundButtonLink to="/create">
-        <RoundButtonOutlined>밥타 시작하기</RoundButtonOutlined>
+        <StartButton>밥타 시작하기</StartButton>
       </RoundButtonLink>
     </Container>
   )
 }
+
+const StartButton = styled(RoundButtonOutlined)`
+  width: 100%;
+`
 
 const Container = styled(RootContainer)`
   justify-content: center;
@@ -34,7 +38,7 @@ const RoundButtonLink = styled(Link)`
   width: 100%;
 `
 const H3 = styled.h3`
-  font-family: "Pretendard-SemiBold", sans-serif;
+  font-family: 'Pretendard-SemiBold', sans-serif;
   font-size: 20px;
   line-height: 32px;
   margin-block-start: 0;

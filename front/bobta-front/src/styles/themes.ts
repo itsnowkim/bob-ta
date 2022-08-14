@@ -1,7 +1,7 @@
-import styled from "styled-components"
-import { Link } from "react-router-dom"
+import styled from 'styled-components'
+import {Link} from 'react-router-dom'
 
-import * as colors from "./colors"
+import * as colors from './colors'
 export const RootContainer = styled.div`
   max-width: 500px;
   min-width: 200px;
@@ -12,18 +12,19 @@ export const RootContainer = styled.div`
   margin: auto;
 `
 
-export const RoundButtonSolid = styled.div`
+export const RoundButtonSolid = styled.button`
   background-color: ${colors.primary};
   padding-top: 12px;
   padding-bottom: 12px;
   border-radius: 24px;
-  font-family: "Pretendard-Bold", sans-serif;
+  font-family: 'Pretendard-Bold', sans-serif;
   font-size: 16px;
   line-height: 24px;
   color: white;
   text-align: center;
+  cursor: pointer;
 `
-export const RoundButtonOutlined = styled.div`
+export const RoundButtonOutlined = styled.button`
   background-color: ${colors.white};
   padding-top: 12px;
   padding-bottom: 12px;
@@ -31,13 +32,14 @@ export const RoundButtonOutlined = styled.div`
   border-color: ${colors.primary};
   border-width: 1px;
   border-style: solid;
-  font-family: "Pretendard-Bold", sans-serif;
+  font-family: 'Pretendard-Bold', sans-serif;
   font-size: 16px;
   line-height: 24px;
   color: ${colors.primary};
   text-align: center;
+  cursor: pointer;
 `
-export const RoundButtonDisabled = styled.div`
+export const RoundButtonDisabled = styled.button`
   background-color: ${colors.white};
   padding-top: 12px;
   padding-bottom: 12px;
@@ -45,15 +47,16 @@ export const RoundButtonDisabled = styled.div`
   border-color: ${colors.gray300};
   border-width: 1px;
   border-style: solid;
-  font-family: "Pretendard-Bold", sans-serif;
+  font-family: 'Pretendard-Bold', sans-serif;
   font-size: 16px;
   line-height: 24px;
   color: ${colors.gray300};
   text-align: center;
+  cursor: pointer;
 `
 
 export const LogoStatic = styled.span`
-  font-family: "GmarketSans", sans-serif;
+  font-family: 'GmarketSans', sans-serif;
   font-weight: 700;
   font-size: 32px;
   line-height: 48px;

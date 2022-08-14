@@ -1,22 +1,24 @@
-import React, { useState, useCallback, useRef } from "react"
-import { Link } from "react-router-dom"
-import styled from "styled-components"
+import React, {useState, useCallback, useRef} from 'react'
+import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
+import styled from 'styled-components'
 
-import { RootContainer, RoundButtonDisabled } from "../styles"
-import * as colors from "../styles/colors"
-import { LogoStatic } from "../components"
+import {RootContainer, RoundButtonDisabled, RoundButtonOutlined} from '../styles'
+import * as colors from '../styles/colors'
+import {LogoLinked} from '../components'
 
-import AddIcon from "../static/images/Button/Add.png"
-import RemoveIcon from "../static/images/Button/Remove.png"
+import AddIcon from '../static/images/Button/Add.png'
+import RemoveIcon from '../static/images/Button/Remove.png'
 
 export const Create = () => {
-  // ******************** states ********************
-  const [name, setName] = useState<string>("") // 이름
-  const [image, setImage] = useState<any>(null) // 시간표
-  const [imageUri, setImageUri] = useState<string>("")
-
   // ******************** utils ********************
+  const navigate = useNavigate()
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // ******************** states ********************
+  const [name, setName] = useState<string>('') // 이름
+  const [image, setImage] = useState<any>(null) // 시간표
+  const [imageUri, setImageUri] = useState<string>('')
 
   // ******************** callbacks ********************
   const onNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,45 +29,36 @@ export const Create = () => {
     fileInputRef.current?.click()
   }, [fileInputRef])
 
-  const onUploadImage = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (!e.target.files) {
-        return
-      }
-      setImage(e.target.files[0])
-      setImageUri(URL.createObjectURL(e.target.files[0]))
-    },
-    []
-  )
+  const onUploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) {
+      return
+    }
+    setImage(e.target.files[0])
+    setImageUri(URL.createObjectURL(e.target.files[0]))
+  }, [])
 
   const onClickRemoveButton = useCallback(() => {
     setImage(null)
-    setImageUri("")
+    setImageUri('')
   }, [])
 
+  const onClickSubmit = useCallback(() => {
+    navigate('/result')
+  }, [name, image])
+
+  // ******************** renderer ********************
   return (
     <RootContainer>
-      <A to="/index">
-        <LogoStatic />
-      </A>
+      <LogoLinked />
       <NameWrapper>
         <Label>내 이름</Label>
-        <NameInput
-          placeholder="이름을 입력해 주세요"
-          value={name}
-          onChange={onNameChange}
-        />
+        <NameInput placeholder="이름을 입력해 주세요" value={name} onChange={onNameChange} />
       </NameWrapper>
       <TimeTableWrapper>
         <Label>내 시간표</Label>
-        {imageUri == "" ? (
+        {imageUri == '' ? (
           <TimeTableInputWrapper>
-            <FileInput
-              type="file"
-              accept="image/*"
-              ref={fileInputRef}
-              onChange={onUploadImage}
-            />
+            <FileInput type="file" accept="image/*" ref={fileInputRef} onChange={onUploadImage} />
             <AddButtonWrapper onClick={onClickAddButton}>
               <AddButton src={AddIcon} />
               <AddButtonText>시간표 업로드</AddButtonText>
@@ -81,7 +74,12 @@ export const Create = () => {
           </TimeTableImageWrapper>
         )}
       </TimeTableWrapper>
-      <SubmitButton>결과 보기</SubmitButton>
+
+      {name != '' && imageUri != '' ? (
+        <SubmitButtonEnabled onClick={onClickSubmit}>결과 보기</SubmitButtonEnabled>
+      ) : (
+        <SubmitButtonDisabled>결과 보기</SubmitButtonDisabled>
+      )}
     </RootContainer>
   )
 }
@@ -110,7 +108,7 @@ const TimeTableImage = styled.img`
 `
 
 const AddButtonText = styled.span`
-  font-family: "Pretendard-SemiBold", sans-serif;
+  font-family: 'Pretendard-SemiBold', sans-serif;
   font-size: 16px;
   line-height: 24px;
   color: ${colors.gray500};
@@ -120,9 +118,12 @@ const FileInput = styled.input`
   display: none;
 `
 
-const SubmitButton = styled(RoundButtonDisabled)`
+const SubmitButtonEnabled = styled(RoundButtonOutlined)`
   margin-top: auto;
-  cursor: pointer;
+`
+
+const SubmitButtonDisabled = styled(RoundButtonDisabled)`
+  margin-top: auto;
 `
 
 const AddButtonWrapper = styled.div`
@@ -157,17 +158,13 @@ const TimeTableWrapper = styled.div`
   margin-bottom: 24px;
 `
 
-const A = styled(Link)`
-  text-decoration: none;
-  margin-bottom: 24px;
-`
 const NameWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 24px;
 `
 const Label = styled.label`
-  font-family: "Pretendard-Bold", sans-serif;
+  font-family: 'Pretendard-Bold', sans-serif;
   font-size: 16px;
   line-height: 24px;
   margin-bottom: 8px;
@@ -180,7 +177,7 @@ const NameInput = styled.input`
   border-radius: 8px;
   border-width: 1px;
   border-color: ${colors.gray300};
-  font-family: "Pretendard-Medium", sans-serif;
+  font-family: 'Pretendard-Medium', sans-serif;
   font-size: 14px;
   line-height: 20px;
   color: ${colors.gray800};
