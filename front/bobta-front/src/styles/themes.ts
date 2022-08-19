@@ -89,5 +89,5 @@ export const Title = styled.h1`
 export const Separator = styled.div`
   width: 100%;
   height: 1px;
-  background-color: ${colors.gray100};
+  background-color: ${colors.gray200};
 `

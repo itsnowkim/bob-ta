@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {Link, useLocation, useParams} from 'react-router-dom'
 
 import * as colors from '../styles/colors'
-import {LogoLinked, KakaoShareButton, TimeTable} from '../components'
+import {LogoLinked, KakaoShareButton, TimeTable, Footer} from '../components'
 import {RootContainer, RoundButtonOutlined} from '../styles'
 
 type TitleProps = {
@@ -52,6 +52,7 @@ export const Result = () => {
           </AddSelfButtonLink>
         </ButtonContainer>
       </Container>
+      <Footer />
     </RootContainer>
   )
 }

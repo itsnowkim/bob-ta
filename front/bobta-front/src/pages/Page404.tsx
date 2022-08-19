@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import {RootContainer, RoundButtonOutlined} from '../styles'
+import {Footer} from '../components'
 export const Page404 = () => {
   return (
     <Container>
@@ -18,7 +19,14 @@ const Container = styled(RootContainer)`
   justify-content: center;
   align-items: 'center';
 `
+const Wrapper = styled.div`
+  display: flex;
 
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: 'center';
+`
 const H2 = styled.h2`
   margin-block-start: 0;
   margin-block-end: 0;

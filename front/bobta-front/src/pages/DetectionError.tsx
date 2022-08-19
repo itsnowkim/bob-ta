@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom'
 
 import {RootContainer, RoundButtonOutlined, Title, Separator as SeparatorTemp} from '../styles'
 import * as colors from '../styles/colors'
-import {LogoLinked} from '../components'
+import {LogoLinked, Footer} from '../components'
 import Step1Image from '../static/images/tutorial/step1.png'
 import Step2Image from '../static/images/tutorial/step2.png'
 
@@ -41,6 +41,7 @@ export const DetectionError = () => {
         <Img src={Step2Image} />
       </StepContainer>
       <GoBackButton onClick={onClickGoBack}>뒤로 가기</GoBackButton>
+      <Footer />
     </RootContainer>
   )
 }

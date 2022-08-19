@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import {RootContainer, RoundButtonDisabled, RoundButtonOutlined} from '../styles'
 import * as colors from '../styles/colors'
-import {LogoLinked} from '../components'
+import {LogoLinked, Footer} from '../components'
 
 import AddIcon from '../static/images/Button/Add.png'
 import RemoveIcon from '../static/images/Button/Remove.png'
@@ -108,6 +108,7 @@ export const Create = () => {
       ) : (
         <SubmitButtonDisabled>결과 보기</SubmitButtonDisabled>
       )}
+      <Footer />
     </RootContainer>
   )
 }
