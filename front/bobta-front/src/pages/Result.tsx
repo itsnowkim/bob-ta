@@ -1,10 +1,17 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
-import {Link} from 'react-router-dom'
-import {LogoLinked, KakaoButton, TimeTable} from '../components'
+import {Link, useLocation} from 'react-router-dom'
+import {LogoLinked, KakaoShareButton, TimeTable} from '../components'
 import {RootContainer, RoundButtonOutlined} from '../styles'
 
 export const Result = () => {
+  const location = useLocation()
+  const [groupId, setGroupId] = useState<string>('')
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    const tempGroupId = params.get('groupId')
+    setGroupId(tempGroupId!)
+  }, [])
   return (
     <RootContainer>
       <LogoLinked />
@@ -12,9 +19,9 @@ export const Result = () => {
         <Title>진실님의 밥약</Title>
         <TimeTable />
         <ButtonContainer>
-          <KakaoButton label="친구에게 추가 요청" />
-          <AddSelfButtonLink to="/create?target=friend">
-            <AddSelfButton>직접 친구 시간표 추가하기</AddSelfButton>
+          <KakaoShareButton label="친구에게 추가 요청" groupId={groupId} />
+          <AddSelfButtonLink to="/create?target=me">
+            <AddSelfButton>시간표 추가하기</AddSelfButton>
           </AddSelfButtonLink>
         </ButtonContainer>
       </Container>

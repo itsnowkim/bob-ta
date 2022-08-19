@@ -1,6 +1,6 @@
-import styled from "styled-components"
-import { Link } from "react-router-dom"
-import { RootContainer, RoundButtonOutlined } from "../styles"
+import styled from 'styled-components'
+import {Link} from 'react-router-dom'
+import {RootContainer, RoundButtonOutlined} from '../styles'
 export const Page404 = () => {
   return (
     <Container>
@@ -16,13 +16,13 @@ const Container = styled(RootContainer)`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: "center";
+  align-items: 'center';
 `
 
 const H2 = styled.h2`
   margin-block-start: 0;
   margin-block-end: 0;
-  font-family: "Pretendard-Bold", sans-serif;
+  font-family: 'Pretendard-Bold', sans-serif;
   font-size: 20px;
   line-height: 28px;
   text-align: center;
@@ -34,5 +34,5 @@ const A = styled(Link)`
   justify-content: center;
 `
 const GoMainButton = styled(RoundButtonOutlined)`
-  width: 80%;
+  width: 100%;
 `

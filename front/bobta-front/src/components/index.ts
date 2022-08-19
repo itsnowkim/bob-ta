@@ -1,5 +1,5 @@
 export * from './LogoStatic'
 export * from './LogoLinked'
 export * from './Header'
-export * from './KakaoButton'
+export * from './KakaoShareButton'
 export * from './TimeTable'

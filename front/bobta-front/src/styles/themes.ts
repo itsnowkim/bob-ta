@@ -7,7 +7,7 @@ export const RootContainer = styled.div`
   min-width: 200px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   padding: 20px;
   margin: auto;
 `
@@ -38,6 +38,13 @@ export const RoundButtonOutlined = styled.button`
   color: ${colors.primary};
   text-align: center;
   cursor: pointer;
+
+  transition: all 0.2s linear;
+
+  &:hover {
+    background-color: ${colors.primary};
+    color: white;
+  }
 `
 export const RoundButtonDisabled = styled.button`
   background-color: ${colors.white};
@@ -53,6 +60,13 @@ export const RoundButtonDisabled = styled.button`
   color: ${colors.gray300};
   text-align: center;
   cursor: pointer;
+
+  transition: all 0.2s linear;
+
+  &:hover {
+    background-color: ${colors.gray300};
+    color: white;
+  }
 `
 
 export const LogoStatic = styled.span`
@@ -63,4 +77,17 @@ export const LogoStatic = styled.span`
 `
 export const StyledLink = styled(Link)`
   text-decoration: none;
+`
+
+export const Title = styled.h1`
+  font-family: 'Pretendard-Bold', sans-serif;
+  font-size: 20px;
+  line-height: 28px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+`
+export const Separator = styled.div`
+  width: 100%;
+  height: 1px;
+  background-color: ${colors.gray100};
 `

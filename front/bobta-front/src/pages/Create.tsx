@@ -69,7 +69,9 @@ export const Create = () => {
   }, [])
 
   const onClickSubmit = useCallback(() => {
-    navigate('/result')
+    // 백에서 200 응답을 날릴 때 groupId도 같이 넣어줌
+    const groupId = '11'
+    navigate(`/result/${groupId}`)
   }, [name, image])
 
   // ******************** renderer ********************
