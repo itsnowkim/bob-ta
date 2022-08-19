@@ -2,6 +2,44 @@ import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 
 import * as colors from './colors'
+
+export const light = {
+  gray50: colors.gray50,
+  gray100: colors.gray100,
+  gray200: colors.gray200,
+  gray300: colors.gray300,
+  gray400: colors.gray400,
+  gray500: colors.gray500,
+  gray600: colors.gray600,
+  gray700: colors.gray700,
+  gray800: colors.gray800,
+  primary: colors.primary,
+  secondary: colors.secondary,
+  primary50: colors.primary50,
+  buttonBgColor: 'transparent',
+  buttonFontColor: colors.primary,
+  inputBgColor: 'transparent',
+}
+
+export const dark = {
+  gray50: colors.darkgray50,
+  gray100: colors.darkgray100,
+  gray200: colors.darkgray200,
+  gray300: colors.darkgray300,
+  gray400: colors.darkgray400,
+  gray500: colors.darkgray500,
+  gray600: colors.darkgray600,
+  gray700: colors.darkgray700,
+  gray800: colors.darkgray800,
+  // primary: colors.primary,
+  primary: colors.primary,
+  secondary: colors.secondary,
+  primary50: colors.primary50,
+  buttonBgColor: colors.primary,
+  buttonFontColor: colors.white,
+  inputBgColor: colors.gray800,
+}
+
 export const RootContainer = styled.div`
   max-width: 500px;
   min-width: 200px;
@@ -25,7 +63,9 @@ export const RoundButtonSolid = styled.button`
   cursor: pointer;
 `
 export const RoundButtonOutlined = styled.button`
-  background-color: ${colors.white};
+  //background-color: ${colors.white};
+  background-color: transparent;
+
   padding-top: 12px;
   padding-bottom: 12px;
   border-radius: 24px;
@@ -47,7 +87,9 @@ export const RoundButtonOutlined = styled.button`
   }
 `
 export const RoundButtonDisabled = styled.button`
-  background-color: ${colors.white};
+  /* background-color: ${colors.white}; */
+  background-color: transparent;
+
   padding-top: 12px;
   padding-bottom: 12px;
   border-radius: 24px;

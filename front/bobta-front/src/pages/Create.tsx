@@ -140,7 +140,8 @@ const AddButtonText = styled.span`
   font-family: 'Pretendard-SemiBold', sans-serif;
   font-size: 16px;
   line-height: 24px;
-  color: ${colors.gray500};
+
+  color: ${({theme}) => theme.gray500};
 `
 
 const FileInput = styled.input`
@@ -178,6 +179,7 @@ const TimeTableInputWrapper = styled.div`
   border-radius: 8px;
   border-width: 1px;
   border-color: ${colors.gray300};
+  background-color: ${({theme}) => theme.inputBgColor};
 `
 
 const TimeTableWrapper = styled.div`
@@ -197,6 +199,7 @@ const Label = styled.label`
   font-size: 16px;
   line-height: 24px;
   margin-bottom: 8px;
+  color: ${({theme}) => theme.gray800};
 `
 const NameInput = styled.input`
   height: 24px;
@@ -209,7 +212,8 @@ const NameInput = styled.input`
   font-family: 'Pretendard-Medium', sans-serif;
   font-size: 14px;
   line-height: 20px;
-  color: ${colors.gray800};
+  color: ${({theme}) => theme.gray800};
+  background-color: ${({theme}) => theme.inputBgColor};
   ::placeholder,
   ::-webkit-input-placeholder {
     color: ${colors.gray300};

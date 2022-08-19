@@ -1,5 +1,5 @@
-import styled from "styled-components"
-import * as colors from "../styles/colors"
+import styled from 'styled-components'
+import * as colors from '../styles/colors'
 
 export const LogoStatic = () => {
   return (
@@ -12,14 +12,15 @@ export const LogoStatic = () => {
 }
 
 const Gray800 = styled.span`
-  color: ${colors.gray800};
+  /* color: ${colors.gray800}; */
+  color: ${({theme}) => theme.gray800};
 `
 const Primary = styled.span`
   color: ${colors.primary};
 `
 
 const H1 = styled.h1`
-  font-family: "GmarketSans", sans-serif;
+  font-family: 'GmarketSans', sans-serif;
   font-weight: 700;
   font-size: 32px;
   line-height: 48px;

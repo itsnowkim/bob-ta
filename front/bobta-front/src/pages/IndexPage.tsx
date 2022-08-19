@@ -20,6 +20,8 @@ export const IndexPage = () => {
 
 const StartButton = styled(RoundButtonOutlined)`
   width: 100%;
+  background-color: ${({theme}) => theme.buttonBgColor};
+  color: ${({theme}) => theme.buttonFontColor};
 `
 
 const Container = styled(RootContainer)`
@@ -42,6 +44,6 @@ const H3 = styled.h3`
   font-size: 20px;
   line-height: 32px;
   margin-block-start: 0;
-
+  color: ${({theme}) => theme.gray800};
   margin-block-end: 0;
 `
