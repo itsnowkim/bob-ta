@@ -13,10 +13,10 @@ export const LogoStatic = () => {
 
 const Gray800 = styled.span`
   /* color: ${colors.gray800}; */
-  color: ${({theme}) => theme.gray800};
+  color: ${({theme}) => theme.colors.gray800};
 `
 const Primary = styled.span`
-  color: ${colors.primary};
+  color: ${({theme}) => theme.colors.primary};
 `
 
 const H1 = styled.h1`

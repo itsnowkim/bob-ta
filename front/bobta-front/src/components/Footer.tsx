@@ -4,8 +4,7 @@ import styled from 'styled-components'
 import * as colors from '../styles/colors'
 import InstagramIcon from '../static/icons/instagram.png'
 import EmailIcon from '../static/icons/email.png'
-
-import {Separator as TempSeparator} from '../styles'
+import {Separator} from './Separator'
 
 export const Footer = () => {
   const onClickEmail = useCallback(() => {
@@ -33,10 +32,10 @@ export const Footer = () => {
   )
 }
 
-const Separator = styled(TempSeparator)`
-  margin-top: 36px;
-  margin-bottom: 24px;
-`
+// const Separator = styled(TempSeparator)`
+//   margin-top: 36px;
+//   margin-bottom: 24px;
+// `
 const Icon = styled.img`
   width: 24px;
   height: 24px;

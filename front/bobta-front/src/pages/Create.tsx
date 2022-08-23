@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import {RootContainer, RoundButtonDisabled, RoundButtonOutlined} from '../styles'
 import * as colors from '../styles/colors'
-import {LogoLinked, Footer} from '../components'
+import {LogoLinked, Footer, ButtonDisabled, ButtonSolid} from '../components'
 
 import AddIcon from '../static/images/Button/Add.png'
 import RemoveIcon from '../static/images/Button/Remove.png'
@@ -104,9 +104,11 @@ export const Create = () => {
       </TimeTableWrapper>
 
       {name != '' && imageUri != '' ? (
-        <SubmitButtonEnabled onClick={onClickSubmit}>결과 보기</SubmitButtonEnabled>
+        <ButtonSolid onClick={onClickSubmit} label="결과 보기"></ButtonSolid>
       ) : (
-        <SubmitButtonDisabled>결과 보기</SubmitButtonDisabled>
+        // <ButtonDisabled  lable="결과 보기" />
+        // <SubmitButtonDisabled>결과 보기</SubmitButtonDisabled>
+        <ButtonDisabled label="결과 보기" />
       )}
       <Footer />
     </RootContainer>
@@ -133,7 +135,10 @@ const RemoveButton = styled.button`
 
 const TimeTableImage = styled.img`
   width: 100%;
+  border: solid;
   border-radius: 8px;
+  border-width: 1px;
+  border-color: ${({theme}) => theme.colors.gray300};
 `
 
 const AddButtonText = styled.span`
@@ -141,7 +146,7 @@ const AddButtonText = styled.span`
   font-size: 16px;
   line-height: 24px;
 
-  color: ${({theme}) => theme.gray500};
+  color: ${({theme}) => theme.colors.gray500};
 `
 
 const FileInput = styled.input`
@@ -150,10 +155,19 @@ const FileInput = styled.input`
 
 const SubmitButtonEnabled = styled(RoundButtonOutlined)`
   margin-top: auto;
+  background-color: ${({theme}) => theme.buttonBgColor};
+  color: ${({theme}) => theme.buttonFontColor};
 `
 
 const SubmitButtonDisabled = styled(RoundButtonDisabled)`
   margin-top: auto;
+  background-color: ${({theme}) => theme.disabledButtonBgColor};
+  color: ${({theme}) => theme.colors.gray300};
+  border-color: ${({theme}) => theme.colors.gray300};
+  &:hover {
+    background-color: ${({theme}) => theme.colors.gray300};
+    color: ${({theme}) => theme.colors.gray800};
+  }
 `
 
 const AddButtonWrapper = styled.div`
@@ -178,7 +192,9 @@ const TimeTableInputWrapper = styled.div`
   border-style: solid;
   border-radius: 8px;
   border-width: 1px;
-  border-color: ${colors.gray300};
+  /* border-color: ${colors.gray300}; */
+  border-color: ${({theme}) => theme.colors.gray300};
+  //background-color: 'transparent';
   background-color: ${({theme}) => theme.inputBgColor};
 `
 
@@ -199,7 +215,7 @@ const Label = styled.label`
   font-size: 16px;
   line-height: 24px;
   margin-bottom: 8px;
-  color: ${({theme}) => theme.gray800};
+  color: ${({theme}) => theme.colors.gray800};
 `
 const NameInput = styled.input`
   height: 24px;
@@ -208,15 +224,19 @@ const NameInput = styled.input`
   border-style: solid;
   border-radius: 8px;
   border-width: 1px;
-  border-color: ${colors.gray300};
+  /* border-color: ${colors.gray300}; */
+  border-color: ${({theme}) => theme.colors.gray300};
+
   font-family: 'Pretendard-Medium', sans-serif;
   font-size: 14px;
   line-height: 20px;
-  color: ${({theme}) => theme.gray800};
+  color: ${({theme}) => theme.colors.gray800};
   background-color: ${({theme}) => theme.inputBgColor};
+  //background-color: transparent;
+
   ::placeholder,
   ::-webkit-input-placeholder {
-    color: ${colors.gray300};
+    ${({theme}) => theme.colors.gray300};
   }
 
   :focus {

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import {RootContainer, RoundButtonOutlined} from '../styles'
-import {LogoStatic} from '../components'
+import {LogoStatic, Button} from '../components'
 
 export const IndexPage = () => {
   return (
@@ -12,7 +12,7 @@ export const IndexPage = () => {
         <LogoStatic />
       </TitleContainer>
       <RoundButtonLink to="/create?target=me">
-        <StartButton>밥타 시작하기</StartButton>
+        <Button label="밥타 시작하기" />
       </RoundButtonLink>
     </Container>
   )
@@ -44,6 +44,6 @@ const H3 = styled.h3`
   font-size: 20px;
   line-height: 32px;
   margin-block-start: 0;
-  color: ${({theme}) => theme.gray800};
+  color: ${({theme}) => theme.colors.gray800};
   margin-block-end: 0;
 `

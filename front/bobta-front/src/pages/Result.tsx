@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import {Link, useLocation, useParams} from 'react-router-dom'
 
 import * as colors from '../styles/colors'
-import {LogoLinked, KakaoShareButton, TimeTable, Footer} from '../components'
-import {RootContainer, RoundButtonOutlined} from '../styles'
+import {LogoLinked, KakaoShareButton, TimeTable, Footer, Button} from '../components'
+import {RootContainer} from '../styles'
 
 type TitleProps = {
   isBest: boolean
@@ -48,7 +48,7 @@ export const Result = () => {
         <ButtonContainer>
           <KakaoShareButton label="친구에게 추가 요청" groupId={groupId} />
           <AddSelfButtonLink to="/create?target=me">
-            <AddSelfButton>시간표 추가하기</AddSelfButton>
+            <Button label="시간표 추가하기" />
           </AddSelfButtonLink>
         </ButtonContainer>
       </Container>
@@ -58,8 +58,11 @@ export const Result = () => {
 }
 
 const RankingButton = styled.button<RankingButtonProps>`
-  background-color: ${props => (props.isSelected ? colors.primary50 : '#eeeeef')};
-  color: ${props => (props.isSelected ? colors.primary : colors.gray400)};
+  background-color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.bgColor : props.theme.rankingButton.disabled.bgColor)};
+
+color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.fontColor : props.theme.rankingButton.disabled.fontColor)};
+
+  //color: ${props => (props.isSelected ? colors.primary : colors.gray400)};
   border-radius: 20px;
   padding: 4px 14px;
   margin-right: 8px;
@@ -83,13 +86,14 @@ const RankingButtonContainer = styled.div`
 
 const TitleWrapper = styled.div`
   margin-bottom: 24px;
+  color: ${({theme}) => theme.colors.gray800};
 `
 
 const GuideText = styled.p`
   font-family: 'Pretendard-Regular', sans-serif;
   font-size: 12px;
   line-height: 16px;
-  color: ${colors.gray700};
+  color: ${({theme}) => theme.colors.gray700};
   margin-block-start: 0;
   margin-block-end: 0;
 `
@@ -107,16 +111,16 @@ const Title = styled.h2<TitleProps>`
   margin-bottom: ${props => (props.isBest ? '24px' : '8px')};
 `
 
-const AddSelfButton = styled(RoundButtonOutlined)`
-  width: 100%;
-  margin-top: 12px;
-`
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
 `
+
 const ButtonContainer = styled.div`
   margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  height: 110px;
+  justify-content: space-between;
 `
