@@ -1,3 +1,4 @@
+import {useEffect, useRef} from 'react'
 import styled from 'styled-components'
 import * as colors from '../styles/colors'
 
@@ -6,11 +7,16 @@ type TdProps = {
 }
 
 export const TimeTable = () => {
+  const TdRef = useRef<HTMLTableDataCellElement>(null)
+  useEffect(() => {
+    console.log(TdRef.current?.className)
+    TdRef.current!.className += ' selected'
+  }, [])
   return (
     <Table>
       <Thead>
         <Tr>
-          <ThStart></ThStart>
+          <ThStart />
           <Th>월</Th>
           <Th>화</Th>
           <Th>수</Th>
@@ -18,62 +24,280 @@ export const TimeTable = () => {
           <Th>금</Th>
         </Tr>
       </Thead>
+      {/* 1교시 */}
       <Tbody>
         <Tr>
-          <TdStart>1교시</TdStart>
+          <TdStart rowSpan={5}>1교시</TdStart>
           <Td />
-          <Td></Td>
-          <Td></Td>
-          <Td></Td>
-          <Td></Td>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
         </Tr>
         <Tr>
-          <TdStart>2교시</TdStart>
-          <Td></Td>
-          <Td></Td>
-          <Td></Td>
-          <Td></Td>
-          <Td></Td>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
         </Tr>
         <Tr>
-          <TdStart>3교시</TdStart>
-          <Td></Td>
-          <Td selected></Td>
-          <Td selected></Td>
-          <Td></Td>
-          <Td></Td>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
         </Tr>
         <Tr>
-          <TdStart>4교시</TdStart>
-          <Td></Td>
-          <Td></Td>
-          <Td selected></Td>
-          <Td></Td>
-          <Td></Td>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
         </Tr>
         <Tr>
-          <TdStart>5교시</TdStart>
-          <Td></Td>
-          <Td></Td>
-          <Td selected></Td>
-          <Td></Td>
-          <Td></Td>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+      </Tbody>
+      {/* 2교시 */}
+
+      <Tbody>
+        <Tr>
+          <TdStart rowSpan={5}>2교시</TdStart>
+          <Td ref={TdRef} />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
         </Tr>
         <Tr>
-          <TdStart>6교시</TdStart>
-          <Td></Td>
-          <Td></Td>
-          <Td></Td>
-          <Td></Td>
-          <Td></Td>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
         </Tr>
         <Tr>
-          <TdStart>7교시</TdStart>
-          <Td></Td>
-          <Td></Td>
-          <Td></Td>
-          <Td></Td>
-          <Td></Td>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+      </Tbody>
+
+      {/* 3교시 */}
+      <Tbody>
+        <Tr>
+          <TdStart rowSpan={5}>3교시</TdStart>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+      </Tbody>
+      {/* 4교시 */}
+      <Tbody>
+        <Tr>
+          <TdStart rowSpan={5}>4교시</TdStart>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+      </Tbody>
+      {/* 5교시 */}
+      <Tbody>
+        <Tr>
+          <TdStart rowSpan={5}>5교시</TdStart>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+      </Tbody>
+      {/* 6교시 */}
+      <Tbody>
+        <Tr>
+          <TdStart rowSpan={5}>6교시</TdStart>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+      </Tbody>
+      {/* 7교시 */}
+      <Tbody>
+        <Tr>
+          <TdStart rowSpan={5}>7교시</TdStart>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+        </Tr>
+        <Tr>
+          <Td />
+          <Td />
+          <Td />
+          <Td />
+          <Td />
         </Tr>
       </Tbody>
     </Table>
@@ -112,11 +336,15 @@ const TdStart = styled.td`
   padding-top: 4px;
 `
 const Td = styled.td<TdProps>`
-  height: 60px;
-  background: ${props => (props.selected ? props.theme.colors.secondary : 'transparent')};
-  border: ${props => (props.selected ? 'none' : 'solid')};
+  height: 10px;
+  background: 'transparent';
+  border-right: ${props => (props.selected ? 'none' : 'solid')};
   border-color: ${({theme}) => theme.colors.gray300};
   border-width: 0.5px;
+
+  &.selected {
+    background-color: ${({theme}) => theme.colors.secondary};
+  }
 `
 
 const Tr = styled.tr``
@@ -138,4 +366,8 @@ const Th = styled.th`
   border-width: 0.5px;
 `
 
-const Tbody = styled.tbody``
+const Tbody = styled.tbody`
+  border: solid;
+  border-color: ${({theme}) => theme.colors.gray300};
+  border-width: 0.5px;
+`
