@@ -5,15 +5,23 @@ import {RoundButtonOutlined} from '../styles'
 type ButtonProps = {
   label: string
   onClick?: () => void
+  width?: string
 }
 
-export const Button = ({label, onClick}: ButtonProps) => {
-  return <ButtonWrapper onClick={onClick}>{label}</ButtonWrapper>
+type ButtonStyleProps = {
+  width: string
 }
 
-const ButtonWrapper = styled(RoundButtonOutlined)`
-  width: 100%;
+export const Button = ({label, onClick, width = '100%'}: ButtonProps) => {
+  return (
+    <ButtonWrapper onClick={onClick} width={width}>
+      {label}
+    </ButtonWrapper>
+  )
+}
 
+const ButtonWrapper = styled(RoundButtonOutlined)<ButtonStyleProps>`
+  width: ${props => props.width};
   background-color: ${({theme}) => theme.buttons.default.bgColor};
   border-color: ${({theme}) => theme.buttons.default.borderColor};
   color: ${({theme}) => theme.buttons.default.fontColor};

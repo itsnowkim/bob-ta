@@ -1,13 +1,17 @@
-import React, {useState, useCallback, useRef, useEffect} from 'react'
+import React, {useState, useCallback, useRef, useEffect, useContext} from 'react'
 import {useNavigate, useLocation} from 'react-router-dom'
-import styled from 'styled-components'
+import styled, {useTheme} from 'styled-components'
 
 import {RootContainer, RoundButtonDisabled, RoundButtonOutlined} from '../styles'
 import * as colors from '../styles/colors'
 import {LogoLinked, Footer, ButtonDisabled, ButtonSolid} from '../components'
+import {ThemeContext} from '../contexts'
 
 import AddIcon from '../static/images/Button/Add.png'
 import RemoveIcon from '../static/images/Button/Remove.png'
+
+import AddIconDark from '../static/icons/Button/AddDark.png'
+import RemoveIconDark from '../static/icons/Button/RemoveDark.png'
 
 type LabelType = {
   name: string
@@ -19,6 +23,7 @@ export const Create = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const {isDarkMode} = useContext(ThemeContext)
 
   // ******************** states ********************
   const [labels, setLabels] = useState<LabelType>({
@@ -88,14 +93,14 @@ export const Create = () => {
           <TimeTableInputWrapper>
             <FileInput type="file" accept="image/*" ref={fileInputRef} onChange={onUploadImage} />
             <AddButtonWrapper onClick={onClickAddButton}>
-              <AddButton src={AddIcon} />
+              <AddButton src={isDarkMode ? AddIconDark : AddIcon} />
               <AddButtonText>시간표 업로드</AddButtonText>
             </AddButtonWrapper>
           </TimeTableInputWrapper>
         ) : (
           <TimeTableImageWrapper>
             <RemoveButton type="button" onClick={onClickRemoveButton}>
-              <RemoveButtonImage src={RemoveIcon} />
+              <RemoveButtonImage src={isDarkMode ? RemoveIconDark : RemoveIcon} />
             </RemoveButton>
 
             <TimeTableImage src={imageUri} />
@@ -103,13 +108,7 @@ export const Create = () => {
         )}
       </TimeTableWrapper>
 
-      {name != '' && imageUri != '' ? (
-        <ButtonSolid onClick={onClickSubmit} label="결과 보기"></ButtonSolid>
-      ) : (
-        // <ButtonDisabled  lable="결과 보기" />
-        // <SubmitButtonDisabled>결과 보기</SubmitButtonDisabled>
-        <ButtonDisabled label="결과 보기" />
-      )}
+      {name != '' && imageUri != '' ? <ButtonSolid onClick={onClickSubmit} label="결과 보기"></ButtonSolid> : <ButtonDisabled label="결과 보기" />}
       <Footer />
     </RootContainer>
   )
@@ -151,23 +150,6 @@ const AddButtonText = styled.span`
 
 const FileInput = styled.input`
   display: none;
-`
-
-const SubmitButtonEnabled = styled(RoundButtonOutlined)`
-  margin-top: auto;
-  background-color: ${({theme}) => theme.buttonBgColor};
-  color: ${({theme}) => theme.buttonFontColor};
-`
-
-const SubmitButtonDisabled = styled(RoundButtonDisabled)`
-  margin-top: auto;
-  background-color: ${({theme}) => theme.disabledButtonBgColor};
-  color: ${({theme}) => theme.colors.gray300};
-  border-color: ${({theme}) => theme.colors.gray300};
-  &:hover {
-    background-color: ${({theme}) => theme.colors.gray300};
-    color: ${({theme}) => theme.colors.gray800};
-  }
 `
 
 const AddButtonWrapper = styled.div`
@@ -224,7 +206,6 @@ const NameInput = styled.input`
   border-style: solid;
   border-radius: 8px;
   border-width: 1px;
-  /* border-color: ${colors.gray300}; */
   border-color: ${({theme}) => theme.colors.gray300};
 
   font-family: 'Pretendard-Medium', sans-serif;
@@ -232,7 +213,6 @@ const NameInput = styled.input`
   line-height: 20px;
   color: ${({theme}) => theme.colors.gray800};
   background-color: ${({theme}) => theme.inputBgColor};
-  //background-color: transparent;
 
   ::placeholder,
   ::-webkit-input-placeholder {

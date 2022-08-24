@@ -39,7 +39,7 @@ export const Result = () => {
         </TitleWrapper>
         <RankingButtonContainer>
           {[...Array(5)].map((item, idx) => (
-            <RankingButton isSelected={selectedNumber == idx + 1} onClick={() => onClickRankingButton(idx + 1)}>
+            <RankingButton key={idx} isSelected={selectedNumber == idx + 1} onClick={() => onClickRankingButton(idx + 1)}>
               {idx + 1}순위
             </RankingButton>
           ))}
@@ -60,9 +60,8 @@ export const Result = () => {
 const RankingButton = styled.button<RankingButtonProps>`
   background-color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.bgColor : props.theme.rankingButton.disabled.bgColor)};
 
-color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.fontColor : props.theme.rankingButton.disabled.fontColor)};
+  color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.fontColor : props.theme.rankingButton.disabled.fontColor)};
 
-  //color: ${props => (props.isSelected ? colors.primary : colors.gray400)};
   border-radius: 20px;
   padding: 4px 14px;
   margin-right: 8px;
@@ -75,9 +74,6 @@ color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.fontColo
 `
 
 const RankingButtonContainer = styled.div`
-  /* display: flex;
-  flex-direction: row;
-  align-items: center; */
   display: flex;
   flex-wrap: nowrap;
   margin-bottom: 16px;
@@ -91,8 +87,8 @@ const TitleWrapper = styled.div`
 
 const GuideText = styled.p`
   font-family: 'Pretendard-Regular', sans-serif;
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 14px;
+  line-height: 20px;
   color: ${({theme}) => theme.colors.gray700};
   margin-block-start: 0;
   margin-block-end: 0;

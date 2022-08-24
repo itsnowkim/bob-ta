@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
-import {ButtonSolid} from '../components'
+import {Button} from '../components'
 import {RootContainer, RoundButtonOutlined} from '../styles'
 import {Footer} from '../components'
 export const Page404 = () => {
@@ -8,7 +8,7 @@ export const Page404 = () => {
     <Container>
       <H2>앗, 이 페이지는 없어요</H2>
       <A to="/index">
-        <ButtonSolid label="메인으로 이동" />
+        <Button label="메인으로 이동" width="80%" />
       </A>
     </Container>
   )

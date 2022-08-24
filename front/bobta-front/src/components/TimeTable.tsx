@@ -21,7 +21,7 @@ export const TimeTable = () => {
       <Tbody>
         <Tr>
           <TdStart>1교시</TdStart>
-          <Td></Td>
+          <Td />
           <Td></Td>
           <Td></Td>
           <Td></Td>
@@ -109,20 +109,20 @@ const TdStart = styled.td`
   border-color: ${({theme}) => theme.colors.gray300};
   border-radius: 8px;
   border-width: 0.5px;
+  padding-top: 4px;
 `
 const Td = styled.td<TdProps>`
   height: 60px;
   background: ${props => (props.selected ? props.theme.colors.secondary : 'transparent')};
   border: ${props => (props.selected ? 'none' : 'solid')};
   border-color: ${({theme}) => theme.colors.gray300};
-  //border-color: ${props => (props.selected ? 'transparent' : props.theme.colors.gray300)};
   border-width: 0.5px;
 `
 
 const Tr = styled.tr``
 
 const ThStart = styled.th`
-  width: 36px;
+  width: 32px;
   border: solid;
   border-color: ${({theme}) => theme.colors.gray300};
   border-radius: 8px;
@@ -131,7 +131,7 @@ const ThStart = styled.th`
 
 const Th = styled.th`
   font-weight: normal;
-  height: 36px;
+  height: 32px;
   border: solid;
   border-color: ${({theme}) => theme.colors.gray300};
   border-radius: 8px;

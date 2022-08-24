@@ -12,17 +12,11 @@ export const IndexPage = () => {
         <LogoStatic />
       </TitleContainer>
       <RoundButtonLink to="/create?target=me">
-        <Button label="밥타 시작하기" />
+        <Button label="밥타 시작하기" width="80%" />
       </RoundButtonLink>
     </Container>
   )
 }
-
-const StartButton = styled(RoundButtonOutlined)`
-  width: 100%;
-  background-color: ${({theme}) => theme.buttonBgColor};
-  color: ${({theme}) => theme.buttonFontColor};
-`
 
 const Container = styled(RootContainer)`
   justify-content: center;
@@ -38,6 +32,7 @@ const TitleContainer = styled.div`
 const RoundButtonLink = styled(Link)`
   text-decoration: none;
   width: 100%;
+  text-align: center;
 `
 const H3 = styled.h3`
   font-family: 'Pretendard-SemiBold', sans-serif;

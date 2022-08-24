@@ -16,7 +16,7 @@ export const Footer = () => {
   }, [])
   return (
     <footer>
-      <Separator />
+      <Separator marginTop={'36px'} marginBottom={'24px'} />
 
       {/* <Wrapper onClick={onClickInstagram}>
         <Icon src={InstagramIcon} />
