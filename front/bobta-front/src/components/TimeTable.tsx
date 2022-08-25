@@ -12,9 +12,11 @@ type TimeTableProps = {
 }
 const days = ['월', '화', '수', '목', '금']
 
+const CELL_PER_BLOCK = 6
+
 export const TimeTable = ({result}: TimeTableProps) => {
   // 각 시간 cell의 ref
-  const TdRefs = useRef<HTMLTableDataCellElement[][]>(Array.from(Array(7), () => new Array(5)))
+  const TdRefs = useRef<HTMLTableDataCellElement[][]>(Array.from(Array(6), () => new Array(6)))
 
   useEffect(() => {
     // 각 요일을 돎.
@@ -51,18 +53,18 @@ export const TimeTable = ({result}: TimeTableProps) => {
           <Th>금</Th>
         </Tr>
       </Thead>
-      {[...Array(7)].map((_, i) => {
+      {[...Array(6)].map((_, i) => {
         return (
           <Tbody key={'tbody' + i}>
-            {[...Array(5)].map((_, j) => (
+            {[...Array(6)].map((_, j) => (
               <Tr key={'tr' + i + j}>
                 {j == 0 ? (
                   <>
-                    <TdStart rowSpan={5}>{i + 1}교시</TdStart>
+                    <TdStart rowSpan={6}>{i + 1}교시</TdStart>
                     <Td
                       ref={ref => {
                         if (TdRefs.current) {
-                          TdRefs.current[0][i * 5 + j] = ref!
+                          TdRefs.current[0][i * CELL_PER_BLOCK + j] = ref!
                         }
                       }}
                     />
@@ -71,7 +73,7 @@ export const TimeTable = ({result}: TimeTableProps) => {
                   <Td
                     ref={ref => {
                       if (TdRefs.current) {
-                        TdRefs.current[0][i * 5 + j] = ref!
+                        TdRefs.current[0][i * CELL_PER_BLOCK + j] = ref!
                       }
                     }}
                   />
@@ -79,28 +81,28 @@ export const TimeTable = ({result}: TimeTableProps) => {
                 <Td
                   ref={ref => {
                     if (TdRefs.current) {
-                      TdRefs.current[1][i * 5 + j] = ref!
+                      TdRefs.current[1][i * CELL_PER_BLOCK + j] = ref!
                     }
                   }}
                 />
                 <Td
                   ref={ref => {
                     if (TdRefs.current) {
-                      TdRefs.current[2][i * 5 + j] = ref!
+                      TdRefs.current[2][i * CELL_PER_BLOCK + j] = ref!
                     }
                   }}
                 />
                 <Td
                   ref={ref => {
                     if (TdRefs.current) {
-                      TdRefs.current[3][i * 5 + j] = ref!
+                      TdRefs.current[3][i * CELL_PER_BLOCK + j] = ref!
                     }
                   }}
                 />
                 <Td
                   ref={ref => {
                     if (TdRefs.current) {
-                      TdRefs.current[4][i * 5 + j] = ref!
+                      TdRefs.current[4][i * CELL_PER_BLOCK + j] = ref!
                     }
                   }}
                 />
