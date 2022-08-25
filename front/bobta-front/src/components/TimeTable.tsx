@@ -7,11 +7,13 @@ type TdProps = {
 }
 
 export const TimeTable = () => {
-  const TdRef = useRef<HTMLTableDataCellElement>(null)
+  const TdRefs = useRef<HTMLTableDataCellElement[][]>(Array.from(Array(7), () => new Array(5)))
   useEffect(() => {
-    console.log(TdRef.current?.className)
-    TdRef.current!.className += ' selected'
-  }, [])
+    if (TdRefs.current) {
+      TdRefs.current[1][20].className += ' selected'
+    }
+  }, [TdRefs])
+
   return (
     <Table>
       <Thead>
@@ -24,282 +26,64 @@ export const TimeTable = () => {
           <Th>금</Th>
         </Tr>
       </Thead>
-      {/* 1교시 */}
-      <Tbody>
-        <Tr>
-          <TdStart rowSpan={5}>1교시</TdStart>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-      </Tbody>
-      {/* 2교시 */}
-
-      <Tbody>
-        <Tr>
-          <TdStart rowSpan={5}>2교시</TdStart>
-          <Td ref={TdRef} />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-      </Tbody>
-
-      {/* 3교시 */}
-      <Tbody>
-        <Tr>
-          <TdStart rowSpan={5}>3교시</TdStart>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-      </Tbody>
-      {/* 4교시 */}
-      <Tbody>
-        <Tr>
-          <TdStart rowSpan={5}>4교시</TdStart>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-      </Tbody>
-      {/* 5교시 */}
-      <Tbody>
-        <Tr>
-          <TdStart rowSpan={5}>5교시</TdStart>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-      </Tbody>
-      {/* 6교시 */}
-      <Tbody>
-        <Tr>
-          <TdStart rowSpan={5}>6교시</TdStart>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-      </Tbody>
-      {/* 7교시 */}
-      <Tbody>
-        <Tr>
-          <TdStart rowSpan={5}>7교시</TdStart>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-        <Tr>
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-          <Td />
-        </Tr>
-      </Tbody>
+      {[...Array(7)].map((_, i) => {
+        return (
+          <Tbody key={'tbody' + i}>
+            {[...Array(5)].map((_, j) => (
+              <Tr key={'tr' + i + j}>
+                {j == 0 ? (
+                  <>
+                    <TdStart rowSpan={5}>{i + 1}교시</TdStart>
+                    <Td
+                      ref={ref => {
+                        if (TdRefs.current) {
+                          TdRefs.current[0][i * 5 + j] = ref!
+                        }
+                      }}
+                    />
+                  </>
+                ) : (
+                  <Td
+                    ref={ref => {
+                      if (TdRefs.current) {
+                        TdRefs.current[0][i * 5 + j] = ref!
+                      }
+                    }}
+                  />
+                )}
+                <Td
+                  ref={ref => {
+                    if (TdRefs.current) {
+                      TdRefs.current[1][i * 5 + j] = ref!
+                    }
+                  }}
+                />
+                <Td
+                  ref={ref => {
+                    if (TdRefs.current) {
+                      TdRefs.current[2][i * 5 + j] = ref!
+                    }
+                  }}
+                />
+                <Td
+                  ref={ref => {
+                    if (TdRefs.current) {
+                      TdRefs.current[3][i * 5 + j] = ref!
+                    }
+                  }}
+                />
+                <Td
+                  ref={ref => {
+                    if (TdRefs.current) {
+                      TdRefs.current[4][i * 5 + j] = ref!
+                    }
+                  }}
+                />
+              </Tr>
+            ))}
+          </Tbody>
+        )
+      })}
     </Table>
   )
 }
