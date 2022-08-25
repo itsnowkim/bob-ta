@@ -1,16 +1,41 @@
 import {useEffect, useRef} from 'react'
 import styled from 'styled-components'
+import {timeCalculator} from '../utils'
 import * as colors from '../styles/colors'
 
 type TdProps = {
   selected?: boolean
 }
 
-export const TimeTable = () => {
+type TimeTableProps = {
+  result: any
+}
+const days = ['월', '화', '수', '목', '금']
+
+export const TimeTable = ({result}: TimeTableProps) => {
+  // 각 시간 cell의 ref
   const TdRefs = useRef<HTMLTableDataCellElement[][]>(Array.from(Array(7), () => new Array(5)))
+
   useEffect(() => {
-    if (TdRefs.current) {
-      TdRefs.current[1][20].className += ' selected'
+    // 각 요일을 돎.
+    for (var i = 0; i < 5; i++) {
+      const times = result[days[i]] // 해당 요일에서 가능한 시간을 꺼냄
+
+      if (times[0] == '') {
+        continue
+      }
+
+      // 가능한 시간들을 돌면서
+      for (var time of times) {
+        const [time1, time2] = time.split('-') // 시작 시간과 끝 시간을 꺼냄
+
+        const timeIdx1 = timeCalculator(time1) // 시작 시간의 index와
+        const timeIdx2 = timeCalculator(time2) // 끝 시간의 index를 구함
+
+        for (var j = timeIdx1; j < timeIdx2; j++) {
+          TdRefs.current[i][j].className += ' selected'
+        }
+      }
     }
   }, [TdRefs])
 

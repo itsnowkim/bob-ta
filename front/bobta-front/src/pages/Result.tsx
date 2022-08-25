@@ -14,6 +14,14 @@ type RankingButtonProps = {
   isSelected: boolean
 }
 
+const example = {
+  월: ['10:30-11:45', '12:00-13:15', '16:30-17:45'],
+  화: ['10:30-11:45', '12:00-13:15', '15:00-16:15'],
+  수: ['10:30-11:45', '12:00-13:15', '16:30-17:45'],
+  목: ['10:30-11:45', '12:00-13:15', '15:00-16:15'],
+  금: [''],
+}
+
 export const Result = () => {
   const location = useLocation()
   const {groupId} = useParams()
@@ -44,7 +52,7 @@ export const Result = () => {
             </RankingButton>
           ))}
         </RankingButtonContainer>
-        <TimeTable />
+        <TimeTable result={example} />
         <ButtonContainer>
           <KakaoShareButton label="친구에게 추가 요청" groupId={groupId} />
           <AddSelfButtonLink to="/create?target=me">
