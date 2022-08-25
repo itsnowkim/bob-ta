@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {Link, useLocation, useParams} from 'react-router-dom'
 
 import * as colors from '../styles/colors'
-import {LogoLinked, KakaoShareButton, TimeTable, Footer, Button} from '../components'
+import {LogoLinked, KakaoShareButton, TimeTable, Footer, Button, SelectResultView} from '../components'
 import {RootContainer} from '../styles'
 
 type TitleProps = {
@@ -15,9 +15,9 @@ type RankingButtonProps = {
 }
 
 const example = {
-  월: ['10:30-11:45', '12:00-13:15', '16:30-17:45'],
+  월: ['10:30-13:15', '16:30-17:45'],
   화: ['10:30-11:45', '12:00-13:15', '15:00-16:15'],
-  수: ['10:30-11:45', '12:00-13:15', '16:30-17:45'],
+  수: ['10:30-11:45', '12:00-17:45'],
   목: ['10:30-11:45', '12:00-13:15', '15:00-16:15'],
   금: [''],
 }
@@ -26,7 +26,7 @@ export const Result = () => {
   const location = useLocation()
   const {groupId} = useParams()
 
-  const [isBest, setIsBest] = useState<boolean>(false)
+  const [isBest, setIsBest] = useState<boolean>(true)
   const [selectedNumber, setSelectedNumber] = useState<number>(1)
 
   const onClickRankingButton = useCallback((rankingNumber: number) => {
@@ -39,19 +39,26 @@ export const Result = () => {
       <Container>
         <TitleWrapper>
           <Title isBest={isBest}>진실님의 밥약</Title>
-          <GuideText>
-            모두가 가능한 시간이 없습니다.
-            <br />
-            가능한 시간이 많은 순으로 결과를 보여줍니다.
-          </GuideText>
+          {!isBest && (
+            <GuideText>
+              모두가 가능한 시간이 없습니다.
+              <br />
+              가능한 시간이 많은 순으로 결과를 보여줍니다.
+            </GuideText>
+          )}
         </TitleWrapper>
-        <RankingButtonContainer>
-          {[...Array(5)].map((item, idx) => (
-            <RankingButton key={idx} isSelected={selectedNumber == idx + 1} onClick={() => onClickRankingButton(idx + 1)}>
-              {idx + 1}순위
-            </RankingButton>
-          ))}
-        </RankingButtonContainer>
+        {!isBest && (
+          <RankingButtonContainer>
+            {[...Array(5)].map((item, idx) => (
+              <RankingButton key={idx} isSelected={selectedNumber == idx + 1} onClick={() => onClickRankingButton(idx + 1)}>
+                {idx + 1}순위
+              </RankingButton>
+            ))}
+          </RankingButtonContainer>
+        )}
+        <SelectResultViewContainer>
+          <SelectResultView />
+        </SelectResultViewContainer>
         <TimeTable result={example} />
         <ButtonContainer>
           <KakaoShareButton label="친구에게 추가 요청" groupId={groupId} />
@@ -64,6 +71,10 @@ export const Result = () => {
     </RootContainer>
   )
 }
+
+const SelectResultViewContainer = styled.div`
+  margin-bottom: 12px;
+`
 
 const RankingButton = styled.button<RankingButtonProps>`
   background-color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.bgColor : props.theme.rankingButton.disabled.bgColor)};
@@ -112,7 +123,7 @@ const Title = styled.h2<TitleProps>`
   font-family: 'Pretendard-Bold', sans-serif;
   font-size: 20px;
   line-height: 28px;
-  margin-bottom: ${props => (props.isBest ? '24px' : '8px')};
+  margin-bottom: ${props => (props.isBest ? '0px' : '8px')};
 `
 
 const Container = styled.div`

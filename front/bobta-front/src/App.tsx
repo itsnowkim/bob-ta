@@ -3,7 +3,7 @@ import {ThemeProvider as StyledProvider} from 'styled-components'
 import {QueryClient, QueryClientProvider, useQuery} from '@tanstack/react-query'
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import {ThemeContext} from './contexts'
-import {IndexPage, Page404, Create, Result, DetectionError} from './pages'
+import {IndexPage, Page404, Create, Result, DetectionError, Test} from './pages'
 import {light, dark} from './styles'
 
 const KAKAO_APP_KEY = process.env.REACT_APP_KAKAO_KEY
@@ -43,6 +43,7 @@ function App() {
                 <Route path="/create" element={<Create />} />
                 <Route path="/result/:groupId" element={<Result />} />
                 <Route path="/error" element={<DetectionError />} />
+                <Route path="/test" element={<Test />} />
                 <Route path="*" element={<Page404 />} />
               </Routes>
             </BrowserRouter>

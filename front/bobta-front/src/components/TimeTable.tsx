@@ -42,7 +42,7 @@ export const TimeTable = ({result}: TimeTableProps) => {
   }, [TdRefs])
 
   return (
-    <Table>
+    <Table rules="groups">
       <Thead>
         <Tr>
           <ThStart />
@@ -117,20 +117,22 @@ export const TimeTable = ({result}: TimeTableProps) => {
 
 const Table = styled.table`
   /* table-layout: fixed; */
-  font-family: 'Pretendard-Medium', sans-serif;
+  font-family: 'Pretendard-Regular', sans-serif;
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;
   width: 100%;
   border-spacing: 0;
   padding: 0;
-  color: ${({theme}) => theme.colors.gray800};
+  color: ${({theme}) => theme.colors.gray700};
 
+  //border-collapse: separate !important;
   border: solid;
-  border-color: ${({theme}) => theme.colors.gray300};
+  border-color: ${({theme}) => theme.colors.gray100};
+  border-width: 1px;
+  /* border-collapse: collapse; */
+  border-spacing: 0;
   border-radius: 8px;
-  border-width: 0.5px;
-  border-collapse: collapse;
 `
 
 const Thead = styled.thead``
@@ -140,21 +142,28 @@ const TdStart = styled.td`
   font-size: 12px;
   line-height: 16px;
   vertical-align: baseline;
-  border: solid;
-  border-color: ${({theme}) => theme.colors.gray300};
-  border-radius: 8px;
-  border-width: 0.5px;
   padding-top: 4px;
+
+  border-right: solid;
+  border-bottom: solid;
+  border-color: ${({theme}) => theme.colors.gray100};
+  border-width: 1px;
 `
 const Td = styled.td<TdProps>`
   height: 10px;
   background: 'transparent';
-  border-right: ${props => (props.selected ? 'none' : 'solid')};
-  border-color: ${({theme}) => theme.colors.gray300};
-  border-width: 0.5px;
+
+  border-right: solid;
+  border-color: ${({theme}) => theme.colors.gray100};
+  border-width: 1px;
 
   &.selected {
     background-color: ${({theme}) => theme.colors.secondary};
+    border-right: none;
+  }
+
+  &:last-child {
+    border: none;
   }
 `
 
@@ -162,23 +171,43 @@ const Tr = styled.tr``
 
 const ThStart = styled.th`
   width: 32px;
-  border: solid;
-  border-color: ${({theme}) => theme.colors.gray300};
-  border-radius: 8px;
-  border-width: 0.5px;
+  border-bottom: solid;
+  border-right: solid;
+  border-color: ${({theme}) => theme.colors.gray100};
+  border-width: 1px;
 `
 
 const Th = styled.th`
   font-weight: normal;
   height: 32px;
-  border: solid;
-  border-color: ${({theme}) => theme.colors.gray300};
-  border-radius: 8px;
-  border-width: 0.5px;
+  border-right: solid;
+  border-bottom: solid;
+  border-color: ${({theme}) => theme.colors.gray100};
+  border-width: 1px;
+  &:last-child {
+    border-right: none;
+  }
 `
 
 const Tbody = styled.tbody`
-  border: solid;
-  border-color: ${({theme}) => theme.colors.gray300};
-  border-width: 0.5px;
+  tr {
+    &:last-child {
+      td {
+        border-bottom: solid;
+        border-color: ${({theme}) => theme.colors.gray100};
+        border-width: 1px;
+        &.selected {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  &:last-child {
+    tr {
+      td {
+        border-bottom: none;
+      }
+    }
+  }
 `
