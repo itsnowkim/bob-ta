@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useCallback} from 'react'
 import styled from 'styled-components'
 import * as colors from '../styles/colors'
 import {ThemeContext} from '../contexts'
@@ -10,13 +10,26 @@ type SelectProps = {
   fontColor: string
 }
 
-export const SelectResultView = () => {
+type SelectResultViewProps = {
+  setIsImageView: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export const SelectResultView = ({setIsImageView}: SelectResultViewProps) => {
   const {isDarkMode} = useContext(ThemeContext)
 
+  const onChangeSelect = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value
+    value == 'image' ? setIsImageView(true) : setIsImageView(false)
+  }, [])
+
   return (
-    <Select chevronUrl={isDarkMode ? ShevronDownDark : ShevronDownLight} fontColor={isDarkMode ? colors.darkgray800 : colors.gray700}>
-      <option>이미지로 보기</option>
-      <option>텍스트로 보기</option>
+    <Select
+      chevronUrl={isDarkMode ? ShevronDownDark : ShevronDownLight}
+      fontColor={isDarkMode ? colors.darkgray800 : colors.gray700}
+      onChange={onChangeSelect}
+      defaultValue="image">
+      <option value="image">이미지로 보기</option>
+      <option value="text">텍스트로 보기</option>
     </Select>
   )
 }

@@ -7,14 +7,14 @@ type TdProps = {
   selected?: boolean
 }
 
-type TimeTableProps = {
+type TimeTableImageProps = {
   result: any
 }
 const days = ['월', '화', '수', '목', '금']
 
 const CELL_PER_BLOCK = 6
 
-export const TimeTable = ({result}: TimeTableProps) => {
+export const TimeTableImage = ({result}: TimeTableImageProps) => {
   // 각 시간 cell의 ref
   const TdRefs = useRef<HTMLTableDataCellElement[][]>(Array.from(Array(6), () => new Array(6)))
 

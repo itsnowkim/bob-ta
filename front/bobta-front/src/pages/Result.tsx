@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import {Link, useLocation, useParams} from 'react-router-dom'
 
 import * as colors from '../styles/colors'
-import {LogoLinked, KakaoShareButton, TimeTable, Footer, Button, SelectResultView} from '../components'
+import {LogoLinked, KakaoShareButton, TimeTableImage, TimeTableText, Footer, Button, SelectResultView} from '../components'
 import {RootContainer} from '../styles'
 
 type TitleProps = {
@@ -12,6 +12,10 @@ type TitleProps = {
 
 type RankingButtonProps = {
   isSelected: boolean
+}
+
+type TitleWrapperProps = {
+  marginBottom: string
 }
 
 const example = {
@@ -26,8 +30,9 @@ export const Result = () => {
   const location = useLocation()
   const {groupId} = useParams()
 
-  const [isBest, setIsBest] = useState<boolean>(true)
-  const [selectedNumber, setSelectedNumber] = useState<number>(1)
+  const [isBest, setIsBest] = useState<boolean>(false) // best인지 차선책인지
+  const [selectedNumber, setSelectedNumber] = useState<number>(1) // 차선책일때 선택된 순위
+  const [isImageView, setIsImageView] = useState<boolean>(true)
 
   const onClickRankingButton = useCallback((rankingNumber: number) => {
     setSelectedNumber(rankingNumber)
@@ -37,8 +42,8 @@ export const Result = () => {
     <RootContainer>
       <LogoLinked />
       <Container>
-        <TitleWrapper>
-          <Title isBest={isBest}>진실님의 밥약</Title>
+        <TitleWrapper marginBottom={isBest ? '8px' : '16px'}>
+          <Title isBest={isBest}>진실님과의 밥약 타임</Title>
           {!isBest && (
             <GuideText>
               모두가 가능한 시간이 없습니다.
@@ -57,9 +62,10 @@ export const Result = () => {
           </RankingButtonContainer>
         )}
         <SelectResultViewContainer>
-          <SelectResultView />
+          <SelectResultView setIsImageView={setIsImageView} />
         </SelectResultViewContainer>
-        <TimeTable result={example} />
+        {isImageView ? <TimeTableImage result={example} /> : <TimeTableText result={example} />}
+
         <ButtonContainer>
           <KakaoShareButton label="친구에게 추가 요청" groupId={groupId} />
           <AddSelfButtonLink to="/create?target=me">
@@ -99,8 +105,8 @@ const RankingButtonContainer = styled.div`
   overflow-x: auto;
 `
 
-const TitleWrapper = styled.div`
-  margin-bottom: 24px;
+const TitleWrapper = styled.div<TitleWrapperProps>`
+  margin-bottom: ${({marginBottom}) => marginBottom};
   color: ${({theme}) => theme.colors.gray800};
 `
 
