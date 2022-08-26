@@ -1,11 +1,10 @@
-import cv2
-from typing import Union
+import exportImg
+
 from fastapi import FastAPI, File, UploadFile
 from PIL import Image
 from io import BytesIO
+
 import numpy as np
-# import mymodule
-import exportImg
 
 app = FastAPI()
 
@@ -19,7 +18,7 @@ def load_image_into_numpy_array(data):
 # input - img
 # output - string, unique url
 @app.post("/uploadfile/")
-async def create_upload_file(file: UploadFile):
+async def create_upload_file(file: UploadFile = File(...)):
     image = load_image_into_numpy_array(await file.read())
     output = exportImg.export_img(image)
 
