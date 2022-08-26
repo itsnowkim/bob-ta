@@ -1,12 +1,23 @@
 import exportImg
 
 from fastapi import FastAPI, File, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
 from io import BytesIO
 
 import numpy as np
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+  CORSMiddleware,
+  allow_origins=origins,
+  allow_credentials=True,
+  allow_methods=["*"],
+  allow_headers=["*"],
+)
 
 @app.get("/")
 def health_check():
