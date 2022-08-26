@@ -1,0 +1,61 @@
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('./static/fonts/Pretendard-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pretendard-Medium';
+  src: url('./static/fonts/Pretendard-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pretendard-SemiBold';
+  src: url('./static/fonts/Pretendard-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pretendard-Bold';
+  src: url('./static/fonts/Pretendard-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'GmarketSans-Light';
+  src: url('./static/fonts/GmarketSansLight.otf') format('otf');
+}
+
+@font-face {
+  font-family: 'GmarketSans-Medium';
+  src: url('./static/fonts/GmarketSansMedium.otf') format('otf');
+}
+
+/* @font-face {
+  font-family: "GmarketSans-Bold";
+  src: url("./static/fonts/GmarketSansBold.otf") format("otf");
+} */
+
+@font-face {
+  font-family: 'GmarketSans';
+  font-weight: 700;
+  font-style: normal;
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.eot');
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.eot?#iefix') format('embedded-opentype'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.woff2') format('woff2'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.woff') format('woff'),
+    url('https://cdn.jsdelivr.net/gh/webfontworld/gmarket/GmarketSansBold.ttf') format('truetype');
+  font-display: swap;
+}
+body {
+  margin: 0;
+  font-family: 'Pretendard-Medium';
+  color: #202021;
+  font-size: 14px;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+  }
+}
