@@ -4,13 +4,9 @@ import mymodule
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
 @app.post("/test")
-def test(name):
-    a = mymodule.greeting(name)
+def module_test():
+    a = mymodule.checkDB()
     return {'a' : a}
 
 @app.get("/health")
