@@ -11,6 +11,8 @@ def init():
     database_id = os.environ.get('DATABASE_ID')
     token=os.environ.get('TOKEN')
 
+    print(database_id, token)
+
     headers = {
         "Authorization": f"{token}",
         "Notion-Version": "2022-06-28",
@@ -70,20 +72,14 @@ def build_payload(database_id, username, data):
 
   return payload, unique_url
 
-def add_user(username):
-    # add new username and unique id to notion page
-    url, headers, database_id = init()
-
-    response = requests.post(url, headers=headers, data=json.dumps(payload))
-
-    print(response.text)
-
 def savedb(username, data):
     # add new username and unique id to notion page
     url, headers, database_id = init()
     payload, unique_url = build_payload(database_id, username, data)
 
     response = requests.post(url, headers=headers, data=json.dumps(payload))
+
+    print(response.text)
 
     return unique_url
     

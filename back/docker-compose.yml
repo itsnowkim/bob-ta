@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  fastapi:
+    image: nowkimdocker/bob-ta:0.7
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload
+    ports:
+      - 8080:8080
+    env_file:
+    - .env
+    volumes:
+      - ./app:/code/app
+    
