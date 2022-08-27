@@ -3,6 +3,10 @@ import convertImgFormat
 
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+# from typing import Union
+# from pydantic import BaseModel
+
+
 
 app = FastAPI()
 
@@ -20,20 +24,26 @@ app.add_middleware(
 def health_check():
   return {"Server Working"}
 
-# 시간표 이미지 전송
-# input - img
-# output - string, unique url
+# 처음 올릴 경우 - 가능한 시간대 + unique_url 리턴하면 됨.
 @app.post("/uploadfile/")
-async def create_upload_file(file: UploadFile = File(...)):
+async def create_upload_file(file: UploadFile = File(...), username: str=''):
+    # 유저의 시간표 read
     image = convertImgFormat.load_image_into_numpy_array(await file.read())
     output = exportImg.export_img(image)
 
-    return {"filename": file.filename, "output": output}
+    # 유저의 시간표 db에 저장
+    # savedb(output)
+    
+    # 가능한 시간 찾기 함수
+    # findposstime(output)
 
-# @app.post("/test")
-# def module_test():
-#     a = mymodule.checkDB()
-#     return {'a' : a}
+    # uniqueid return
+    
+
+    return {"user_name": username, "output": output}
+
+# 링크를 받아서 올릴 경우 - 교집합을 리턴해야 됨.
+
 
 # 만들어진 방에 해당하는 userid 들의 시간표 return.
 # input - string type unique id

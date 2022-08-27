@@ -86,7 +86,7 @@ def get_time(img, box, box_height, box_width):
     return class_daytime, class_time
 
 def get_timebox(THEME, ROI, box_height, box_width):
-    
+
     if THEME == 'LIGHT': # normal theme
         # 110 이 가장 잘 나온 듯
         TEMP = 255 - ROI
@@ -145,10 +145,15 @@ def calculate_daytime(roi_width, box_width, startpoint):
             return daytime
 
 def calculate_time(start, end):
-    class_start = round(start, 3)
-    class_end = round(end, 3)
+    starttime_list = [9, 10.5, 12, 13.5, 15, 16.5, 18, 19.5]
+    endtime_list = [10.25, 11.75, 13.25, 14.75, 16.25, 17.75, 19.25, 20.75]
     
-    return (f'{class_start}-{class_start+class_end}')
+    class_start = [abs(x - start) for x in starttime_list]
+    class_end = [abs(x - (start + end)) for x in endtime_list]
+
+
+    
+    return (f'{starttime_list[class_start.index(min(class_start))]}-{endtime_list[class_end.index(min(class_end))]}')
 
 def export_img(img):
     # input data read
