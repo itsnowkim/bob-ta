@@ -28,7 +28,7 @@ async def create_upload_file(file: UploadFile = File(...), username: str=''):
     output = exportImg.export_img(image)
 
     # 유저의 시간표 db에 저장
-    # savedb(output)
+    databaseModule.savedb(username, str(output))
     
     # 가능한 시간 찾기 함수
     # findposstime(output)
@@ -40,8 +40,8 @@ async def create_upload_file(file: UploadFile = File(...), username: str=''):
 
 # 링크를 받아서 올릴 경우 - 교집합을 리턴해야 됨.
 @app.get("/test")
-def health_check():
-  databaseModule.get_database()
+def db_test(username: str=''):
+  databaseModule.add_user(username)
   return {"Server Working"}
 
 # 만들어진 방에 해당하는 userid 들의 시간표 return.
