@@ -21,6 +21,8 @@ type LabelType = {
   image: string
 }
 
+const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/
+
 export const Create = () => {
   // ******************** utils ********************
   const navigate = useNavigate()
@@ -84,7 +86,18 @@ export const Create = () => {
     setImageUri('')
   }, [])
 
+  // const validateName = useCallback((name: string) => {
+  //   if(name.length > 10 || ){
+
+  //   }
+  //   return true
+  // }, [])
+
   const onClickSubmit = useCallback(() => {
+    if (regex.test(name) == false || name.length > 10) {
+      alert('이름은 1자-10자 사이의 한글, 영어, 숫자만 가능합니다.')
+      return
+    }
     let formData = new FormData()
 
     formData.append('file', image)

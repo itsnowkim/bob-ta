@@ -6,9 +6,10 @@ type ButtonProps = {
   label: string
   onClick?: () => void
   width?: string
+  isLoading?: boolean
 }
 
-export const ButtonSolid = ({label, onClick, width = '100%'}: ButtonProps) => {
+export const ButtonSolid = ({label, onClick, width = '100%', isLoading = false}: ButtonProps) => {
   return <ButtonWrapper onClick={onClick}>{label}</ButtonWrapper>
 }
 
