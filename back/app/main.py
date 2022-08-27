@@ -1,12 +1,8 @@
-import exportImg
-import convertImgFormat
-
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-# from typing import Union
-# from pydantic import BaseModel
 
-
+# custom module
+import exportImg, convertImgFormat, databaseModule
 
 app = FastAPI()
 
@@ -38,12 +34,15 @@ async def create_upload_file(file: UploadFile = File(...), username: str=''):
     # findposstime(output)
 
     # uniqueid return
-    
+
 
     return {"user_name": username, "output": output}
 
 # 링크를 받아서 올릴 경우 - 교집합을 리턴해야 됨.
-
+@app.get("/test")
+def health_check():
+  databaseModule.get_database()
+  return {"Server Working"}
 
 # 만들어진 방에 해당하는 userid 들의 시간표 return.
 # input - string type unique id
