@@ -1,17 +1,20 @@
 import React, {useState, useCallback, useRef, useEffect, useContext} from 'react'
 import {useNavigate, useLocation} from 'react-router-dom'
-import styled, {useTheme} from 'styled-components'
+import styled from 'styled-components'
+import {useMutation} from '@tanstack/react-query'
 
-import {RootContainer, RoundButtonDisabled, RoundButtonOutlined} from '../styles'
+import {RootContainer} from '../styles'
 import * as colors from '../styles/colors'
 import {LogoLinked, Footer, ButtonDisabled, ButtonSolid} from '../components'
 import {ThemeContext} from '../contexts'
+import {useScrollToTop} from '../utils'
 
 import AddIcon from '../static/images/Button/Add.png'
 import RemoveIcon from '../static/images/Button/Remove.png'
-
 import AddIconDark from '../static/icons/Button/AddDark.png'
 import RemoveIconDark from '../static/icons/Button/RemoveDark.png'
+
+import {uploadTimeTableImage, queryKeys} from '../api'
 
 type LabelType = {
   name: string
@@ -24,6 +27,14 @@ export const Create = () => {
   const location = useLocation()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const {isDarkMode} = useContext(ThemeContext)
+  useScrollToTop()
+
+  // ******************** react queries ********************
+  const uploadTimeTableImageQuery = useMutation([queryKeys.image], uploadTimeTableImage, {
+    onSuccess(data, variables, context) {
+      console.log(data)
+    },
+  })
 
   // ******************** states ********************
   const [labels, setLabels] = useState<LabelType>({
@@ -74,6 +85,11 @@ export const Create = () => {
   }, [])
 
   const onClickSubmit = useCallback(() => {
+    let formData = new FormData()
+
+    formData.append('file', image)
+    uploadTimeTableImageQuery.mutate(formData) // s3에 이미지 저장
+
     // 백에서 200 응답을 날릴 때 groupId도 같이 넣어줌
     const groupId = '11'
     navigate(`/result/${groupId}`)

@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
-import {RootContainer, RoundButtonOutlined} from '../styles'
-import {LogoStatic, Button} from '../components'
+import {RootContainer} from '../styles'
+import {LogoStatic, ButtonSolid} from '../components'
 
 export const IndexPage = () => {
   return (
@@ -12,7 +12,7 @@ export const IndexPage = () => {
         <LogoStatic />
       </TitleContainer>
       <RoundButtonLink to="/create?target=me">
-        <Button label="밥타 시작하기" width="80%" />
+        <ButtonSolid label="밥타 시작하기" width="80%" />
       </RoundButtonLink>
     </Container>
   )
