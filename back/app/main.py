@@ -1,11 +1,8 @@
 import exportImg
+import convertImgFormat
 
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from PIL import Image
-from io import BytesIO
-
-import numpy as np
 
 app = FastAPI()
 
@@ -23,14 +20,12 @@ app.add_middleware(
 def health_check():
   return {"Server Working"}
 
-def load_image_into_numpy_array(data):
-    return np.array(Image.open(BytesIO(data)))
 # 시간표 이미지 전송
 # input - img
 # output - string, unique url
 @app.post("/uploadfile/")
 async def create_upload_file(file: UploadFile = File(...)):
-    image = load_image_into_numpy_array(await file.read())
+    image = convertImgFormat.load_image_into_numpy_array(await file.read())
     output = exportImg.export_img(image)
 
     return {"filename": file.filename, "output": output}

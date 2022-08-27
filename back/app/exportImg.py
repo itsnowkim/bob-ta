@@ -90,46 +90,13 @@ def get_timebox(THEME, ROI, box_height, box_width):
     if THEME == 'LIGHT': # normal theme
         # 110 이 가장 잘 나온 듯
         TEMP = 255 - ROI
-        
-#         b, g, r = cv2.split(TEMP)
-        #이미지 마스킹 가즈아
-#         # 색상 변경 ok, 가장 많은 색을 검정으로 변경 필요
-#         BIAS = 30
-#         for i,target in enumerate(b):
-#             b[i] = b[i] - BIAS
-#             g[i] = g[i] - BIAS
-#             r[i] = r[i] - BIAS
-        
-#         inverse = cv2.merge((b,g,r))
-#         img_show('inverse',inverse)
-
         gray = cv2.cvtColor(TEMP, cv2.COLOR_BGR2GRAY)
     else:
         gray = cv2.cvtColor(ROI, cv2.COLOR_BGR2GRAY)
 
-    # erosion - box 경계 찾기
-    kernel = np.ones((3,3), np.uint8)
-    erosion = cv2.erode(gray, kernel, iterations = 1)
-
-    # ret, otsu2 = cv2.threshold(erosion, THRESHOLD_THEME, 255, cv2.THRESH_BINARY)
     ret, otsu2 = cv2.threshold(gray, -1, 255,  cv2.THRESH_BINARY | cv2.THRESH_OTSU)
-#     img_show('otsu',otsu2)
+
     contours, hierarchy = cv2.findContours(otsu2, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-
-    # 실제 시간표 box만 남기기 - filtering
-#     real_cnt_indexs = []
-
-#     if THEME == 'DARK':
-#         for idx, table in enumerate(hierarchy[0]):
-#             if table[3] == -1:
-#                 real_cnt_indexs.append(idx)
-#         cnts = [contours[i] for i in real_cnt_indexs]
-#     else:
-#         # light mode
-#         for idx, table in enumerate(hierarchy[0]):
-#             real_cnt_indexs.append(idx)
-#         cnts = [contours[i] for i in real_cnt_indexs]
-
 
     # box 크기로 필요 없는 것 제거
     results = [x for x in contours if cv2.contourArea(x) > 1000]
@@ -181,7 +148,7 @@ def calculate_time(start, end):
     class_start = round(start, 3)
     class_end = round(end, 3)
     
-    return (f'{class_start} - {class_start+class_end}')
+    return (f'{class_start}-{class_start+class_end}')
 
 def export_img(img):
     # input data read

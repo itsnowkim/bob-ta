@@ -3,13 +3,13 @@
 ## run docker image
 ```bash
 docker build -t myimage .
-docker build -t nowkimdocker/bob-ta:0.3 .
+docker build -t nowkimdocker/bob-ta:0.5 .
 
-docker run --rm -dp 80:80 --name bob-ta nowkimdocker/bob-ta:0.4
+docker run --rm -dp 80:80 --name bob-ta nowkimdocker/bob-ta:0.5
 ```
 
 ## push image
-docker push nowkimdocker/bob-ta:0.3
+docker push nowkimdocker/bob-ta:0.5
 
 ## mount volume in running container
 ```bash
