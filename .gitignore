@@ -1,2 +1,3 @@
 linux_user.pem
 __pycache__
+.env
