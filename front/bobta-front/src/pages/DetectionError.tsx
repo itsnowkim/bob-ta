@@ -3,18 +3,27 @@ import styled from 'styled-components'
 import {MdOutlineChevronRight} from 'react-icons/md'
 import {useNavigate} from 'react-router-dom'
 
+import {useScrollToTop} from '../utils'
+import {ThemeContext} from '../contexts'
 import {RootContainer, Title} from '../styles'
 import * as colors from '../styles/colors'
 import {LogoLinked, Footer, ButtonSolid, Separator} from '../components'
 import Step1Image from '../static/images/tutorial/step1.png'
 import Step2Image from '../static/images/tutorial/step2.png'
+import Step3Image from '../static/images/tutorial/step3.png'
 
 const ARROW_STYLE = {
   margin: '0 4px',
 }
 
 export const DetectionError = () => {
+  // ******************** utils ********************
+  useScrollToTop()
+
   const navigate = useNavigate()
+  const {isDarkMode} = useContext(ThemeContext)
+
+  // ******************** callbacks ********************
   const onClickGoBack = useCallback(() => {
     navigate(-1)
   }, [])
@@ -28,17 +37,26 @@ export const DetectionError = () => {
       <StepContainer>
         <TitleWrapper>
           1. 에브리타임
-          <MdOutlineChevronRight size={20} color={colors.gray800} style={ARROW_STYLE} />
+          <MdOutlineChevronRight size={20} color={isDarkMode ? colors.darkgray800 : colors.gray800} style={ARROW_STYLE} />
           내 시간표
-          <MdOutlineChevronRight size={20} color={colors.gray800} style={ARROW_STYLE} />
+          <MdOutlineChevronRight size={20} color={isDarkMode ? colors.darkgray800 : colors.gray800} style={ARROW_STYLE} />
           설정
         </TitleWrapper>
         <Img src={Step1Image} />
       </StepContainer>
       <Separator marginBottom={'24px'} />
       <StepContainer>
-        <TitleWrapper>2. 이미지로 저장 선택</TitleWrapper>
+        <TitleWrapper>
+          2. 테마 및 스타일 변경
+          <MdOutlineChevronRight size={20} color={isDarkMode ? colors.darkgray800 : colors.gray800} style={ARROW_STYLE} />
+          기본 테마 설정
+        </TitleWrapper>
         <Img src={Step2Image} />
+      </StepContainer>
+      <Separator marginBottom={'24px'} />
+      <StepContainer>
+        <TitleWrapper>3. 이미지로 저장 선택</TitleWrapper>
+        <Img src={Step3Image} />
       </StepContainer>
       <ButtonSolid onClick={onClickGoBack} label="뒤로 가기" />
       <Footer />

@@ -59,6 +59,7 @@ const KakaoButtonContainer = styled.button`
   padding-bottom: 12px;
   font-size: 16px;
   line-height: 24px;
+  color: ${colors.gray800};
   cursor: pointer;
   border-radius: 24px;
   font-family: 'Pretendard-Bold', sans-serif;

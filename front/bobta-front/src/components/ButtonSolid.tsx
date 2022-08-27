@@ -5,9 +5,10 @@ import {RoundButtonSolid} from '../styles'
 type ButtonProps = {
   label: string
   onClick?: () => void
+  width?: string
 }
 
-export const ButtonSolid = ({label, onClick}: ButtonProps) => {
+export const ButtonSolid = ({label, onClick, width = '100%'}: ButtonProps) => {
   return <ButtonWrapper onClick={onClick}>{label}</ButtonWrapper>
 }
 

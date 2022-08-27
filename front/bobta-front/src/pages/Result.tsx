@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import {Link, useLocation, useParams} from 'react-router-dom'
 
 import * as colors from '../styles/colors'
-import {LogoLinked, KakaoShareButton, TimeTableImage, TimeTableText, Footer, Button, SelectResultView} from '../components'
+import {LogoLinked, KakaoShareButton, TimeTableImage, TimeTableText, Footer, Button, ButtonSolid, SelectResultView} from '../components'
 import {RootContainer} from '../styles'
+import {useScrollToTop} from '../utils'
 
 type TitleProps = {
   isBest: boolean
@@ -38,6 +39,7 @@ export const Result = () => {
     setSelectedNumber(rankingNumber)
   }, [])
 
+  useScrollToTop()
   return (
     <RootContainer>
       <LogoLinked />
@@ -69,7 +71,7 @@ export const Result = () => {
         <ButtonContainer>
           <KakaoShareButton label="친구에게 추가 요청" groupId={groupId} />
           <AddSelfButtonLink to="/create?target=me">
-            <Button label="시간표 추가하기" />
+            <ButtonSolid label="시간표 추가하기" />
           </AddSelfButtonLink>
         </ButtonContainer>
       </Container>
@@ -87,7 +89,7 @@ const RankingButton = styled.button<RankingButtonProps>`
 
   color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.fontColor : props.theme.rankingButton.disabled.fontColor)};
 
-  border-radius: 20px;
+  border-radius: 16px;
   padding: 4px 14px;
   margin-right: 8px;
   border: none;
