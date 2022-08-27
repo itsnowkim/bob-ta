@@ -150,8 +150,6 @@ def calculate_time(start, end):
     
     class_start = [abs(x - start) for x in starttime_list]
     class_end = [abs(x - (start + end)) for x in endtime_list]
-
-
     
     return (f'{starttime_list[class_start.index(min(class_start))]}-{endtime_list[class_end.index(min(class_end))]}')
 

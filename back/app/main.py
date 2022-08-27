@@ -2,7 +2,7 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
 # custom module
-import exportImg, convertImgFormat, databaseModule
+import exportImg, convertImgFormat, databaseModule, management
 
 app = FastAPI()
 
@@ -25,18 +25,15 @@ def health_check():
 async def create_upload_file(file: UploadFile = File(...), username: str=''):
     # 유저의 시간표 read
     image = convertImgFormat.load_image_into_numpy_array(await file.read())
-    output = exportImg.export_img(image)
+    timetable = exportImg.export_img(image)
 
     # 유저의 시간표 db에 저장
-    databaseModule.savedb(username, str(output))
+    unique_url = databaseModule.savedb(username, str(timetable))
     
     # 가능한 시간 찾기 함수
-    # findposstime(output)
+    output = management.first_person(timetable)
 
-    # uniqueid return
-
-
-    return {"user_name": username, "output": output}
+    return {"user_name": username, "output": output, "unique_url": unique_url}
 
 # 링크를 받아서 올릴 경우 - 교집합을 리턴해야 됨.
 @app.get("/test")
