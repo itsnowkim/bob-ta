@@ -1,10 +1,9 @@
 import {useCallback} from 'react'
 import styled from 'styled-components'
+import {IoLogoInstagram} from 'react-icons/io'
+import {IoMailOutline} from 'react-icons/io5'
+import {MdEmail} from 'react-icons/md'
 import * as colors from '../styles/colors'
-
-import InstagramIcon from '../static/icons/instagram.png'
-import EmailIcon from '../static/icons/email.png'
-import {Separator} from './Separator'
 
 export const Footer = () => {
   const onClickEmail = useCallback(() => {
@@ -16,28 +15,35 @@ export const Footer = () => {
   }, [])
   return (
     <FooterContainer>
-      {/* <Separator marginTop={'36px'} marginBottom={'24px'} /> */}
-
-      {/* <IconContainer>
-        <Icon src={InstagramIcon} onClick={onClickInstagram} />
-        <Icon src={EmailIcon} onClick={onClickEmail} />
-      </IconContainer> */}
+      <IconContainer>
+        <IconWrapper onClick={onClickEmail}>
+          {/* <IoMailOutline size={20} /> */}
+          <MdEmail size={20} />
+        </IconWrapper>
+        <IconWrapper onClick={onClickInstagram}>
+          <IoLogoInstagram size={20} />
+        </IconWrapper>
+      </IconContainer>
     </FooterContainer>
   )
 }
 const FooterContainer = styled.footer`
-  background-color: ${colors.primary50};
-  margin-top: 36px;
-  height: 100px;
-`
-const Icon = styled.img`
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-  cursor: pointer;
+  background-color: #fdf3ef;
+  margin-top: 72px;
+  padding: 46px 10%;
 `
 
 const IconContainer = styled.div`
   display: flex;
+  align-items: center;
   justify-content: flex-end;
+`
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-left: 12px;
 `

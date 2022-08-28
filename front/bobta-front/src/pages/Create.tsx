@@ -120,36 +120,38 @@ export const Create = () => {
 
   // ******************** renderer ********************
   return (
-    <RootContainer>
-      <LogoLinked />
-      <NameWrapper>
-        <Label>{labels.name}</Label>
-        <NameInput placeholder="이름을 입력해 주세요" value={name} onChange={onNameChange} />
-      </NameWrapper>
-      <TimeTableWrapper>
-        <Label>{labels.image}</Label>
-        {imageUri == '' ? (
-          <TimeTableInputWrapper>
-            <FileInput type="file" accept="image/*" ref={fileInputRef} onChange={onUploadImage} />
-            <AddButtonWrapper onClick={onClickAddButton}>
-              <AddButton src={isDarkMode ? AddIconDark : AddIcon} />
-              <AddButtonText>시간표 업로드</AddButtonText>
-            </AddButtonWrapper>
-          </TimeTableInputWrapper>
-        ) : (
-          <TimeTableImageWrapper>
-            <RemoveButton type="button" onClick={onClickRemoveButton}>
-              <RemoveButtonImage src={isDarkMode ? RemoveIconDark : RemoveIcon} />
-            </RemoveButton>
+    <>
+      <RootContainer>
+        <LogoLinked />
+        <NameWrapper>
+          <Label>{labels.name}</Label>
+          <NameInput placeholder="이름을 입력해 주세요" value={name} onChange={onNameChange} />
+        </NameWrapper>
+        <TimeTableWrapper>
+          <Label>{labels.image}</Label>
+          {imageUri == '' ? (
+            <TimeTableInputWrapper>
+              <FileInput type="file" accept="image/*" ref={fileInputRef} onChange={onUploadImage} />
+              <AddButtonWrapper onClick={onClickAddButton}>
+                <AddButton src={isDarkMode ? AddIconDark : AddIcon} />
+                <AddButtonText>시간표 업로드</AddButtonText>
+              </AddButtonWrapper>
+            </TimeTableInputWrapper>
+          ) : (
+            <TimeTableImageWrapper>
+              <RemoveButton type="button" onClick={onClickRemoveButton}>
+                <RemoveButtonImage src={isDarkMode ? RemoveIconDark : RemoveIcon} />
+              </RemoveButton>
 
-            <TimeTableImage src={imageUri} />
-          </TimeTableImageWrapper>
-        )}
-      </TimeTableWrapper>
+              <TimeTableImage src={imageUri} />
+            </TimeTableImageWrapper>
+          )}
+        </TimeTableWrapper>
 
-      {name != '' && imageUri != '' ? <ButtonSolid onClick={onClickSubmit} label="결과 보기"></ButtonSolid> : <ButtonDisabled label="결과 보기" />}
+        {name != '' && imageUri != '' ? <ButtonSolid onClick={onClickSubmit} label="결과 보기"></ButtonSolid> : <ButtonDisabled label="결과 보기" />}
+      </RootContainer>
       <Footer />
-    </RootContainer>
+    </>
   )
 }
 

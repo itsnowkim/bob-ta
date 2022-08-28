@@ -42,42 +42,44 @@ export const Result = () => {
 
   useScrollToTop()
   return (
-    <RootContainer>
-      <LogoLinked />
-      <Container>
-        <TitleWrapper marginBottom={isBest ? '8px' : '16px'}>
-          <Title isBest={isBest}>{state?.user_name}님과의 밥약 타임</Title>
+    <>
+      <RootContainer>
+        <LogoLinked />
+        <Container>
+          <TitleWrapper marginBottom={isBest ? '8px' : '16px'}>
+            <Title isBest={isBest}>{state?.user_name}님과의 밥약 타임</Title>
+            {!isBest && (
+              <GuideText>
+                모두가 가능한 시간이 없습니다.
+                <br />
+                가능한 시간이 많은 순으로 결과를 보여줍니다.
+              </GuideText>
+            )}
+          </TitleWrapper>
           {!isBest && (
-            <GuideText>
-              모두가 가능한 시간이 없습니다.
-              <br />
-              가능한 시간이 많은 순으로 결과를 보여줍니다.
-            </GuideText>
+            <RankingButtonContainer>
+              {[...Array(5)].map((item, idx) => (
+                <RankingButton key={idx} isSelected={selectedNumber == idx + 1} onClick={() => onClickRankingButton(idx + 1)}>
+                  {idx + 1}순위
+                </RankingButton>
+              ))}
+            </RankingButtonContainer>
           )}
-        </TitleWrapper>
-        {!isBest && (
-          <RankingButtonContainer>
-            {[...Array(5)].map((item, idx) => (
-              <RankingButton key={idx} isSelected={selectedNumber == idx + 1} onClick={() => onClickRankingButton(idx + 1)}>
-                {idx + 1}순위
-              </RankingButton>
-            ))}
-          </RankingButtonContainer>
-        )}
-        <SelectResultViewContainer>
-          <SelectResultView setIsImageView={setIsImageView} />
-        </SelectResultViewContainer>
-        {isImageView ? <TimeTableImage result={state?.output} /> : <TimeTableText result={state?.output} />}
+          <SelectResultViewContainer>
+            <SelectResultView setIsImageView={setIsImageView} />
+          </SelectResultViewContainer>
+          {isImageView ? <TimeTableImage result={state?.output} /> : <TimeTableText result={state?.output} />}
 
-        <ButtonContainer>
-          <KakaoShareButton label="친구에게 추가 요청" groupId={groupId} />
-          <AddSelfButtonLink to="/create?target=me">
-            <ButtonSolid label="시간표 추가하기" />
-          </AddSelfButtonLink>
-        </ButtonContainer>
-      </Container>
+          <ButtonContainer>
+            <KakaoShareButton label="친구에게 추가 요청" groupId={groupId} />
+            <AddSelfButtonLink to="/create?target=me">
+              <ButtonSolid label="시간표 추가하기" />
+            </AddSelfButtonLink>
+          </ButtonContainer>
+        </Container>
+      </RootContainer>
       <Footer />
-    </RootContainer>
+    </>
   )
 }
 
