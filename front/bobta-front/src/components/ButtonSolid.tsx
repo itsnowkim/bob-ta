@@ -9,12 +9,20 @@ type ButtonProps = {
   isLoading?: boolean
 }
 
-export const ButtonSolid = ({label, onClick, width = '100%', isLoading = false}: ButtonProps) => {
-  return <ButtonWrapper onClick={onClick}>{label}</ButtonWrapper>
+type ButtonStyleProps = {
+  width: string
 }
 
-const ButtonWrapper = styled(RoundButtonSolid)`
-  width: 100%;
+export const ButtonSolid = ({label, onClick, width = '100%', isLoading = false}: ButtonProps) => {
+  return (
+    <ButtonWrapper onClick={onClick} width={width}>
+      {label}
+    </ButtonWrapper>
+  )
+}
+
+const ButtonWrapper = styled(RoundButtonSolid)<ButtonStyleProps>`
+  width: ${({width}) => width};
   border: none;
   background-color: ${({theme}) => theme.colors.primary};
   border-color: ${({theme}) => theme.colors.primaray};

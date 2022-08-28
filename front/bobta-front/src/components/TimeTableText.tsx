@@ -19,7 +19,9 @@ export const TimeTableText = ({result}: TimeTableTextProps) => {
         <TimeTableTextWrapper key={day}>
           <DayTitle>{day}요일</DayTitle>
           <TimesContainer>
-            {result[day][0] !== '' && result[day].map((time: string) => <TimeButton key={day + time} time={time} isDarkMode={isDarkMode} />)}
+            {result != undefined &&
+              result[day] != undefined &&
+              result[day].map((time: string) => <TimeButton key={day + time} time={time} isDarkMode={isDarkMode} />)}
           </TimesContainer>
           <Separator />
         </TimeTableTextWrapper>
