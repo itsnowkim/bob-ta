@@ -1,11 +1,16 @@
-import {useCallback} from 'react'
+import {useCallback, useContext} from 'react'
 import styled from 'styled-components'
 import {IoLogoInstagram} from 'react-icons/io'
-import {IoMailOutline} from 'react-icons/io5'
 import {MdEmail} from 'react-icons/md'
+import {ThemeContext} from '../contexts'
 import * as colors from '../styles/colors'
 
+type FooterContainerProps = {
+  backgroundColor: string
+}
+
 export const Footer = () => {
+  const {isDarkMode} = useContext(ThemeContext)
   const onClickEmail = useCallback(() => {
     window.open('mailto:bobta.official@gmail.com')
   }, [])
@@ -14,23 +19,22 @@ export const Footer = () => {
     window.open('https://www.instagram.com/bobta.official/', '_blank', 'noopener,noreferrer')
   }, [])
   return (
-    <FooterContainer>
+    <FooterContainer backgroundColor={isDarkMode ? colors.darkgray100 : '#faf2ed'}>
       <IconContainer>
         <IconWrapper onClick={onClickEmail}>
-          {/* <IoMailOutline size={20} /> */}
-          <MdEmail size={20} />
+          <MdEmail size={18} color={isDarkMode ? colors.darkgray800 : colors.gray800} />
         </IconWrapper>
         <IconWrapper onClick={onClickInstagram}>
-          <IoLogoInstagram size={20} />
+          <IoLogoInstagram size={18} color={isDarkMode ? colors.darkgray800 : colors.gray800} />
         </IconWrapper>
       </IconContainer>
     </FooterContainer>
   )
 }
-const FooterContainer = styled.footer`
-  background-color: #fdf3ef;
+const FooterContainer = styled.footer<FooterContainerProps>`
+  background-color: ${({backgroundColor}) => backgroundColor};
   margin-top: 72px;
-  padding: 46px 10%;
+  padding: 36px 10%;
 `
 
 const IconContainer = styled.div`
@@ -45,5 +49,5 @@ const IconWrapper = styled.div`
   width: 24px;
   height: 24px;
   cursor: pointer;
-  margin-left: 12px;
+  margin-left: 10px;
 `
