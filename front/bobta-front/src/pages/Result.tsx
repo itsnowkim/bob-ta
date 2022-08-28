@@ -1,11 +1,11 @@
-import React, {useEffect, useState, useCallback} from 'react'
+import {useState, useCallback} from 'react'
 import styled from 'styled-components'
 import {Link, useLocation, useParams} from 'react-router-dom'
 
-import * as colors from '../styles/colors'
-import {LogoLinked, KakaoShareButton, TimeTableImage, TimeTableText, Footer, Button, ButtonSolid, SelectResultView} from '../components'
+import {LogoLinked, KakaoShareButton, TimeTableImage, TimeTableText, Footer, ButtonSolid, SelectResultView} from '../components'
 import {RootContainer} from '../styles'
 import {useScrollToTop} from '../utils'
+import {ResultParams} from '../utils'
 
 type TitleProps = {
   isBest: boolean
@@ -20,15 +20,16 @@ type TitleWrapperProps = {
 }
 
 const example = {
-  월: ['10:30-13:15', '16:30-17:45'],
-  화: ['10:30-11:45', '12:00-13:15', '15:00-16:15'],
-  수: ['10:30-11:45', '12:00-17:45'],
-  목: ['10:30-11:45', '12:00-13:15', '15:00-16:15'],
-  금: [''],
+  수: ['16.5-17.75', '12-13.25', '10.5-11.75'],
+  월: ['16.5-17.75', '12-13.25', '10.5-11.75'],
+  목: ['15-16.25', '12-13.25', '10.5-11.75'],
+  화: ['15-16.25', '12-13.25', '10.5-11.75'],
 }
 
 export const Result = () => {
   const location = useLocation()
+  const state = location.state as ResultParams
+  console.log(state)
   const {groupId} = useParams()
 
   const [isBest, setIsBest] = useState<boolean>(false) // best인지 차선책인지
@@ -41,42 +42,44 @@ export const Result = () => {
 
   useScrollToTop()
   return (
-    <RootContainer>
-      <LogoLinked />
-      <Container>
-        <TitleWrapper marginBottom={isBest ? '8px' : '16px'}>
-          <Title isBest={isBest}>진실님과의 밥약 타임</Title>
+    <>
+      <RootContainer>
+        <LogoLinked />
+        <Container>
+          <TitleWrapper marginBottom={isBest ? '8px' : '16px'}>
+            <Title isBest={isBest}>{state?.user_name}님과의 밥약 타임</Title>
+            {!isBest && (
+              <GuideText>
+                모두가 가능한 시간이 없습니다.
+                <br />
+                가능한 시간이 많은 순으로 결과를 보여줍니다.
+              </GuideText>
+            )}
+          </TitleWrapper>
           {!isBest && (
-            <GuideText>
-              모두가 가능한 시간이 없습니다.
-              <br />
-              가능한 시간이 많은 순으로 결과를 보여줍니다.
-            </GuideText>
+            <RankingButtonContainer>
+              {[...Array(5)].map((item, idx) => (
+                <RankingButton key={idx} isSelected={selectedNumber == idx + 1} onClick={() => onClickRankingButton(idx + 1)}>
+                  {idx + 1}순위
+                </RankingButton>
+              ))}
+            </RankingButtonContainer>
           )}
-        </TitleWrapper>
-        {!isBest && (
-          <RankingButtonContainer>
-            {[...Array(5)].map((item, idx) => (
-              <RankingButton key={idx} isSelected={selectedNumber == idx + 1} onClick={() => onClickRankingButton(idx + 1)}>
-                {idx + 1}순위
-              </RankingButton>
-            ))}
-          </RankingButtonContainer>
-        )}
-        <SelectResultViewContainer>
-          <SelectResultView setIsImageView={setIsImageView} />
-        </SelectResultViewContainer>
-        {isImageView ? <TimeTableImage result={example} /> : <TimeTableText result={example} />}
+          <SelectResultViewContainer>
+            <SelectResultView setIsImageView={setIsImageView} />
+          </SelectResultViewContainer>
+          {isImageView ? <TimeTableImage result={state?.output} /> : <TimeTableText result={state?.output} />}
 
-        <ButtonContainer>
-          <KakaoShareButton label="친구에게 추가 요청" groupId={groupId} />
-          <AddSelfButtonLink to="/create?target=me">
-            <ButtonSolid label="시간표 추가하기" />
-          </AddSelfButtonLink>
-        </ButtonContainer>
-      </Container>
+          <ButtonContainer>
+            <KakaoShareButton label="친구에게 추가 요청" groupId={groupId} />
+            <AddSelfButtonLink to="/create?target=me">
+              <ButtonSolid label="시간표 추가하기" />
+            </AddSelfButtonLink>
+          </ButtonContainer>
+        </Container>
+      </RootContainer>
       <Footer />
-    </RootContainer>
+    </>
   )
 }
 

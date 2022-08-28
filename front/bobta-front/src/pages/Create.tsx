@@ -21,6 +21,8 @@ type LabelType = {
   image: string
 }
 
+const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/
+
 export const Create = () => {
   // ******************** utils ********************
   const navigate = useNavigate()
@@ -32,7 +34,16 @@ export const Create = () => {
   // ******************** react queries ********************
   const uploadTimeTableImageQuery = useMutation([queryKeys.image], uploadTimeTableImage, {
     onSuccess(data, variables, context) {
-      console.log(data)
+      const {output, unique_url, user_name} = data
+      navigate(`/result/${unique_url}`, {
+        state: {
+          output,
+          user_name,
+        },
+      })
+    },
+    onError(error, variables, context) {
+      navigate('/error')
     },
   })
 
@@ -85,48 +96,62 @@ export const Create = () => {
   }, [])
 
   const onClickSubmit = useCallback(() => {
+    // return if post api is ongoing
+    if (uploadTimeTableImageQuery.isLoading) {
+      return
+    }
+
+    // name validation
+    if (regex.test(name) == false || name.length > 10) {
+      alert('이름은 1자-10자 사이의 한글, 영어, 숫자만 가능합니다.')
+      return
+    }
+
+    // create form data
     let formData = new FormData()
-
     formData.append('file', image)
-    uploadTimeTableImageQuery.mutate(formData) // s3에 이미지 저장
 
-    // 백에서 200 응답을 날릴 때 groupId도 같이 넣어줌
-    const groupId = '11'
-    navigate(`/result/${groupId}`)
-  }, [name, image])
+    // trigger api
+    uploadTimeTableImageQuery.mutate({
+      username: name,
+      formData,
+    })
+  }, [name, image, uploadTimeTableImageQuery])
 
   // ******************** renderer ********************
   return (
-    <RootContainer>
-      <LogoLinked />
-      <NameWrapper>
-        <Label>{labels.name}</Label>
-        <NameInput placeholder="이름을 입력해 주세요" value={name} onChange={onNameChange} />
-      </NameWrapper>
-      <TimeTableWrapper>
-        <Label>{labels.image}</Label>
-        {imageUri == '' ? (
-          <TimeTableInputWrapper>
-            <FileInput type="file" accept="image/*" ref={fileInputRef} onChange={onUploadImage} />
-            <AddButtonWrapper onClick={onClickAddButton}>
-              <AddButton src={isDarkMode ? AddIconDark : AddIcon} />
-              <AddButtonText>시간표 업로드</AddButtonText>
-            </AddButtonWrapper>
-          </TimeTableInputWrapper>
-        ) : (
-          <TimeTableImageWrapper>
-            <RemoveButton type="button" onClick={onClickRemoveButton}>
-              <RemoveButtonImage src={isDarkMode ? RemoveIconDark : RemoveIcon} />
-            </RemoveButton>
+    <>
+      <RootContainer>
+        <LogoLinked />
+        <NameWrapper>
+          <Label>{labels.name}</Label>
+          <NameInput placeholder="이름을 입력해 주세요" value={name} onChange={onNameChange} />
+        </NameWrapper>
+        <TimeTableWrapper>
+          <Label>{labels.image}</Label>
+          {imageUri == '' ? (
+            <TimeTableInputWrapper>
+              <FileInput type="file" accept="image/*" ref={fileInputRef} onChange={onUploadImage} />
+              <AddButtonWrapper onClick={onClickAddButton}>
+                <AddButton src={isDarkMode ? AddIconDark : AddIcon} />
+                <AddButtonText>시간표 업로드</AddButtonText>
+              </AddButtonWrapper>
+            </TimeTableInputWrapper>
+          ) : (
+            <TimeTableImageWrapper>
+              <RemoveButton type="button" onClick={onClickRemoveButton}>
+                <RemoveButtonImage src={isDarkMode ? RemoveIconDark : RemoveIcon} />
+              </RemoveButton>
 
-            <TimeTableImage src={imageUri} />
-          </TimeTableImageWrapper>
-        )}
-      </TimeTableWrapper>
+              <TimeTableImage src={imageUri} />
+            </TimeTableImageWrapper>
+          )}
+        </TimeTableWrapper>
 
-      {name != '' && imageUri != '' ? <ButtonSolid onClick={onClickSubmit} label="결과 보기"></ButtonSolid> : <ButtonDisabled label="결과 보기" />}
+        {name != '' && imageUri != '' ? <ButtonSolid onClick={onClickSubmit} label="결과 보기"></ButtonSolid> : <ButtonDisabled label="결과 보기" />}
+      </RootContainer>
       <Footer />
-    </RootContainer>
+    </>
   )
 }
 

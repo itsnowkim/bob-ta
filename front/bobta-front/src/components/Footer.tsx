@@ -1,12 +1,16 @@
-import React, {useCallback} from 'react'
+import {useCallback, useContext} from 'react'
 import styled from 'styled-components'
-
+import {IoLogoInstagram} from 'react-icons/io'
+import {MdEmail} from 'react-icons/md'
+import {ThemeContext} from '../contexts'
 import * as colors from '../styles/colors'
-import InstagramIcon from '../static/icons/instagram.png'
-import EmailIcon from '../static/icons/email.png'
-import {Separator} from './Separator'
+
+type FooterContainerProps = {
+  backgroundColor: string
+}
 
 export const Footer = () => {
+  const {isDarkMode} = useContext(ThemeContext)
   const onClickEmail = useCallback(() => {
     window.open('mailto:bobta.official@gmail.com')
   }, [])
@@ -15,46 +19,35 @@ export const Footer = () => {
     window.open('https://www.instagram.com/bobta.official/', '_blank', 'noopener,noreferrer')
   }, [])
   return (
-    <footer>
-      <Separator marginTop={'36px'} marginBottom={'24px'} />
-
-      {/* <Wrapper onClick={onClickInstagram}>
-        <Icon src={InstagramIcon} />
-      </Wrapper>
-      <Wrapper onClick={onClickEmail}>
-        <Icon src={EmailIcon} />
-      </Wrapper> */}
+    <FooterContainer backgroundColor={isDarkMode ? colors.darkgray100 : '#faf2ed'}>
       <IconContainer>
-        <Icon src={InstagramIcon} onClick={onClickInstagram} />
-        <Icon src={EmailIcon} onClick={onClickEmail} />
+        <IconWrapper onClick={onClickEmail}>
+          <MdEmail size={18} color={isDarkMode ? colors.darkgray800 : colors.gray800} />
+        </IconWrapper>
+        <IconWrapper onClick={onClickInstagram}>
+          <IoLogoInstagram size={18} color={isDarkMode ? colors.darkgray800 : colors.gray800} />
+        </IconWrapper>
       </IconContainer>
-    </footer>
+    </FooterContainer>
   )
 }
-
-// const Separator = styled(TempSeparator)`
-//   margin-top: 36px;
-//   margin-bottom: 24px;
-// `
-const Icon = styled.img`
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-  cursor: pointer;
+const FooterContainer = styled.footer<FooterContainerProps>`
+  background-color: ${({backgroundColor}) => backgroundColor};
+  margin-top: 72px;
+  padding: 36px 10%;
 `
-
-// const Wrapper = styled.div`
-//   display: flex;
-//   align-items: center;
-//   margin-bottom: 8px;
-//   justify-content: flex-start;
-//   color: ${colors.gray600};
-//   cursor: pointer;
-//   font-size: 12px;
-//   line-height: 16px;
-// `
 
 const IconContainer = styled.div`
   display: flex;
+  align-items: center;
   justify-content: flex-end;
+`
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-left: 10px;
 `

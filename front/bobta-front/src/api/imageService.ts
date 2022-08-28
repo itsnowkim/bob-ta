@@ -1,8 +1,9 @@
 import axios from 'axios'
 import {apiImageClient} from './apiClients'
+import {TimeTableForm} from '../utils'
 
-export const uploadTimeTableImage = async (formData: FormData) => {
-  const {data} = await apiImageClient.post('/uploadfile/', formData)
+export const uploadTimeTableImage = async ({username, formData}: TimeTableForm) => {
+  const {data} = await apiImageClient.post(`/uploadfile/?username=${username}`, formData)
 
   return data
 }

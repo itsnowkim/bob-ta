@@ -21,17 +21,39 @@ export const TimeTableImage = ({result}: TimeTableImageProps) => {
   const TdRefs = useRef<HTMLTableDataCellElement[][]>(Array.from(Array(5), () => new Array(CELL_PER_BLOCK * rows)))
 
   useEffect(() => {
+    if (result == undefined) {
+      return
+    }
     // 각 요일을 돎.
     for (var i = 0; i < 5; i++) {
       const times = result[days[i]] // 해당 요일에서 가능한 시간을 꺼냄
 
-      if (times[0] == '') {
+      // 해당 요일에서 가능한 시간이 없으면 continue
+      if (times == undefined) {
         continue
       }
 
       // 가능한 시간들을 돌면서
       for (var time of times) {
-        const [time1, time2] = time.split('-') // 시작 시간과 끝 시간을 꺼냄
+        let time1, time2
+        const [t1, t2] = time.split('-') // 시작 시간과 끝 시간을 꺼냄\
+        let [t1Hour, t1Minute] = t1.split('.')
+
+        if (t1Minute == undefined) {
+          time1 = t1Hour + ':00'
+        } else {
+          t1Minute = (60 * parseFloat('0.' + t1Minute)).toString()
+          time1 = t1Hour + ':' + t1Minute
+        }
+
+        let [t2Hour, t2Minute] = t2.split('.')
+
+        if (t2Minute == undefined) {
+          time2 = t2Hour + ':00'
+        } else {
+          t2Minute = (60 * parseFloat('0.' + t2Minute)).toString()
+          time2 = t2Hour + ':' + t2Minute
+        }
 
         // 시간표 표 범위가 넘어가면 렌더링하지 않음
         if (time1 < '09:00' || time2 < '09:00' || time1 > '21:00' || time2 > '21:00') {
@@ -46,7 +68,7 @@ export const TimeTableImage = ({result}: TimeTableImageProps) => {
         }
       }
     }
-  }, [TdRefs])
+  }, [TdRefs, result])
 
   return (
     <Table rules="groups">

@@ -16,6 +16,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.25",
     "axios": "^0.27.2",
+    "npm-run-all": "^4.1.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
@@ -29,7 +30,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync ./build s3://bobta --profile=nowkim",
+    "invalidate": "aws cloudfront create-invalidation --profile=nowkim --distribution-id E1XUO4UYL2VWE7 --paths /*",
+    "all": "npm-run-all -s build deploy invalidate"
   },
   "eslintConfig": {
     "extends": [
