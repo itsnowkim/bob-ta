@@ -1,3 +1,4 @@
+import json
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -28,18 +29,23 @@ async def create_upload_file(file: UploadFile = File(...), username: str=''):
     timetable = exportImg.export_img(image)
 
     # 유저의 시간표 db에 저장
-    unique_url = databaseModule.savedb(username, str(timetable))
+    unique_url = databaseModule.savedb(username, json.dumps(timetable, ensure_ascii=False))
     
     # 가능한 시간 찾기 함수
     output = management.first_person(timetable)
 
     return {"user_name": username, "output": output, "unique_url": unique_url}
 
-# 링크를 받아서 올릴 경우 - 교집합을 리턴해야 됨.
-@app.get("/test")
-def db_test(username: str=''):
-  databaseModule.add_user(username)
-  return {"Server Working"}
+# unique id로 get 요청 - 해당 url에 속하는 사람들의 교집합 return
+@app.get("/meet/")
+async def filter_timetable(id: str=''):
+  # 겹치는 meet 가져오기
+  meets = databaseModule.filter_meet(id)
+
+  # 겹치는 시간대 전부 표시하는 알고리즘
+  # res = function()
+  # return res
+  return {"meets": meets}
 
 # 만들어진 방에 해당하는 userid 들의 시간표 return.
 # input - string type unique id
