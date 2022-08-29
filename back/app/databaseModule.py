@@ -21,9 +21,12 @@ def init():
 
     return headers, database_id
 
-def build_payload(database_id, username, data):
+def build_payload(database_id, username, data, id=''):
 
-  unique_url = str(uuid.uuid4())
+  if id != '':
+    unique_url = id
+  else:
+    unique_url = str(uuid.uuid4())
 
   payload = {
   "parent": {
@@ -70,11 +73,11 @@ def build_payload(database_id, username, data):
 
   return payload, unique_url
 
-def savedb(username, data):
+def savedb(username, data, id=''):
     # add new username and unique id to notion page
     url = f'https://api.notion.com/v1/pages'
     headers, database_id = init()
-    payload, unique_url = build_payload(database_id, username, data)
+    payload, unique_url = build_payload(database_id, username, data, id)
 
     response = requests.post(url, headers=headers, data=json.dumps(payload))
 
