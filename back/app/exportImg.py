@@ -105,7 +105,7 @@ def get_timebox(THEME, ROI, box_height, box_width):
     
     for box in results:
         class_daytime, class_time = get_time(ROI, box, box_height, box_width)
-        print(class_daytime, class_time)
+        # print(class_daytime, class_time)
         if class_daytime in export_data:
             export_data[class_daytime].append(class_time)
         else:

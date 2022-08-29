@@ -78,8 +78,6 @@ def savedb(username, data):
 
     response = requests.post(url, headers=headers, data=json.dumps(payload))
 
-    print(response.text)
-
     return unique_url
     
 def filter_meet(id):

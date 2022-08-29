@@ -43,9 +43,9 @@ async def filter_timetable(id: str=''):
   meets = databaseModule.filter_meet(id)
 
   # 겹치는 시간대 전부 표시하는 알고리즘
-  # res = function()
+  res = management.filter_table(meets)
   # return res
-  return {"meets": meets}
+  return {"meets": res}
 
 # 만들어진 방에 해당하는 userid 들의 시간표 return.
 # input - string type unique id
