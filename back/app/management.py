@@ -72,10 +72,10 @@ def first_person(data):
   return output
 
 def filter_table(meets):
-  output = counting_table()
-
-  print(output)
+  time_map = time_mapping()
+  for person in meets:
+    mapped = counting_table(time_map, meets[person])
+  output = construct_table(mapped)
 
   return output
-
   
