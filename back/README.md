@@ -11,7 +11,7 @@ docker run --rm -dp 80:80 nowkimdocker/bob-ta:0.7
 ```
 
 ## push image
-docker push nowkimdocker/bob-ta:0.5
+docker push nowkimdocker/bob-ta:0.8
 
 ## mount volume in running container
 ```bash
