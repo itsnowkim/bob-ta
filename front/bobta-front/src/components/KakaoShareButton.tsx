@@ -8,13 +8,14 @@ const KAKAO_APP_KEY = process.env.REACT_APP_KAKAO_KEY
 
 type KakaoButtonProps = {
   label: string
-  groupId?: string
+  user_names: string[]
+  meetId?: string
 }
 
-const MOBILE_WEB_URL = 'http://localhost:3000/create'
-const WEB_URL = 'http://localhost:3000/create'
+const MOBILE_WEB_URL = process.env.REACT_APP_KAKAO_MOBILE_WEB_URL
+const WEB_URL = process.env.REACT_APP_KAKAO_WEB_URL
 
-export const KakaoShareButton = ({label, groupId = ''}: KakaoButtonProps) => {
+export const KakaoShareButton = ({label, meetId = '', user_names}: KakaoButtonProps) => {
   const onClickKakaoButton = useCallback(() => {
     //@ts-ignore
     if (!window.Kakao) {
@@ -32,12 +33,12 @@ export const KakaoShareButton = ({label, groupId = ''}: KakaoButtonProps) => {
     kakaoSdk.Link.sendDefault({
       objectType: 'feed',
       content: {
-        title: '진실님과 밥약해요!',
+        title: user_names.map((username, idx) => username) + '님과 밥약해요!',
         description: '시간표를 추가해서 밥약 시간을 맞춰 보세요',
         imageUrl: '',
         link: {
-          mobileWebUrl: `${MOBILE_WEB_URL}?groupId=${groupId}`,
-          webUrl: `${WEB_URL}?groupId=${groupId}`,
+          mobileWebUrl: `${MOBILE_WEB_URL}/${meetId}`,
+          webUrl: `${WEB_URL}/${meetId}`,
         },
       },
     })

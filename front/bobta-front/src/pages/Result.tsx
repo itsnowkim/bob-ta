@@ -1,11 +1,13 @@
 import {useState, useCallback} from 'react'
 import styled from 'styled-components'
 import {Link, useLocation, useParams} from 'react-router-dom'
+import {useQuery} from '@tanstack/react-query'
 
 import {LogoLinked, KakaoShareButton, TimeTableImage, TimeTableText, Footer, ButtonSolid, SelectResultView} from '../components'
 import {RootContainer} from '../styles'
 import {useScrollToTop} from '../utils'
-import {ResultParams} from '../utils'
+import {ResultType} from '../utils'
+import {queryKeys, getMeet} from '../api'
 
 type TitleProps = {
   isBest: boolean
@@ -19,23 +21,30 @@ type TitleWrapperProps = {
   marginBottom: string
 }
 
-const example = {
-  수: ['16.5-17.75', '12-13.25', '10.5-11.75'],
-  월: ['16.5-17.75', '12-13.25', '10.5-11.75'],
-  목: ['15-16.25', '12-13.25', '10.5-11.75'],
-  화: ['15-16.25', '12-13.25', '10.5-11.75'],
-}
-
 export const Result = () => {
-  const location = useLocation()
-  const state = location.state as ResultParams
-  console.log(state)
-  const {groupId} = useParams()
+  // ********************* utils *********************
+  const {meetId} = useParams()
 
-  const [isBest, setIsBest] = useState<boolean>(false) // best인지 차선책인지
+  // ********************* states *********************
+  const [isBest, setIsBest] = useState<boolean>(true) // best인지 차선책인지
   const [selectedNumber, setSelectedNumber] = useState<number>(1) // 차선책일때 선택된 순위
   const [isImageView, setIsImageView] = useState<boolean>(true)
+  const [result, setResult] = useState<ResultType>({
+    meets: {},
+    user_names: ['진실', '현재'],
+  })
 
+  // ********************* react queries *********************
+  useQuery([queryKeys.meet], () => getMeet(meetId!), {
+    onSuccess(data) {
+      setResult({...result, meets: data.meets})
+    },
+    onError(err) {
+      alert('유효하지 않은 요청입니다')
+    },
+  })
+
+  // ********************* callbacks *********************
   const onClickRankingButton = useCallback((rankingNumber: number) => {
     setSelectedNumber(rankingNumber)
   }, [])
@@ -47,12 +56,15 @@ export const Result = () => {
         <LogoLinked />
         <Container>
           <TitleWrapper marginBottom={isBest ? '8px' : '16px'}>
-            <Title isBest={isBest}>{state?.user_name}님과의 밥약 타임</Title>
+            <Title isBest={isBest}>
+              {result.user_names.length == 0 ? '' : result.user_names.map((username, idx) => (idx == result.user_names.length - 1 ? username : username + ','))}
+              님의 밥약
+            </Title>
             {!isBest && (
               <GuideText>
                 모두가 가능한 시간이 없습니다.
                 <br />
-                가능한 시간이 많은 순으로 결과를 보여줍니다.
+                가능한 시간이 많은 순으로 결과를 보여줍니다
               </GuideText>
             )}
           </TitleWrapper>
@@ -68,11 +80,11 @@ export const Result = () => {
           <SelectResultViewContainer>
             <SelectResultView setIsImageView={setIsImageView} />
           </SelectResultViewContainer>
-          {isImageView ? <TimeTableImage result={state?.output} /> : <TimeTableText result={state?.output} />}
+          {isImageView ? <TimeTableImage result={result.meets} /> : <TimeTableText result={result.meets} />}
 
           <ButtonContainer>
-            <KakaoShareButton label="친구에게 추가 요청" groupId={groupId} />
-            <AddSelfButtonLink to="/create?target=me">
+            <KakaoShareButton label="친구에게 추가 요청" meetId={meetId} user_names={result.user_names} />
+            <AddSelfButtonLink to={`/create?meetId=${meetId}`}>
               <ButtonSolid label="시간표 추가하기" />
             </AddSelfButtonLink>
           </ButtonContainer>
