@@ -83,23 +83,20 @@ def savedb(username, data, id=''):
 
     return unique_url
     
-def filter_meet(id):
-  
+async def filter_meet(id):
   headers, database_id = init()
   url = f"https://api.notion.com/v1/databases/{database_id}/query"
   payload = {
     "filter": {
         "property": "unique_url",
         "rich_text": {
-            "contains": id
+            "equals": id
         }
     }
   }
-
   res = requests.post(url, json=payload, headers=headers)
-  
-  meet = {}
 
+  meet = {}
   for person in res.json()["results"]:
     key = person["properties"]["name"]["title"][0]["plain_text"]
     value = json.loads(person["properties"]["timetable"]["rich_text"][0]["plain_text"])
