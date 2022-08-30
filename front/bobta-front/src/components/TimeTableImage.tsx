@@ -1,6 +1,6 @@
 import {useEffect, useState, useRef} from 'react'
 import styled from 'styled-components'
-import {timeCalculator} from '../utils'
+import {timeIndexCalculator} from '../utils'
 import * as colors from '../styles/colors'
 
 type TdProps = {
@@ -35,34 +35,11 @@ export const TimeTableImage = ({result}: TimeTableImageProps) => {
 
       // 가능한 시간들을 돌면서
       for (var time of times) {
-        let time1, time2
-        const [t1, t2] = time.split('-') // 시작 시간과 끝 시간을 꺼냄\
-        let [t1Hour, t1Minute] = t1.split('.')
+        // let time1, time2
+        const [time1, time2] = time.split('-') // 시작 시간과 끝 시간을 꺼냄\
 
-        t1Hour = parseInt(t1Hour) < 10 ? '0' + t1Hour : t1Hour
-        if (t1Minute == undefined) {
-          time1 = t1Hour + ':00'
-        } else {
-          t1Minute = (60 * parseFloat('0.' + t1Minute)).toString()
-          time1 = t1Hour + ':' + t1Minute
-        }
-
-        let [t2Hour, t2Minute] = t2.split('.')
-        t2Hour = parseInt(t2Hour) < 10 ? '0' + t2Hour : t2Hour
-
-        if (t2Minute == undefined) {
-          time2 = t2Hour + ':00'
-        } else {
-          t2Minute = (60 * parseFloat('0.' + t2Minute)).toString()
-          time2 = t2Hour + ':' + t2Minute
-        }
-
-        if (time1 < '09:00' || time2 < '09:00' || time1 > '21:00' || time2 > '21:00') {
-          continue
-        }
-
-        const timeIdx1 = timeCalculator(time1) // 시작 시간의 index와
-        const timeIdx2 = timeCalculator(time2) // 끝 시간의 index를 구함
+        const timeIdx1 = timeIndexCalculator(time1) // 시작 시간의 index와
+        const timeIdx2 = timeIndexCalculator(time2) // 끝 시간의 index를 구함
 
         for (var j = timeIdx1; j < timeIdx2; j++) {
           TdRefs.current[i][j].className += ' selected'

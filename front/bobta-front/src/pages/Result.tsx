@@ -5,9 +5,10 @@ import {useQuery} from '@tanstack/react-query'
 
 import {LogoLinked, KakaoShareButton, TimeTableImage, TimeTableText, Footer, ButtonSolid, SelectResultView} from '../components'
 import {RootContainer} from '../styles'
-import {useScrollToTop} from '../utils'
+import {timeCalculator, useScrollToTop} from '../utils'
 import {ResultType} from '../utils'
 import {queryKeys, getMeet} from '../api'
+import {timeIndexCalculator} from '../utils'
 
 type TitleProps = {
   isBest: boolean
@@ -20,6 +21,8 @@ type RankingButtonProps = {
 type TitleWrapperProps = {
   marginBottom: string
 }
+
+const days = ['월', '화', '수', '목', '금']
 
 export const Result = () => {
   // ********************* utils *********************
@@ -37,6 +40,83 @@ export const Result = () => {
   // ********************* react queries *********************
   useQuery([queryKeys.meet], () => getMeet(meetId!), {
     onSuccess(data) {
+      for (var i = 0; i < 5; i++) {
+        const times = data.meets[days[i]] // 해당 요일에서 가능한 시간을 꺼냄
+        // 해당 요일에서 가능한 시간이 없으면 continue
+        if (times == undefined) {
+          continue
+        }
+
+        // 시간 포맷팅
+        for (var j = 0; j < times.length; j++) {
+          let time = times[j]
+          let time1, time2
+          const [t1, t2] = time.split('-') // 시작 시간과 끝 시간을 꺼냄
+          let [t1Hour, t1Minute] = t1.split('.') // 소수점 파싱
+
+          t1Hour = parseInt(t1Hour) < 10 ? '0' + t1Hour : t1Hour // HH 단위로 맞춰줌
+          if (t1Minute == undefined) {
+            // 소수점 아래가 없으면 00 추가
+            time1 = t1Hour + ':00'
+          } else {
+            // 소수점 아래가 있으면 분 단위로 변환한 후 시간 포맷팅
+            t1Minute = (60 * parseFloat('0.' + t1Minute)).toString()
+            time1 = t1Hour + ':' + t1Minute
+          }
+
+          let [t2Hour, t2Minute] = t2.split('.')
+          t2Hour = parseInt(t2Hour) < 10 ? '0' + t2Hour : t2Hour
+
+          if (t2Minute == undefined) {
+            time2 = t2Hour + ':00'
+          } else {
+            t2Minute = (60 * parseFloat('0.' + t2Minute)).toString()
+            time2 = t2Hour + ':' + t2Minute
+          }
+
+          times[j] = time1 + '-' + time2 // 포맷팅한 시간으로 연결
+        }
+
+        // 연속된 시간 찾기
+        var res: string[] = []
+
+        for (var j = 0; j < times.length - 1; j++) {
+          const [front1, front2] = times[j].split('-')
+          const [back1, back2] = times[j + 1].split('-')
+          const diff = timeCalculator(front2, back1) // 시간 차이를 분 단위로 구함
+
+          // 15분 차이가 나면
+          if (diff == 15) {
+            const resLength = res.length
+
+            // 이이전 시간과도 연속됐는지를 판단하기 위해 res 배열의 끝 요소를 가져옴
+            if (resLength > 0) {
+              const [last1, last2] = res[resLength - 1].split('-') // res 배열의 끝 요소의 시간
+              // 이이전 시간과도 연속되면
+              if (timeCalculator(last2, back1) == 15) {
+                res[resLength - 1] = last1 + '-' + back2 //이이전 시간과 연결
+              }
+              // 이이전 시간과 연속되지 않으면
+              else {
+                res.push(front1 + '-' + back2) // 그냥 이전고 현재 시간만 연결
+              }
+            }
+            // 이이전 시간과는 연속되지 않고 그냥 이전 시간과만 연속되면
+            else {
+              res.push(front1 + '-' + back2)
+            }
+          }
+          // 연속되지 않으면 그냥 현재 시간 push
+          else {
+            res.push(times[j])
+            if (j == times.length - 2) {
+              res.push(times[times.length - 1])
+            }
+          }
+        }
+        data.meets[days[i]] = res
+      }
+
       setResult({...result, meets: data.meets})
     },
     onError(err) {
@@ -85,7 +165,7 @@ export const Result = () => {
           <ButtonContainer>
             <KakaoShareButton label="친구에게 추가 요청" meetId={meetId} user_names={result.user_names} />
             <AddSelfButtonLink to={`/create?meetId=${meetId}`}>
-              <ButtonSolid label="시간표 추가하기" />
+              <ButtonSolid label="내 시간표 추가하기" />
             </AddSelfButtonLink>
           </ButtonContainer>
         </Container>

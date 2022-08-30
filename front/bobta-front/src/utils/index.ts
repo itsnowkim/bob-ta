@@ -1,4 +1,5 @@
 export * from './useTheme'
-export * from './timeCalculator'
+export * from './timeIndexCalculator'
 export * from './useScrollToTop'
 export * from './types'
+export * from './timeCalculator'
