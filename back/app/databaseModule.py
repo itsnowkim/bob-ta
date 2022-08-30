@@ -11,21 +11,22 @@ def init():
     database_id = os.environ.get('DATABASE_ID')
     token=os.environ.get('TOKEN')
 
-    print(database_id, token)
+    # print(database_id, token)
 
     headers = {
         "Authorization": f"{token}",
-        "Notion-Version": "2022-06-28",
+        "Notion-Version": "2021-05-11",
         "Content-Type": "application/json"
     }
-    
-    url = f'https://api.notion.com/v1/pages'
 
-    return url, headers, database_id
+    return headers, database_id
 
-def build_payload(database_id, username, data):
+def build_payload(database_id, username, data, id=''):
 
-  unique_url = str(uuid.uuid4())
+  if id != '':
+    unique_url = id
+  else:
+    unique_url = str(uuid.uuid4())
 
   payload = {
   "parent": {
@@ -72,15 +73,36 @@ def build_payload(database_id, username, data):
 
   return payload, unique_url
 
-def savedb(username, data):
+def savedb(username, data, id=''):
     # add new username and unique id to notion page
-    url, headers, database_id = init()
-    payload, unique_url = build_payload(database_id, username, data)
+    url = f'https://api.notion.com/v1/pages'
+    headers, database_id = init()
+    payload, unique_url = build_payload(database_id, username, data, id)
 
     response = requests.post(url, headers=headers, data=json.dumps(payload))
 
-    print(response.text)
-
     return unique_url
     
-    
+def filter_meet(id):
+  
+  headers, database_id = init()
+  url = f"https://api.notion.com/v1/databases/{database_id}/query"
+  payload = {
+    "filter": {
+        "property": "unique_url",
+        "rich_text": {
+            "contains": id
+        }
+    }
+  }
+
+  res = requests.post(url, json=payload, headers=headers)
+  
+  meet = {}
+
+  for person in res.json()["results"]:
+    key = person["properties"]["name"]["title"][0]["plain_text"]
+    value = json.loads(person["properties"]["timetable"]["rich_text"][0]["plain_text"])
+    meet[key] = value
+
+  return meet
