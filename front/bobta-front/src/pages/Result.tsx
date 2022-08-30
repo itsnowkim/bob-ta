@@ -83,7 +83,7 @@ export const Result = () => {
           {isImageView ? <TimeTableImage result={result.meets} /> : <TimeTableText result={result.meets} />}
 
           <ButtonContainer>
-            <KakaoShareButton label="친구에게 추가 요청" meetId={meetId} />
+            <KakaoShareButton label="친구에게 추가 요청" meetId={meetId} user_names={result.user_names} />
             <AddSelfButtonLink to={`/create?meetId=${meetId}`}>
               <ButtonSolid label="시간표 추가하기" />
             </AddSelfButtonLink>
