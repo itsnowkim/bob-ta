@@ -17,6 +17,8 @@ const CELL_PER_BLOCK = 4 // 한 블럭 안에 들어가는 셀의 개수. 셀은
 export const TimeTableImage = ({result}: TimeTableImageProps) => {
   const [rows, setRows] = useState<number>(12) // row 수
 
+  console.log(result)
+
   // 각 시간 cell의 ref
   const TdRefs = useRef<HTMLTableDataCellElement[][]>(Array.from(Array(5), () => new Array(CELL_PER_BLOCK * rows)))
 
@@ -39,6 +41,7 @@ export const TimeTableImage = ({result}: TimeTableImageProps) => {
         const [t1, t2] = time.split('-') // 시작 시간과 끝 시간을 꺼냄\
         let [t1Hour, t1Minute] = t1.split('.')
 
+        t1Hour = parseInt(t1Hour) < 10 ? '0' + t1Hour : t1Hour
         if (t1Minute == undefined) {
           time1 = t1Hour + ':00'
         } else {
@@ -47,6 +50,7 @@ export const TimeTableImage = ({result}: TimeTableImageProps) => {
         }
 
         let [t2Hour, t2Minute] = t2.split('.')
+        t2Hour = parseInt(t2Hour) < 10 ? '0' + t2Hour : t2Hour
 
         if (t2Minute == undefined) {
           time2 = t2Hour + ':00'
@@ -55,8 +59,12 @@ export const TimeTableImage = ({result}: TimeTableImageProps) => {
           time2 = t2Hour + ':' + t2Minute
         }
 
+        console.log(time1, time2)
         // 시간표 표 범위가 넘어가면 렌더링하지 않음
+        console.log('9:00' > '21:00')
         if (time1 < '09:00' || time2 < '09:00' || time1 > '21:00' || time2 > '21:00') {
+          console.log('here')
+
           continue
         }
 

@@ -8,13 +8,13 @@ const KAKAO_APP_KEY = process.env.REACT_APP_KAKAO_KEY
 
 type KakaoButtonProps = {
   label: string
-  groupId?: string
+  meetId?: string
 }
 
-const MOBILE_WEB_URL = 'http://localhost:3000/create'
-const WEB_URL = 'http://localhost:3000/create'
+const MOBILE_WEB_URL = 'http://localhost:3000/result'
+const WEB_URL = 'http://localhost:3000/result'
 
-export const KakaoShareButton = ({label, groupId = ''}: KakaoButtonProps) => {
+export const KakaoShareButton = ({label, meetId = ''}: KakaoButtonProps) => {
   const onClickKakaoButton = useCallback(() => {
     //@ts-ignore
     if (!window.Kakao) {
@@ -36,8 +36,8 @@ export const KakaoShareButton = ({label, groupId = ''}: KakaoButtonProps) => {
         description: '시간표를 추가해서 밥약 시간을 맞춰 보세요',
         imageUrl: '',
         link: {
-          mobileWebUrl: `${MOBILE_WEB_URL}?groupId=${groupId}`,
-          webUrl: `${WEB_URL}?groupId=${groupId}`,
+          mobileWebUrl: `${MOBILE_WEB_URL}/${meetId}`,
+          webUrl: `${WEB_URL}/${meetId}`,
         },
       },
     })

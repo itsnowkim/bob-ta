@@ -7,3 +7,8 @@ export type ResultParams = {
   output: any
   user_name: string
 }
+
+export type ResultType = {
+  meets: object
+  user_names: string[]
+}

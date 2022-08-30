@@ -28,39 +28,41 @@ export const DetectionError = () => {
     navigate(-1)
   }, [])
   return (
-    <RootContainer>
-      <LogoLinked />
-      <TitleContainer>
-        <DetectionErrorTitle>앗, 시간표 탐색에 실패했어요</DetectionErrorTitle>
-        <GuideText>다음 방법을 통해 시간표 이미지를 추출해 주세요.</GuideText>
-      </TitleContainer>
-      <StepContainer>
-        <TitleWrapper>
-          1. 에브리타임
-          <MdOutlineChevronRight size={20} color={isDarkMode ? colors.darkgray800 : colors.gray800} style={ARROW_STYLE} />
-          내 시간표
-          <MdOutlineChevronRight size={20} color={isDarkMode ? colors.darkgray800 : colors.gray800} style={ARROW_STYLE} />
-          설정
-        </TitleWrapper>
-        <Img src={Step1Image} />
-      </StepContainer>
-      <Separator marginBottom={'24px'} />
-      <StepContainer>
-        <TitleWrapper>
-          2. 테마 및 스타일 변경
-          <MdOutlineChevronRight size={20} color={isDarkMode ? colors.darkgray800 : colors.gray800} style={ARROW_STYLE} />
-          기본 테마 설정
-        </TitleWrapper>
-        <Img src={Step2Image} />
-      </StepContainer>
-      <Separator marginBottom={'24px'} />
-      <StepContainer>
-        <TitleWrapper>3. 이미지로 저장 선택</TitleWrapper>
-        <Img src={Step3Image} />
-      </StepContainer>
-      <ButtonSolid onClick={onClickGoBack} label="뒤로 가기" />
+    <>
+      <RootContainer>
+        <LogoLinked />
+        <TitleContainer>
+          <DetectionErrorTitle>앗, 시간표 탐색에 실패했어요</DetectionErrorTitle>
+          <GuideText>다음 방법을 통해 시간표 이미지를 추출해 주세요.</GuideText>
+        </TitleContainer>
+        <StepContainer>
+          <TitleWrapper>
+            1. 에브리타임
+            <MdOutlineChevronRight size={20} color={isDarkMode ? colors.darkgray800 : colors.gray800} style={ARROW_STYLE} />
+            내 시간표
+            <MdOutlineChevronRight size={20} color={isDarkMode ? colors.darkgray800 : colors.gray800} style={ARROW_STYLE} />
+            설정
+          </TitleWrapper>
+          <Img src={Step1Image} />
+        </StepContainer>
+        <Separator marginBottom={'24px'} />
+        <StepContainer>
+          <TitleWrapper>
+            2. 테마 및 스타일 변경
+            <MdOutlineChevronRight size={20} color={isDarkMode ? colors.darkgray800 : colors.gray800} style={ARROW_STYLE} />
+            기본 테마 설정
+          </TitleWrapper>
+          <Img src={Step2Image} />
+        </StepContainer>
+        <Separator marginBottom={'24px'} />
+        <StepContainer>
+          <TitleWrapper>3. 이미지로 저장 선택</TitleWrapper>
+          <Img src={Step3Image} />
+        </StepContainer>
+        <ButtonSolid onClick={onClickGoBack} label="뒤로 가기" />
+      </RootContainer>
       <Footer />
-    </RootContainer>
+    </>
   )
 }
 

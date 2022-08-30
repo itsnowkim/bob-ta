@@ -148,7 +148,11 @@ export const Create = () => {
           )}
         </TimeTableWrapper>
 
-        {name != '' && imageUri != '' ? <ButtonSolid onClick={onClickSubmit} label="결과 보기"></ButtonSolid> : <ButtonDisabled label="결과 보기" />}
+        {name != '' && imageUri != '' ? (
+          <ButtonSolid onClick={onClickSubmit} label="결과 보기" isLoading={uploadTimeTableImageQuery.isLoading}></ButtonSolid>
+        ) : (
+          <ButtonDisabled label="결과 보기" />
+        )}
       </RootContainer>
       <Footer />
     </>

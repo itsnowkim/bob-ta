@@ -41,7 +41,7 @@ function App() {
                 <Route path="/" element={<Navigate to="/index" />} />
                 <Route path="/index" element={<IndexPage />} />
                 <Route path="/create" element={<Create />} />
-                <Route path="/result/:groupId" element={<Result />} />
+                <Route path="/result/:meetId" element={<Result />} />
                 <Route path="/error" element={<DetectionError />} />
                 <Route path="/test" element={<Test />} />
                 <Route path="*" element={<Page404 />} />
