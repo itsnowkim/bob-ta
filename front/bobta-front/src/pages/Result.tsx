@@ -84,31 +84,44 @@ export const Result = () => {
           const [front1, front2] = times[j].split('-')
           const [back1, back2] = times[j + 1].split('-')
           const diff = timeCalculator(front2, back1) // 시간 차이를 분 단위로 구함
+          const resLength = res.length
 
-          // 15분 차이가 나면
+          // 다음 시간과 연속되면
           if (diff == 15) {
-            const resLength = res.length
-
-            // 이이전 시간과도 연속됐는지를 판단하기 위해 res 배열의 끝 요소를 가져옴
+            // 이전 시간과도 연속됐는지를 판단하기 위해 res 배열의 끝 요소를 가져옴
             if (resLength > 0) {
               const [last1, last2] = res[resLength - 1].split('-') // res 배열의 끝 요소의 시간
-              // 이이전 시간과도 연속되면
-              if (timeCalculator(last2, back1) == 15) {
-                res[resLength - 1] = last1 + '-' + back2 //이이전 시간과 연결
+
+              //if (last2 == back2) continue
+              // 이전 시간과도 연속되면
+              const timeDiff = timeCalculator(last2, back1)
+              if (timeDiff == 15) {
+                res[resLength - 1] = last1 + '-' + back2 //이전 시간과 연결
               }
-              // 이이전 시간과 연속되지 않으면
+              // 이전 시간과 연속되지 않으면
               else {
-                res.push(front1 + '-' + back2) // 그냥 이전고 현재 시간만 연결
+                res.push(front1 + '-' + back2) // 그냥 현재 시간과 다음 시간만 연결
               }
             }
-            // 이이전 시간과는 연속되지 않고 그냥 이전 시간과만 연속되면
+            // 이전 시간과는 연속되지 않고 다음 시간과만 연속되면
             else {
               res.push(front1 + '-' + back2)
             }
           }
-          // 연속되지 않으면 그냥 현재 시간 push
+          //  다음 시간과 연속되지 않으면
           else {
-            res.push(times[j])
+            // 다음 시간과는 연속되지 않지만 이전 시간과는 연속되면
+            if (resLength > 0) {
+              const [last1, last2] = res[resLength - 1].split('-') // res 배열의 끝 요소의 시간
+              if (last2 == front2) {
+                continue
+              } else {
+                res.push(times[j])
+              }
+            } else {
+              res.push(times[j])
+            }
+
             if (j == times.length - 2) {
               res.push(times[times.length - 1])
             }
