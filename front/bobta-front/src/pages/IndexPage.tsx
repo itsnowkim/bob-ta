@@ -13,7 +13,7 @@ export const IndexPage = () => {
         <H3>우리들의 밥약 타임</H3>
         <LogoStatic />
       </TitleContainer>
-      <RoundButtonLink to="/create?target=me">
+      <RoundButtonLink to="/create">
         <ButtonSolid label="밥타 시작하기" width="80%" />
       </RoundButtonLink>
     </Container>

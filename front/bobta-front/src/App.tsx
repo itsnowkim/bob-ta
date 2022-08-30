@@ -43,7 +43,7 @@ function App() {
                 <Route path="/create" element={<Create />} />
                 <Route path="/result/:meetId" element={<Result />} />
                 <Route path="/error" element={<DetectionError />} />
-                <Route path="/test" element={<Test />} />
+                {/* <Route path="/test" element={<Test />} /> */}
                 <Route path="*" element={<Page404 />} />
               </Routes>
             </BrowserRouter>

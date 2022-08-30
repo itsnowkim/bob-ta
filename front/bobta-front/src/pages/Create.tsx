@@ -14,7 +14,7 @@ import RemoveIcon from '../static/images/Button/Remove.png'
 import AddIconDark from '../static/icons/Button/AddDark.png'
 import RemoveIconDark from '../static/icons/Button/RemoveDark.png'
 
-import {uploadTimeTableImage, queryKeys} from '../api'
+import {queryKeys, addToMeet, createNewMeet} from '../api'
 
 type LabelType = {
   name: string
@@ -32,15 +32,19 @@ export const Create = () => {
   useScrollToTop()
 
   // ******************** react queries ********************
-  const uploadTimeTableImageQuery = useMutation([queryKeys.image], uploadTimeTableImage, {
+  const createNewMeetQuery = useMutation([queryKeys.image], createNewMeet, {
     onSuccess(data, variables, context) {
       const {output, unique_url, user_name} = data
-      navigate(`/result/${unique_url}`, {
-        state: {
-          output,
-          user_name,
-        },
-      })
+      navigate(`/result/${unique_url}`)
+    },
+    onError(error, variables, context) {
+      navigate('/error')
+    },
+  })
+
+  const addToMeetQuery = useMutation([queryKeys.image], addToMeet, {
+    onSuccess(data, variables, context) {
+      navigate(`/result/${meetId}`)
     },
     onError(error, variables, context) {
       navigate('/error')
@@ -48,29 +52,17 @@ export const Create = () => {
   })
 
   // ******************** states ********************
-  const [labels, setLabels] = useState<LabelType>({
-    name: '',
-    image: '',
-  })
+
+  const [meetId, setMeetId] = useState<string>('') // 모임 Id
   const [name, setName] = useState<string>('') // 이름
   const [image, setImage] = useState<any>(null) // 시간표
   const [imageUri, setImageUri] = useState<string>('')
 
   useEffect(() => {
+    // 모임 id가 있는지 없는지 판단
     const params = new URLSearchParams(location.search)
-    const target = params.get('target')
-
-    if (target == 'me') {
-      setLabels({
-        name: '내 이름',
-        image: '내 시간표',
-      })
-    } else {
-      setLabels({
-        name: '친구 이름',
-        image: '친구 시간표',
-      })
-    }
+    const tempMeetId = params.get('meetId')
+    tempMeetId != undefined && setMeetId(tempMeetId)
   }, [])
 
   // ******************** callbacks ********************
@@ -97,7 +89,7 @@ export const Create = () => {
 
   const onClickSubmit = useCallback(() => {
     // return if post api is ongoing
-    if (uploadTimeTableImageQuery.isLoading) {
+    if (createNewMeetQuery.isLoading) {
       return
     }
 
@@ -111,12 +103,21 @@ export const Create = () => {
     let formData = new FormData()
     formData.append('file', image)
 
-    // trigger api
-    uploadTimeTableImageQuery.mutate({
-      username: name,
-      formData,
-    })
-  }, [name, image, uploadTimeTableImageQuery])
+    // if new meet
+    if (meetId == '') {
+      // trigger api
+      createNewMeetQuery.mutate({
+        username: name,
+        formData,
+      })
+    } else {
+      addToMeetQuery.mutate({
+        username: name,
+        formData,
+        id: meetId,
+      })
+    }
+  }, [name, image, createNewMeetQuery, meetId])
 
   // ******************** renderer ********************
   return (
@@ -124,11 +125,11 @@ export const Create = () => {
       <RootContainer>
         <LogoLinked />
         <NameWrapper>
-          <Label>{labels.name}</Label>
+          <Label>이름</Label>
           <NameInput placeholder="이름을 입력해 주세요" value={name} onChange={onNameChange} />
         </NameWrapper>
         <TimeTableWrapper>
-          <Label>{labels.image}</Label>
+          <Label>시간표</Label>
           {imageUri == '' ? (
             <TimeTableInputWrapper>
               <FileInput type="file" accept="image/*" ref={fileInputRef} onChange={onUploadImage} />
@@ -149,7 +150,7 @@ export const Create = () => {
         </TimeTableWrapper>
 
         {name != '' && imageUri != '' ? (
-          <ButtonSolid onClick={onClickSubmit} label="결과 보기" isLoading={uploadTimeTableImageQuery.isLoading}></ButtonSolid>
+          <ButtonSolid onClick={onClickSubmit} label="결과 보기" isLoading={createNewMeetQuery.isLoading}></ButtonSolid>
         ) : (
           <ButtonDisabled label="결과 보기" />
         )}

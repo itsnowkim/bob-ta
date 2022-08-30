@@ -84,7 +84,7 @@ export const Result = () => {
 
           <ButtonContainer>
             <KakaoShareButton label="친구에게 추가 요청" meetId={meetId} />
-            <AddSelfButtonLink to="/create?target=me">
+            <AddSelfButtonLink to={`/create?meetId=${meetId}`}>
               <ButtonSolid label="시간표 추가하기" />
             </AddSelfButtonLink>
           </ButtonContainer>
