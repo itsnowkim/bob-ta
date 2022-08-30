@@ -62,7 +62,7 @@ def construct_table(mapped):
       if mapped[daytime][idx] == minimum:
         output_table[daytime].append(f'{starttime_list[idx]}-{endtime_list[idx]}')
 
-  return output_table
+  return output_table, minimum
 
 def first_person(data):
   time_map = time_mapping()
@@ -73,9 +73,11 @@ def first_person(data):
 
 def filter_table(meets):
   time_map = time_mapping()
+  participants = []
   for person in meets:
+    participants.append(person)
     mapped = counting_table(time_map, meets[person])
-  output = construct_table(mapped)
+  output, minimum = construct_table(mapped)
 
-  return output
+  return output, participants, minimum
   

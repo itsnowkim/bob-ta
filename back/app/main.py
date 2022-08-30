@@ -27,7 +27,7 @@ async def create_meet(file: UploadFile = File(...), username: str=''):
     # 유저의 시간표 read
     image = convertImgFormat.load_image_into_numpy_array(await file.read())
     timetable = exportImg.export_img(image)
-
+    print(timetable)
     # 유저의 시간표 db에 저장
     unique_url = databaseModule.savedb(username, json.dumps(timetable, ensure_ascii=False))
     
@@ -62,7 +62,8 @@ async def filter_timetable(id: str=''):
   meets = databaseModule.filter_meet(id)
 
   # 겹치는 시간대 전부 표시하는 알고리즘
-  res = management.filter_table(meets)
+  res, participants, minimum = management.filter_table(meets)
+  
   # return res
-  return {"meets": res}
+  return {"meets": res, "participants": participants, "absent": minimum}
 
