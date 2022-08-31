@@ -8,7 +8,6 @@ import {RootContainer} from '../styles'
 import {timeCalculator, useScrollToTop} from '../utils'
 import {ResultType} from '../utils'
 import {queryKeys, getMeet} from '../api'
-import {timeIndexCalculator} from '../utils'
 
 type TitleProps = {
   isBest: boolean
@@ -42,7 +41,6 @@ export const Result = () => {
   // ********************* react queries *********************
   useQuery([queryKeys.meet], () => getMeet(meetId!), {
     onSuccess(data) {
-      console.log(data)
       // 존재하지 않는 meetId
       if (data.error && data.error == '해당하는 url이 존재하지 않습니다.') {
         alert('유효하지 않은 url입니다')
@@ -146,9 +144,9 @@ export const Result = () => {
   })
 
   // ********************* callbacks *********************
-  const onClickRankingButton = useCallback((rankingNumber: number) => {
-    setSelectedNumber(rankingNumber)
-  }, [])
+  // const onClickRankingButton = useCallback((rankingNumber: number) => {
+  //   setSelectedNumber(rankingNumber)
+  // }, [])
 
   useScrollToTop()
   return (
@@ -157,21 +155,21 @@ export const Result = () => {
         <LogoLinked />
         <Container>
           <TitleWrapper marginBottom={isBest ? '8px' : '16px'}>
-            <Title isBest={isBest}>
+            <Title isBest={result.absent == 0}>
               {result.participants.length == 0
                 ? ''
                 : result.participants.map((username, idx) => (idx == result.participants.length - 1 ? username : username + ','))}
               님의 밥약
             </Title>
-            {!isBest && (
+            {result.absent != 0 && (
               <GuideText>
                 모두가 가능한 시간이 없습니다.
                 <br />
-                가능한 시간이 많은 순으로 결과를 보여줍니다
+                {result.participants.length}명 중 {result.participants.length - result.absent}명만 가능한 시간을 보여줍니다.
               </GuideText>
             )}
           </TitleWrapper>
-          {!isBest && (
+          {/* {!isBest && (
             <RankingButtonContainer>
               {[...Array(5)].map((item, idx) => (
                 <RankingButton key={idx} isSelected={selectedNumber == idx + 1} onClick={() => onClickRankingButton(idx + 1)}>
@@ -179,7 +177,7 @@ export const Result = () => {
                 </RankingButton>
               ))}
             </RankingButtonContainer>
-          )}
+          )} */}
           <SelectResultViewContainer>
             <SelectResultView setIsImageView={setIsImageView} />
           </SelectResultViewContainer>
