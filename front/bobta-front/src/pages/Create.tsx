@@ -5,7 +5,7 @@ import {useMutation} from '@tanstack/react-query'
 
 import {RootContainer} from '../styles'
 import * as colors from '../styles/colors'
-import {LogoLinked, Footer, ButtonDisabled, ButtonSolid} from '../components'
+import {LogoLinked, Footer, ButtonDisabled, ButtonSolid, InformationModal} from '../components'
 import {ThemeContext} from '../contexts'
 import {useScrollToTop} from '../utils'
 
@@ -13,13 +13,11 @@ import AddIcon from '../static/images/Button/Add.png'
 import RemoveIcon from '../static/images/Button/Remove.png'
 import AddIconDark from '../static/icons/Button/AddDark.png'
 import RemoveIconDark from '../static/icons/Button/RemoveDark.png'
+import InformationDark from '../static/icons/information_dark.png'
+import InformationLight from '../static/icons/information_light.png'
+import InformationImageSrc from '../static/icons/information_image.png'
 
 import {queryKeys, addToMeet, createNewMeet} from '../api'
-
-type LabelType = {
-  name: string
-  image: string
-}
 
 const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/
 
@@ -34,7 +32,7 @@ export const Create = () => {
   // ******************** react queries ********************
   const createNewMeetQuery = useMutation([queryKeys.image], createNewMeet, {
     onSuccess(data, variables, context) {
-      const {output, unique_url, user_name} = data
+      const {unique_url} = data
       navigate(`/result/${unique_url}`)
     },
     onError(error, variables, context) {
@@ -57,6 +55,7 @@ export const Create = () => {
   const [name, setName] = useState<string>('') // 이름
   const [image, setImage] = useState<any>(null) // 시간표
   const [imageUri, setImageUri] = useState<string>('')
+  const [informationModalOpen, setInformationModalOpen] = useState<boolean>(false)
 
   useEffect(() => {
     // 모임 id가 있는지 없는지 판단
@@ -87,9 +86,17 @@ export const Create = () => {
     setImageUri('')
   }, [])
 
+  const onMouseOverInformationIcon = useCallback((event: React.MouseEvent<HTMLImageElement>) => {
+    setInformationModalOpen(true)
+  }, [])
+
+  const onMouseOutInformationIcon = useCallback((event: React.MouseEvent<HTMLImageElement>) => {
+    setInformationModalOpen(false)
+  }, [])
+
   const onClickSubmit = useCallback(() => {
     // return if post api is ongoing
-    if (createNewMeetQuery.isLoading) {
+    if (createNewMeetQuery.isLoading || addToMeetQuery.isLoading) {
       return
     }
 
@@ -129,7 +136,16 @@ export const Create = () => {
           <NameInput placeholder="이름을 입력해 주세요" value={name} onChange={onNameChange} />
         </NameWrapper>
         <TimeTableWrapper>
-          <Label>시간표</Label>
+          <TimeTableLabelWrapper>
+            <Label>시간표</Label>
+            <InformationIcon
+              src={isDarkMode ? InformationDark : InformationLight}
+              onMouseOver={onMouseOverInformationIcon}
+              onMouseOut={onMouseOutInformationIcon}
+            />
+            {informationModalOpen && <InformationImg src={InformationImageSrc} />}
+          </TimeTableLabelWrapper>
+
           {imageUri == '' ? (
             <TimeTableInputWrapper>
               <FileInput type="file" accept="image/*" ref={fileInputRef} onChange={onUploadImage} />
@@ -150,7 +166,7 @@ export const Create = () => {
         </TimeTableWrapper>
 
         {name != '' && imageUri != '' ? (
-          <ButtonSolid onClick={onClickSubmit} label="결과 보기" isLoading={createNewMeetQuery.isLoading}></ButtonSolid>
+          <ButtonSolid onClick={onClickSubmit} label="결과 보기" isLoading={createNewMeetQuery.isLoading || addToMeetQuery.isLoading}></ButtonSolid>
         ) : (
           <ButtonDisabled label="결과 보기" />
         )}
@@ -159,6 +175,27 @@ export const Create = () => {
     </>
   )
 }
+
+const InformationImg = styled.img`
+  position: absolute;
+  left: -34px;
+  bottom: 12px;
+  width: 180px;
+`
+
+const InformationIcon = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-bottom: 8px;
+  margin-left: 4px;
+  z-index: 1000;
+`
+
+const TimeTableLabelWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+`
 
 const TimeTableImageWrapper = styled.div`
   position: relative;

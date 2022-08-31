@@ -1,6 +1,6 @@
 import {useState, useCallback} from 'react'
 import styled from 'styled-components'
-import {Link, useLocation, useParams} from 'react-router-dom'
+import {Link, useLocation, useParams, useNavigate} from 'react-router-dom'
 import {useQuery} from '@tanstack/react-query'
 
 import {LogoLinked, KakaoShareButton, TimeTableImage, TimeTableText, Footer, ButtonSolid, SelectResultView} from '../components'
@@ -27,6 +27,7 @@ const days = ['월', '화', '수', '목', '금']
 export const Result = () => {
   // ********************* utils *********************
   const {meetId} = useParams()
+  const navigate = useNavigate()
 
   // ********************* states *********************
   const [isBest, setIsBest] = useState<boolean>(true) // best인지 차선책인지
@@ -34,12 +35,21 @@ export const Result = () => {
   const [isImageView, setIsImageView] = useState<boolean>(true)
   const [result, setResult] = useState<ResultType>({
     meets: {},
-    user_names: ['진실', '현재'],
+    participants: [],
+    absent: 0,
   })
 
   // ********************* react queries *********************
   useQuery([queryKeys.meet], () => getMeet(meetId!), {
     onSuccess(data) {
+      console.log(data)
+      // 존재하지 않는 meetId
+      if (data.error && data.error == '해당하는 url이 존재하지 않습니다.') {
+        alert('유효하지 않은 url입니다')
+        navigate('/')
+        return
+      }
+
       for (var i = 0; i < 5; i++) {
         const times = data.meets[days[i]] // 해당 요일에서 가능한 시간을 꺼냄
         // 해당 요일에서 가능한 시간이 없으면 continue
@@ -130,11 +140,9 @@ export const Result = () => {
         data.meets[days[i]] = res
       }
 
-      setResult({...result, meets: data.meets})
+      setResult({absent: data.absent, participants: data.participants, meets: data.meets})
     },
-    onError(err) {
-      alert('유효하지 않은 요청입니다')
-    },
+    onError(err) {},
   })
 
   // ********************* callbacks *********************
@@ -150,7 +158,9 @@ export const Result = () => {
         <Container>
           <TitleWrapper marginBottom={isBest ? '8px' : '16px'}>
             <Title isBest={isBest}>
-              {result.user_names.length == 0 ? '' : result.user_names.map((username, idx) => (idx == result.user_names.length - 1 ? username : username + ','))}
+              {result.participants.length == 0
+                ? ''
+                : result.participants.map((username, idx) => (idx == result.participants.length - 1 ? username : username + ','))}
               님의 밥약
             </Title>
             {!isBest && (
@@ -176,7 +186,7 @@ export const Result = () => {
           {isImageView ? <TimeTableImage result={result.meets} /> : <TimeTableText result={result.meets} />}
 
           <ButtonContainer>
-            <KakaoShareButton label="친구에게 추가 요청" meetId={meetId} user_names={result.user_names} />
+            <KakaoShareButton label="친구에게 추가 요청" meetId={meetId} participants={result.participants} />
             <AddSelfButtonLink to={`/create?meetId=${meetId}`}>
               <ButtonSolid label="내 시간표 추가하기" />
             </AddSelfButtonLink>

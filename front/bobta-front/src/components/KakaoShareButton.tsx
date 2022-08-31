@@ -8,14 +8,14 @@ const KAKAO_APP_KEY = process.env.REACT_APP_KAKAO_KEY
 
 type KakaoButtonProps = {
   label: string
-  user_names: string[]
+  participants: string[]
   meetId?: string
 }
 
 const MOBILE_WEB_URL = process.env.REACT_APP_KAKAO_MOBILE_WEB_URL
 const WEB_URL = process.env.REACT_APP_KAKAO_WEB_URL
 
-export const KakaoShareButton = ({label, meetId = '', user_names}: KakaoButtonProps) => {
+export const KakaoShareButton = ({label, meetId = '', participants}: KakaoButtonProps) => {
   const onClickKakaoButton = useCallback(() => {
     //@ts-ignore
     if (!window.Kakao) {
@@ -33,16 +33,16 @@ export const KakaoShareButton = ({label, meetId = '', user_names}: KakaoButtonPr
     kakaoSdk.Link.sendDefault({
       objectType: 'feed',
       content: {
-        title: user_names.map((username, idx) => username) + '님과 밥약해요!',
-        description: '시간표를 추가해서 밥약 시간을 맞춰 보세요',
-        imageUrl: '',
+        title: participants + '님과 밥약해요!',
+        description: '시간표를 추가해서 밥약 시간을 맞춰 보세요 🍚⏰',
+        imageUrl: 'https://d2vze9rhepmloh.cloudfront.net/kakao_share.png',
         link: {
           mobileWebUrl: `${MOBILE_WEB_URL}/${meetId}`,
           webUrl: `${WEB_URL}/${meetId}`,
         },
       },
     })
-  }, [window])
+  }, [window, participants])
   return (
     <KakaoButtonContainer onClick={onClickKakaoButton}>
       <KakaoLogo src={KakaoLogoIcon} />
