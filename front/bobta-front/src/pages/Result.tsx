@@ -29,7 +29,7 @@ export const Result = () => {
   const navigate = useNavigate()
 
   // ********************* states *********************
-  const [isBest, setIsBest] = useState<boolean>(true) // best인지 차선책인지
+  const [isError, setIsError] = useState<boolean>(false)
   const [selectedNumber, setSelectedNumber] = useState<number>(1) // 차선책일때 선택된 순위
   const [isImageView, setIsImageView] = useState<boolean>(true)
   const [result, setResult] = useState<ResultType>({
@@ -137,7 +137,18 @@ export const Result = () => {
         }
         data.meets[days[i]] = res
       }
-
+      if (data.meets['월'] && data.meets['화'] && data.meets['수'] && data.meets['목'] && data.meets['금']) {
+        if (
+          data.meets['월'][0] == '09:00-20:45' &&
+          data.meets['화'][0] == '09:00-20:45' &&
+          data.meets['수'][0] == '09:00-20:45' &&
+          data.meets['목'][0] == '09:00-20:45' &&
+          data.meets['금'][0] == '09:00-20:45'
+        ) {
+          navigate('/error')
+          return
+        }
+      }
       setResult({absent: data.absent, participants: data.participants, meets: data.meets})
     },
     onError(err) {},
@@ -154,7 +165,7 @@ export const Result = () => {
       <RootContainer>
         <LogoLinked />
         <Container>
-          <TitleWrapper marginBottom={isBest ? '8px' : '16px'}>
+          <TitleWrapper marginBottom={result.absent == 0 ? '8px' : '16px'}>
             <Title isBest={result.absent == 0}>
               {result.participants.length == 0
                 ? ''
