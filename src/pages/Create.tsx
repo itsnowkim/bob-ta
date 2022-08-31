@@ -138,6 +138,7 @@ export const Create = () => {
         <TimeTableWrapper>
           <TimeTableLabelWrapper>
             <Label>시간표</Label>
+
             <InformationIcon
               src={isDarkMode ? InformationDark : InformationLight}
               onMouseOver={onMouseOverInformationIcon}
@@ -145,6 +146,7 @@ export const Create = () => {
             />
             {informationModalOpen && <InformationImg src={InformationImageSrc} />}
           </TimeTableLabelWrapper>
+          {/* <GuideText>* 에브리타임 어플에서 시간표 테마를 기본 테마로 설정해 주세요</GuideText> */}
 
           {imageUri == '' ? (
             <TimeTableInputWrapper>
@@ -175,7 +177,13 @@ export const Create = () => {
     </>
   )
 }
-
+const GuideText = styled.p`
+  color: ${colors.primary};
+  margin-block-start: 4px;
+  margin-block-end: 12px;
+  font-size: 12px;
+  line-height: 16px;
+`
 const InformationImg = styled.img`
   position: absolute;
   left: -34px;
