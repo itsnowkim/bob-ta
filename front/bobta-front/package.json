@@ -35,9 +35,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "aws s3 sync ./build s3://bobta --profile=nowkim",
-    "invalidate": "aws cloudfront create-invalidation --profile=nowkim --distribution-id E1XUO4UYL2VWE7 --paths /*",
-    "all": "npm-run-all -s build deploy invalidate"
+    "deploy": "aws s3 sync ./build s3://bob-ta.com --profile=nowkim",
+    "all": "npm-run-all -s build deploy"
   },
   "eslintConfig": {
     "extends": [

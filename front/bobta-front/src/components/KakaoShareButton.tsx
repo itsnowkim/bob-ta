@@ -35,7 +35,7 @@ export const KakaoShareButton = ({label, meetId = '', participants}: KakaoButton
       content: {
         title: participants + '님과 밥약해요!',
         description: '시간표를 추가해서 밥약 시간을 맞춰 보세요 🍚⏰',
-        imageUrl: 'https://d2vze9rhepmloh.cloudfront.net/kakao_share.png',
+        imageUrl: 'http://bob-ta.com/kakao_share.png',
         link: {
           mobileWebUrl: `${MOBILE_WEB_URL}/${meetId}`,
           webUrl: `${WEB_URL}/${meetId}`,
