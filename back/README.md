@@ -7,11 +7,11 @@ docker build -t nowkimdocker/bob-ta:0.9 .
 # docker build --no-cache --progress=plain --secret id=_env,src=.env -t nowkimdocker/bob-ta:0.6 .
 # docker build --no-cache --progress=plain --secret id=mysecret,src=mysecret.txt -t nowkimdocker/bob-ta:0.7 .
 
-docker run --rm -dp 80:80 nowkimdocker/bob-ta:0.9
+docker run --rm -dp 80:80 nowkimdocker/bob-ta:1.0
 ```
 
 ## push image
-docker push nowkimdocker/bob-ta:0.9
+docker push nowkimdocker/bob-ta:1.0
 
 ## mount volume in running container
 ```bash
