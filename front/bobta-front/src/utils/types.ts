@@ -10,7 +10,8 @@ export type ResultParams = {
 
 export type ResultType = {
   meets: object
-  user_names: string[]
+  participants: string[]
+  absent: number
 }
 
 export type AddMeetForm = {

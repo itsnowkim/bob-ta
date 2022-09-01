@@ -1,11 +1,11 @@
 import {useState, useCallback} from 'react'
 import styled from 'styled-components'
-import {Link, useLocation, useParams} from 'react-router-dom'
+import {Link, useLocation, useParams, useNavigate} from 'react-router-dom'
 import {useQuery} from '@tanstack/react-query'
 
 import {LogoLinked, KakaoShareButton, TimeTableImage, TimeTableText, Footer, ButtonSolid, SelectResultView} from '../components'
 import {RootContainer} from '../styles'
-import {useScrollToTop} from '../utils'
+import {timeCalculator, useScrollToTop} from '../utils'
 import {ResultType} from '../utils'
 import {queryKeys, getMeet} from '../api'
 
@@ -21,33 +21,143 @@ type TitleWrapperProps = {
   marginBottom: string
 }
 
+const days = ['월', '화', '수', '목', '금']
+
 export const Result = () => {
   // ********************* utils *********************
   const {meetId} = useParams()
+  const navigate = useNavigate()
 
   // ********************* states *********************
-  const [isBest, setIsBest] = useState<boolean>(true) // best인지 차선책인지
+  const [isError, setIsError] = useState<boolean>(false)
   const [selectedNumber, setSelectedNumber] = useState<number>(1) // 차선책일때 선택된 순위
   const [isImageView, setIsImageView] = useState<boolean>(true)
   const [result, setResult] = useState<ResultType>({
     meets: {},
-    user_names: ['진실', '현재'],
+    participants: [],
+    absent: 0,
   })
 
   // ********************* react queries *********************
   useQuery([queryKeys.meet], () => getMeet(meetId!), {
     onSuccess(data) {
-      setResult({...result, meets: data.meets})
+      // 존재하지 않는 meetId
+      if (data.error && data.error == '해당하는 url이 존재하지 않습니다.') {
+        alert('유효하지 않은 url입니다')
+        navigate('/')
+        return
+      }
+
+      for (var i = 0; i < 5; i++) {
+        const times = data.meets[days[i]] // 해당 요일에서 가능한 시간을 꺼냄
+        // 해당 요일에서 가능한 시간이 없으면 continue
+        if (times == undefined) {
+          continue
+        }
+
+        // 시간 포맷팅
+        for (var j = 0; j < times.length; j++) {
+          let time = times[j]
+          let time1, time2
+          const [t1, t2] = time.split('-') // 시작 시간과 끝 시간을 꺼냄
+          let [t1Hour, t1Minute] = t1.split('.') // 소수점 파싱
+
+          t1Hour = parseInt(t1Hour) < 10 ? '0' + t1Hour : t1Hour // HH 단위로 맞춰줌
+          if (t1Minute == undefined) {
+            // 소수점 아래가 없으면 00 추가
+            time1 = t1Hour + ':00'
+          } else {
+            // 소수점 아래가 있으면 분 단위로 변환한 후 시간 포맷팅
+            t1Minute = (60 * parseFloat('0.' + t1Minute)).toString()
+            time1 = t1Hour + ':' + t1Minute
+          }
+
+          let [t2Hour, t2Minute] = t2.split('.')
+          t2Hour = parseInt(t2Hour) < 10 ? '0' + t2Hour : t2Hour
+
+          if (t2Minute == undefined) {
+            time2 = t2Hour + ':00'
+          } else {
+            t2Minute = (60 * parseFloat('0.' + t2Minute)).toString()
+            time2 = t2Hour + ':' + t2Minute
+          }
+
+          times[j] = time1 + '-' + time2 // 포맷팅한 시간으로 연결
+        }
+
+        // 연속된 시간 찾기
+        var res: string[] = []
+
+        for (var j = 0; j < times.length - 1; j++) {
+          const [front1, front2] = times[j].split('-')
+          const [back1, back2] = times[j + 1].split('-')
+          const diff = timeCalculator(front2, back1) // 시간 차이를 분 단위로 구함
+          const resLength = res.length
+
+          // 다음 시간과 연속되면
+          if (diff == 15) {
+            // 이전 시간과도 연속됐는지를 판단하기 위해 res 배열의 끝 요소를 가져옴
+            if (resLength > 0) {
+              const [last1, last2] = res[resLength - 1].split('-') // res 배열의 끝 요소의 시간
+
+              //if (last2 == back2) continue
+              // 이전 시간과도 연속되면
+              const timeDiff = timeCalculator(last2, back1)
+              if (timeDiff == 15) {
+                res[resLength - 1] = last1 + '-' + back2 //이전 시간과 연결
+              }
+              // 이전 시간과 연속되지 않으면
+              else {
+                res.push(front1 + '-' + back2) // 그냥 현재 시간과 다음 시간만 연결
+              }
+            }
+            // 이전 시간과는 연속되지 않고 다음 시간과만 연속되면
+            else {
+              res.push(front1 + '-' + back2)
+            }
+          }
+          //  다음 시간과 연속되지 않으면
+          else {
+            // 다음 시간과는 연속되지 않지만 이전 시간과는 연속되면
+            if (resLength > 0) {
+              const [last1, last2] = res[resLength - 1].split('-') // res 배열의 끝 요소의 시간
+              if (last2 == front2) {
+                continue
+              } else {
+                res.push(times[j])
+              }
+            } else {
+              res.push(times[j])
+            }
+
+            if (j == times.length - 2) {
+              res.push(times[times.length - 1])
+            }
+          }
+        }
+        data.meets[days[i]] = res
+      }
+      if (data.meets['월'] && data.meets['화'] && data.meets['수'] && data.meets['목'] && data.meets['금']) {
+        if (
+          data.meets['월'][0] == '09:00-20:45' &&
+          data.meets['화'][0] == '09:00-20:45' &&
+          data.meets['수'][0] == '09:00-20:45' &&
+          data.meets['목'][0] == '09:00-20:45' &&
+          data.meets['금'][0] == '09:00-20:45'
+        ) {
+          navigate('/error')
+          return
+        }
+      }
+      setResult({absent: data.absent, participants: data.participants, meets: data.meets})
     },
-    onError(err) {
-      alert('유효하지 않은 요청입니다')
-    },
+    onError(err) {},
   })
 
   // ********************* callbacks *********************
-  const onClickRankingButton = useCallback((rankingNumber: number) => {
-    setSelectedNumber(rankingNumber)
-  }, [])
+  // const onClickRankingButton = useCallback((rankingNumber: number) => {
+  //   setSelectedNumber(rankingNumber)
+  // }, [])
 
   useScrollToTop()
   return (
@@ -55,20 +165,22 @@ export const Result = () => {
       <RootContainer>
         <LogoLinked />
         <Container>
-          <TitleWrapper marginBottom={isBest ? '8px' : '16px'}>
-            <Title isBest={isBest}>
-              {result.user_names.length == 0 ? '' : result.user_names.map((username, idx) => (idx == result.user_names.length - 1 ? username : username + ','))}
+          <TitleWrapper marginBottom={result.absent == 0 ? '8px' : '16px'}>
+            <Title isBest={result.absent == 0}>
+              {result.participants.length == 0
+                ? ''
+                : result.participants.map((username, idx) => (idx == result.participants.length - 1 ? username : username + ','))}
               님의 밥약
             </Title>
-            {!isBest && (
+            {result.absent != 0 && (
               <GuideText>
                 모두가 가능한 시간이 없습니다.
                 <br />
-                가능한 시간이 많은 순으로 결과를 보여줍니다
+                {result.participants.length}명 중 {result.participants.length - result.absent}명만 가능한 시간을 보여줍니다.
               </GuideText>
             )}
           </TitleWrapper>
-          {!isBest && (
+          {/* {!isBest && (
             <RankingButtonContainer>
               {[...Array(5)].map((item, idx) => (
                 <RankingButton key={idx} isSelected={selectedNumber == idx + 1} onClick={() => onClickRankingButton(idx + 1)}>
@@ -76,16 +188,16 @@ export const Result = () => {
                 </RankingButton>
               ))}
             </RankingButtonContainer>
-          )}
+          )} */}
           <SelectResultViewContainer>
             <SelectResultView setIsImageView={setIsImageView} />
           </SelectResultViewContainer>
           {isImageView ? <TimeTableImage result={result.meets} /> : <TimeTableText result={result.meets} />}
 
           <ButtonContainer>
-            <KakaoShareButton label="친구에게 추가 요청" meetId={meetId} user_names={result.user_names} />
+            <KakaoShareButton label="친구에게 추가 요청" meetId={meetId} participants={result.participants} />
             <AddSelfButtonLink to={`/create?meetId=${meetId}`}>
-              <ButtonSolid label="시간표 추가하기" />
+              <ButtonSolid label="내 시간표 추가하기" />
             </AddSelfButtonLink>
           </ButtonContainer>
         </Container>

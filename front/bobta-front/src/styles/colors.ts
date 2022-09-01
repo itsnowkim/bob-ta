@@ -21,7 +21,7 @@ export const darkgray700 = '#B2B1B1'
 export const darkgray800 = '#FDFDFE'
 export const darkprimary = '#E04800'
 export const darkprimary50 = '#E5D4CC'
-export const darksecondary = '#A93600'
+export const darksecondary = 'rgba(245, 79, 0, 0.75)'
 
 export const secondary = '#FBD9C9'
 export const white = '#ffffff'
