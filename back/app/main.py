@@ -7,7 +7,7 @@ import exportImg, convertImgFormat, databaseModule, management
 
 app = FastAPI()
 
-origins = ["*"]
+origins = ["http://bob-ta.com"]
 
 app.add_middleware(
   CORSMiddleware,
