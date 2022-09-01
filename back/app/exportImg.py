@@ -40,6 +40,15 @@ def img_show(name, img):
     cv2.destroyAllWindows()
     cv2.waitKey(1)
 
+def time_exception(custom_time):
+    minute = custom_time - int(custom_time)
+    minute_output = [0, 0.25, 0.5, 0.75]
+    
+    target = [abs(x - minute) for x in minute_output]
+    output = int(custom_time) + minute_output[target.index(min(target))]
+    
+    return output
+
 def get_time(img, box, box_height, box_width):
     img2 = img.copy()
     
@@ -151,7 +160,16 @@ def calculate_time(start, end):
     class_start = [abs(x - start) for x in starttime_list]
     class_end = [abs(x - (start + end)) for x in endtime_list]
     
-    return (f'{starttime_list[class_start.index(min(class_start))]}-{endtime_list[class_end.index(min(class_end))]}')
+    output_start = starttime_list[class_start.index(min(class_start))]
+    output_end = endtime_list[class_end.index(min(class_end))]
+
+
+    # 커스텀으로 한 시간의 경우 예외 처리 - 30분 단위로 가장 가까운 곳으로 지정
+    if min(class_start) > 0.35:
+        output_start = time_exception(start)
+        output_end = time_exception(start + end)
+
+    return (f'{output_start}-{output_end}')
 
 def export_img(img):
     # input data read
