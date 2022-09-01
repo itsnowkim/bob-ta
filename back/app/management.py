@@ -8,10 +8,7 @@ def counting_table(time_map, data):
       start_time, end_time = classtime.split('-')
       start_idx = starttime_list.index(float(start_time))
       end_idx = endtime_list.index(float(end_time))
-      # 연강이 아닌 경우
-      # if start_idx == end_idx:
-      #   time_map[key][start_idx] += 1
-      # else:
+      
       for idx in range(start_idx, end_idx+1):
         time_map[key][idx] += 1
   

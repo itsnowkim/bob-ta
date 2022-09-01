@@ -1,6 +1,4 @@
 import cv2
-import numpy as np
-import copy
 
 def get_roi(img):
     # CHECK DARK, LIGHT MODE and convert gray scale
@@ -33,13 +31,6 @@ def handle_mode(img):
     img_conv = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     return THEME, img_conv
 
-def img_show(name, img):
-    cv2.imshow(name,img)
-
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-    cv2.waitKey(1)
-
 def time_exception(custom_time):
     minute = custom_time - int(custom_time)
     minute_output = [0, 0.25, 0.5, 0.75]
@@ -50,46 +41,18 @@ def time_exception(custom_time):
     return output
 
 def get_time(img, box, box_height, box_width):
-    img2 = img.copy()
-    
-    # 나중에 ratio 제대로 계산 필요
-    ratio = img.shape[0] / 20
-    
-    GREEN = (0,200,0)
-    RED = (0,0,200)
-    BLUE = (200,0,0)
-    
+
     start = end = box[0][0]
     for temp in box:
         if sum(temp[0]) > sum(end):
             end = temp[0]
-    
-    # copy start point, end point
-    day_start = copy.deepcopy(start)
-    time_start = copy.deepcopy(start)
-    day_end = copy.deepcopy(end)
-    time_end = copy.deepcopy(end)
-    
-    # handle
-    time_start[0] = 0
-    time_end[0] = ratio
-    
-    day_start[1] = 0
-    day_end[1] = ratio
-    
-    # 사각형 영역에서 숫자, 글씨 읽어서 return하기
-    cv2.rectangle(img2, time_start, time_end, GREEN, 2)
-    crop1 = img[time_start[1]:time_end[1],time_start[0]:time_end[0]]
-    cv2.rectangle(img2, day_start, day_end, RED, 2)
-    crop2 = img[day_start[1]:day_end[1],day_start[0]:day_end[0]]
 
-    cv2.rectangle(img2, start, end, BLUE, 2)
 
-    time_line = int(img2.shape[0]/box_height) + 9
-    class_start = (img2.shape[0] - start[1])/box_height
+    time_line = int(img.shape[0]/box_height) + 9
+    class_start = (img.shape[0] - start[1])/box_height
     class_end = (end[1] - start[1])/box_height
     
-    class_daytime = calculate_daytime(img2.shape[1], box_width, start[0])
+    class_daytime = calculate_daytime(img.shape[1], box_width, start[0])
     class_time = calculate_time(time_line - class_start, class_end)
 
     return class_daytime, class_time
@@ -114,7 +77,7 @@ def get_timebox(THEME, ROI, box_height, box_width):
     
     for box in results:
         class_daytime, class_time = get_time(ROI, box, box_height, box_width)
-        # print(class_daytime, class_time)
+
         if class_daytime in export_data:
             export_data[class_daytime].append(class_time)
         else:
@@ -139,9 +102,6 @@ def get_standard_box_size(ROI):
     
     # 두 번째 sizse = 기본 box
     x, y, width, height = cv2.boundingRect(cnts[1])
-
-#     cv2.drawContours(ROI, cnts[1], -1, (0,200,0), 2)
-#     img_show('test',ROI)
     
     return height, width
 
@@ -172,9 +132,7 @@ def calculate_time(start, end):
     return (f'{output_start}-{output_end}')
 
 def export_img(img):
-    # input data read
-    # img = cv2.imread('theme8.png')
-    
+
     # get roi if needed
     ROI, THEME = get_roi(img)
     

@@ -11,8 +11,6 @@ def init():
     database_id = os.environ.get('DATABASE_ID')
     token=os.environ.get('TOKEN')
 
-    # print(database_id, token)
-
     headers = {
         "Authorization": f"{token}",
         "Notion-Version": "2021-05-11",
