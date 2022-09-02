@@ -139,11 +139,11 @@ export const Result = () => {
       }
       if (data.meets['월'] && data.meets['화'] && data.meets['수'] && data.meets['목'] && data.meets['금']) {
         if (
-          data.meets['월'][0] == '09:00-20:45' &&
-          data.meets['화'][0] == '09:00-20:45' &&
-          data.meets['수'][0] == '09:00-20:45' &&
-          data.meets['목'][0] == '09:00-20:45' &&
-          data.meets['금'][0] == '09:00-20:45'
+          data.meets['월'][0] == '09:00-21:00' &&
+          data.meets['화'][0] == '09:00-21:00' &&
+          data.meets['수'][0] == '09:00-21:00' &&
+          data.meets['목'][0] == '09:00-21:00' &&
+          data.meets['금'][0] == '09:00-21:00'
         ) {
           navigate('/error')
           return
@@ -211,28 +211,28 @@ const SelectResultViewContainer = styled.div`
   margin-bottom: 12px;
 `
 
-const RankingButton = styled.button<RankingButtonProps>`
-  background-color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.bgColor : props.theme.rankingButton.disabled.bgColor)};
+// const RankingButton = styled.button<RankingButtonProps>`
+//   background-color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.bgColor : props.theme.rankingButton.disabled.bgColor)};
 
-  color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.fontColor : props.theme.rankingButton.disabled.fontColor)};
+//   color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.fontColor : props.theme.rankingButton.disabled.fontColor)};
 
-  border-radius: 16px;
-  padding: 4px 14px;
-  margin-right: 8px;
-  border: none;
-  font-family: 'Pretendard-Medium';
-  font-size: 14px;
-  line-height: 20px;
-  cursor: pointer;
-  flex: 0 0 auto;
-`
+//   border-radius: 16px;
+//   padding: 4px 14px;
+//   margin-right: 8px;
+//   border: none;
+//   font-family: 'Pretendard-Medium';
+//   font-size: 14px;
+//   line-height: 20px;
+//   cursor: pointer;
+//   flex: 0 0 auto;
+// `
 
-const RankingButtonContainer = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  margin-bottom: 16px;
-  overflow-x: auto;
-`
+// const RankingButtonContainer = styled.div`
+//   display: flex;
+//   flex-wrap: nowrap;
+//   margin-bottom: 16px;
+//   overflow-x: auto;
+// `
 
 const TitleWrapper = styled.div<TitleWrapperProps>`
   margin-bottom: ${({marginBottom}) => marginBottom};

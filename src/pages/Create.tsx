@@ -177,6 +177,7 @@ export const Create = () => {
     </>
   )
 }
+
 const GuideText = styled.p`
   color: ${colors.primary};
   margin-block-start: 4px;
@@ -213,11 +214,12 @@ const RemoveButtonImage = styled.img`
 const RemoveButton = styled.button`
   position: absolute;
   right: -20px;
-  top: -15px;
+  top: -20px;
   overflow-x: hidden;
   background: none;
   border: none;
   cursor: pointer;
+  z-index: 10;
 `
 
 const TimeTableImage = styled.img`
@@ -256,6 +258,7 @@ const AddButton = styled.img`
 
 const TimeTableImageWrapper = styled.div`
   position: relative;
+  overflow-x: visible;
 `
 const TimeTableInputWrapper = styled.div`
   display: flex;

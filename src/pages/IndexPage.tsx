@@ -2,7 +2,7 @@ import {useState, useCallback} from 'react'
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import {RootContainer} from '../styles'
-import {LogoStatic, ButtonSolid, ButtonOutlined, HelpModal} from '../components'
+import {LogoStatic, ButtonSolid, ButtonOutlined, HelpModal, VisitorBubble} from '../components'
 import LogoSrc from '../static/images/logo.png'
 
 export const IndexPage = () => {
@@ -13,6 +13,7 @@ export const IndexPage = () => {
 
   return (
     <Container>
+      <VisitorBubble userNum={5} meetNum={2} />
       <LogoImage src={LogoSrc} />
       <HelpModal helpModalOpen={helpModalOpen} setHelpModalOpen={setHelpModalOpen} />
       <TitleContainer>
