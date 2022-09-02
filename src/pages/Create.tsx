@@ -205,10 +205,6 @@ const TimeTableLabelWrapper = styled.div`
   position: relative;
 `
 
-const TimeTableImageWrapper = styled.div`
-  position: relative;
-`
-
 const RemoveButtonImage = styled.img`
   width: 36px;
   height: 36px;
@@ -216,8 +212,9 @@ const RemoveButtonImage = styled.img`
 
 const RemoveButton = styled.button`
   position: absolute;
-  right: -24px;
+  right: -20px;
   top: -15px;
+  overflow-x: hidden;
   background: none;
   border: none;
   cursor: pointer;
@@ -256,6 +253,10 @@ const AddButton = styled.img`
   margin-bottom: 12px;
   cursor: pointer;
 `
+
+const TimeTableImageWrapper = styled.div`
+  position: relative;
+`
 const TimeTableInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -265,9 +266,7 @@ const TimeTableInputWrapper = styled.div`
   border-style: solid;
   border-radius: 8px;
   border-width: 1px;
-  /* border-color: ${colors.gray300}; */
   border-color: ${({theme}) => theme.colors.gray300};
-  //background-color: 'transparent';
   background-color: ${({theme}) => theme.inputBgColor};
 `
 

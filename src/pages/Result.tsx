@@ -85,57 +85,57 @@ export const Result = () => {
           times[j] = time1 + '-' + time2 // 포맷팅한 시간으로 연결
         }
 
-        // 연속된 시간 찾기
-        var res: string[] = []
+        // // 연속된 시간 찾기
+        // var res: string[] = []
 
-        for (var j = 0; j < times.length - 1; j++) {
-          const [front1, front2] = times[j].split('-')
-          const [back1, back2] = times[j + 1].split('-')
-          const diff = timeCalculator(front2, back1) // 시간 차이를 분 단위로 구함
-          const resLength = res.length
+        // for (var j = 0; j < times.length - 1; j++) {
+        //   const [front1, front2] = times[j].split('-')
+        //   const [back1, back2] = times[j + 1].split('-')
+        //   const diff = timeCalculator(front2, back1) // 시간 차이를 분 단위로 구함
+        //   const resLength = res.length
 
-          // 다음 시간과 연속되면
-          if (diff == 15) {
-            // 이전 시간과도 연속됐는지를 판단하기 위해 res 배열의 끝 요소를 가져옴
-            if (resLength > 0) {
-              const [last1, last2] = res[resLength - 1].split('-') // res 배열의 끝 요소의 시간
+        //   // 다음 시간과 연속되면
+        //   if (diff == 15) {
+        //     // 이전 시간과도 연속됐는지를 판단하기 위해 res 배열의 끝 요소를 가져옴
+        //     if (resLength > 0) {
+        //       const [last1, last2] = res[resLength - 1].split('-') // res 배열의 끝 요소의 시간
 
-              //if (last2 == back2) continue
-              // 이전 시간과도 연속되면
-              const timeDiff = timeCalculator(last2, back1)
-              if (timeDiff == 15) {
-                res[resLength - 1] = last1 + '-' + back2 //이전 시간과 연결
-              }
-              // 이전 시간과 연속되지 않으면
-              else {
-                res.push(front1 + '-' + back2) // 그냥 현재 시간과 다음 시간만 연결
-              }
-            }
-            // 이전 시간과는 연속되지 않고 다음 시간과만 연속되면
-            else {
-              res.push(front1 + '-' + back2)
-            }
-          }
-          //  다음 시간과 연속되지 않으면
-          else {
-            // 다음 시간과는 연속되지 않지만 이전 시간과는 연속되면
-            if (resLength > 0) {
-              const [last1, last2] = res[resLength - 1].split('-') // res 배열의 끝 요소의 시간
-              if (last2 == front2) {
-                continue
-              } else {
-                res.push(times[j])
-              }
-            } else {
-              res.push(times[j])
-            }
+        //       //if (last2 == back2) continue
+        //       // 이전 시간과도 연속되면
+        //       const timeDiff = timeCalculator(last2, back1)
+        //       if (timeDiff == 15) {
+        //         res[resLength - 1] = last1 + '-' + back2 //이전 시간과 연결
+        //       }
+        //       // 이전 시간과 연속되지 않으면
+        //       else {
+        //         res.push(front1 + '-' + back2) // 그냥 현재 시간과 다음 시간만 연결
+        //       }
+        //     }
+        //     // 이전 시간과는 연속되지 않고 다음 시간과만 연속되면
+        //     else {
+        //       res.push(front1 + '-' + back2)
+        //     }
+        //   }
+        //   //  다음 시간과 연속되지 않으면
+        //   else {
+        //     // 다음 시간과는 연속되지 않지만 이전 시간과는 연속되면
+        //     if (resLength > 0) {
+        //       const [last1, last2] = res[resLength - 1].split('-') // res 배열의 끝 요소의 시간
+        //       if (last2 == front2) {
+        //         continue
+        //       } else {
+        //         res.push(times[j])
+        //       }
+        //     } else {
+        //       res.push(times[j])
+        //     }
 
-            if (j == times.length - 2) {
-              res.push(times[times.length - 1])
-            }
-          }
-        }
-        data.meets[days[i]] = res
+        //     if (j == times.length - 2) {
+        //       res.push(times[times.length - 1])
+        //     }
+        //   }
+        // }
+        // data.meets[days[i]] = res
       }
       if (data.meets['월'] && data.meets['화'] && data.meets['수'] && data.meets['목'] && data.meets['금']) {
         if (

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import {RootContainer} from '../styles'
-import {LogoStatic, ButtonSolid} from '../components'
+import {LogoStatic, ButtonSolid, ButtonOutlined} from '../components'
 import LogoSrc from '../static/images/logo.png'
 
 export const IndexPage = () => {
@@ -13,12 +13,24 @@ export const IndexPage = () => {
         <H3>우리들의 밥약 타임</H3>
         <LogoStatic />
       </TitleContainer>
-      <RoundButtonLink to="/create">
-        <ButtonSolid label="밥타 시작하기" width="80%" />
-      </RoundButtonLink>
+      <ButtonsContainer>
+        <RoundButtonLink to="/create">
+          <ButtonSolid label="밥타 시작하기" width="90%" />
+        </RoundButtonLink>
+        <ButtonOutlined label="도움말" width="90%" />
+      </ButtonsContainer>
     </Container>
   )
 }
+
+const ButtonsContainer = styled.div`
+  height: 112px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+`
 
 const Container = styled(RootContainer)`
   justify-content: center;
@@ -26,14 +38,14 @@ const Container = styled(RootContainer)`
 `
 
 const LogoImage = styled.img`
-  height: 33vh;
+  height: 30vh;
 `
 
 const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 60px;
+  margin-bottom: 48px;
   width: 100%;
 `
 const RoundButtonLink = styled(Link)`

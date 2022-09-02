@@ -123,6 +123,9 @@ export const dark = {
 }
 
 export const RootContainer = styled.div`
+  @media only screen and (max-width: 500px) {
+    width: calc(100vw-40px);
+  }
   max-width: 500px;
   min-width: 200px;
   display: flex;
