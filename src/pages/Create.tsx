@@ -5,7 +5,7 @@ import {useMutation} from '@tanstack/react-query'
 
 import {RootContainer} from '../styles'
 import * as colors from '../styles/colors'
-import {LogoLinked, Footer, ButtonDisabled, ButtonSolid, InformationModal} from '../components'
+import {LogoLinked, Footer, ButtonDisabled, ButtonSolid} from '../components'
 import {ThemeContext} from '../contexts'
 import {useScrollToTop} from '../utils'
 

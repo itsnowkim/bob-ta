@@ -1,14 +1,20 @@
-import React from 'react'
+import {useState, useCallback} from 'react'
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import {RootContainer} from '../styles'
-import {LogoStatic, ButtonSolid, ButtonOutlined} from '../components'
+import {LogoStatic, ButtonSolid, ButtonOutlined, HelpModal} from '../components'
 import LogoSrc from '../static/images/logo.png'
 
 export const IndexPage = () => {
+  const [helpModalOpen, setHelpModalOpen] = useState<boolean>(false)
+  const onClickHelper = useCallback(() => {
+    setHelpModalOpen(helpModalOpen => !helpModalOpen)
+  }, [])
+
   return (
     <Container>
       <LogoImage src={LogoSrc} />
+      <HelpModal helpModalOpen={helpModalOpen} setHelpModalOpen={setHelpModalOpen} />
       <TitleContainer>
         <H3>우리들의 밥약 타임</H3>
         <LogoStatic />
@@ -17,7 +23,7 @@ export const IndexPage = () => {
         <RoundButtonLink to="/create">
           <ButtonSolid label="밥타 시작하기" width="90%" />
         </RoundButtonLink>
-        <ButtonOutlined label="도움말" width="90%" />
+        <ButtonOutlined label="도움말" width="90%" onClick={onClickHelper} />
       </ButtonsContainer>
     </Container>
   )
