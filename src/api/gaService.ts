@@ -14,7 +14,7 @@ export const getVisitors = async () => {
   const {data} = await axios.get(
     'https://www.googleapis.com/analytics/v3/data/ga?access_token=' +
       access_token +
-      '&ids=ga%3A274705872&dimensions=ga%3Adate&metrics=ga%3Ausers%2Cga%3Asessions%2Cga%3Apageviews&start-date=7daysAgo&end-date=today',
+      '&ids=ga%3A274705872&dimensions=ga%3Adate&metrics=ga%3Ausers%2Cga%3Asessions%2Cga%3Apageviews&start-date=2022-09-03&end-date=today',
   )
 
   return data

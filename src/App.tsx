@@ -31,9 +31,7 @@ function App() {
       }
     })
 
-    // initialize google analytics
-    //ReactGA.initialize('UA-*********-1')
-    ReactGA.initialize('G-V59RFR1H8P')
+    ReactGA.initialize(process.env.REACT_APP_GA_STREAM_ID!)
     ReactGA.set({page: window.location.pathname})
     ReactGA.pageview(window.location.pathname + window.location.search)
   }, [])
