@@ -33,7 +33,7 @@ export const Create = () => {
   const createNewMeetQuery = useMutation([queryKeys.image], createNewMeet, {
     onSuccess(data, variables, context) {
       const {unique_url} = data
-      navigate(`/result/${unique_url}`)
+      navigate(`/result/${unique_url}?is_new=1`)
     },
     onError(error, variables, context) {
       navigate('/error')

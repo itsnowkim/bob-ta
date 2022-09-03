@@ -1,4 +1,4 @@
-import {useState, useCallback} from 'react'
+import {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {Link, useLocation, useParams, useNavigate} from 'react-router-dom'
 import {useQuery} from '@tanstack/react-query'
@@ -27,10 +27,18 @@ export const Result = () => {
   // ********************* utils *********************
   const {meetId} = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
   useScrollToTop()
 
+  // 새로 생성된 밥약인지 판단
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    if (params.get('is_new') == '1') {
+      setIsNew(true)
+    }
+  }, [location])
   // ********************* states *********************
-  const [isError, setIsError] = useState<boolean>(false)
+  const [isNew, setIsNew] = useState<boolean>(false) // 새로 생성된 밥약인지
   const [selectedNumber, setSelectedNumber] = useState<number>(1) // 차선책일때 선택된 순위
   const [isImageView, setIsImageView] = useState<boolean>(true)
   const [result, setResult] = useState<ResultType>({
@@ -132,7 +140,7 @@ export const Result = () => {
           <ButtonContainer>
             <KakaoShareButton label="친구에게 추가 요청" meetId={meetId} participants={result.participants} />
             <AddSelfButtonLink to={`/create?meetId=${meetId}`}>
-              <ButtonSolid label="내 시간표 추가하기" />
+              <ButtonSolid label={isNew ? '직접 친구 시간표 추가하기' : '내 시간표 추가하기'} />
             </AddSelfButtonLink>
           </ButtonContainer>
         </Container>
