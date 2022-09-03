@@ -1,19 +1,29 @@
 import {useState, useCallback} from 'react'
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
+import {useQuery} from '@tanstack/react-query'
+
 import {RootContainer} from '../styles'
 import {LogoStatic, ButtonSolid, ButtonOutlined, HelpModal, VisitorBubble} from '../components'
 import LogoSrc from '../static/images/logo.png'
+import {getVisitors, queryKeys} from '../api'
 
 export const IndexPage = () => {
   const [helpModalOpen, setHelpModalOpen] = useState<boolean>(false)
+  const [visitors, setVisitors] = useState<number>(0)
   const onClickHelper = useCallback(() => {
     setHelpModalOpen(helpModalOpen => !helpModalOpen)
   }, [])
 
+  useQuery([queryKeys.visitors], getVisitors, {
+    onSuccess(data) {
+      setVisitors(data.totalsForAllResults['ga:pageviews'])
+    },
+  })
+
   return (
     <Container>
-      <VisitorBubble userNum={5} />
+      <VisitorBubble userNum={visitors} />
       <LogoImage src={LogoSrc} />
       <HelpModal helpModalOpen={helpModalOpen} setHelpModalOpen={setHelpModalOpen} />
       <TitleContainer>
