@@ -153,7 +153,7 @@ export const Create = () => {
               <FileInput type="file" accept="image/*" ref={fileInputRef} onChange={onUploadImage} />
               <AddButtonWrapper onClick={onClickAddButton}>
                 <AddButton src={isDarkMode ? AddIconDark : AddIcon} />
-                <AddButtonText>시간표 업로드</AddButtonText>
+                <AddButtonText>에브리타임 시간표 추가</AddButtonText>
               </AddButtonWrapper>
             </TimeTableInputWrapper>
           ) : (

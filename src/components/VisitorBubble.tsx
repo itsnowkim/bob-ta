@@ -1,24 +1,17 @@
-import {useContext} from 'react'
 import styled from 'styled-components'
 import {VscTriangleDown} from 'react-icons/vsc'
 import * as colors from '../styles/colors'
-import {ThemeContext} from '../contexts'
 
 type VisitorBubbleProps = {
   userNum: number
-  meetNum: number
 }
 
-export const VisitorBubble = ({userNum, meetNum}: VisitorBubbleProps) => {
-  const {isDarkMode} = useContext(ThemeContext)
+export const VisitorBubble = ({userNum}: VisitorBubbleProps) => {
   return (
     <>
       <BubbleContainer>
         <BubbleText>
-          밥타 사용자 <span style={{fontFamily: 'Pretendard-SemiBold'}}>{userNum}</span>명
-        </BubbleText>
-        <BubbleText>
-          만들어진 밥약 <span style={{fontFamily: 'Pretendard-SemiBold'}}>{meetNum}</span>개
+          <span style={{fontFamily: 'Pretendard-SemiBold'}}>{userNum}</span>명이 밥타를 다녀갔어요!
         </BubbleText>
       </BubbleContainer>
       <VscTriangleDown color="#fff" size={20} style={{marginTop: '-8px'}} />

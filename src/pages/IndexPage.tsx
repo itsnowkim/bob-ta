@@ -13,7 +13,7 @@ export const IndexPage = () => {
 
   return (
     <Container>
-      <VisitorBubble userNum={5} meetNum={2} />
+      <VisitorBubble userNum={5} />
       <LogoImage src={LogoSrc} />
       <HelpModal helpModalOpen={helpModalOpen} setHelpModalOpen={setHelpModalOpen} />
       <TitleContainer>
