@@ -17,7 +17,7 @@ export const IndexPage = () => {
 
   useQuery([queryKeys.visitors], getVisitors, {
     onSuccess(data) {
-      setVisitors(data.totalsForAllResults['ga:pageviews'])
+      setVisitors(data.totalsForAllResults['ga:users'])
     },
   })
 
