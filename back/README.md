@@ -3,7 +3,7 @@
 ## run docker image
 ```bash
 docker build -t myimage .
-docker build -t nowkimdocker/bob-ta:0.9 .
+docker build -t nowkimdocker/bob-ta:1.0 .
 # docker build --no-cache --progress=plain --secret id=_env,src=.env -t nowkimdocker/bob-ta:0.6 .
 # docker build --no-cache --progress=plain --secret id=mysecret,src=mysecret.txt -t nowkimdocker/bob-ta:0.7 .
 
