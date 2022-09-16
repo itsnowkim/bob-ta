@@ -54,3 +54,6 @@ docker-compose up
 ## Architecture
 
 ![Diagram_Image](/readme_imgs/diagram.png)
+
+## More about
+[밥타 개발 후기 blog](https://velog.io/@n0wkim/%EB%B0%A5%ED%83%80-%EC%84%9C%EB%B9%84%EC%8A%A4-%EA%B0%9C%EB%B0%9C-%ED%9B%84%EA%B8%B0)
