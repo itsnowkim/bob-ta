@@ -4,7 +4,9 @@
 공통적으로 비어 있는 시간을 알려주는 서비스입니다.
 
 - [밥타 구경하러 가기](http://bob-ta.com)
-- [backend readme](https://github.com/itsnowkim/bob-ta/tree/backup/back) <br>
+- [backend readme](https://github.com/itsnowkim/bob-ta/tree/backup/back)
+- [frontend readme](https://github.com/itsnowkim/bob-ta/blob/backup/front/README.md)
+<br>
 ![Bob-ta_Logo](/front/bobta-front/public/kakao_share.png)
 
 
