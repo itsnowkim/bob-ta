@@ -18,12 +18,12 @@
 
 ## Tech Stack
 
-|                                 Design                                 |                                                               Language                                                                |                                        Framework                                         |                                                Distribution                                                |
-| :--------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------: |
-| ![Figma](https://cdn2.downdetector.com/static/uploads/logo/figma2.png) | ![Typescript](https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/1024px-Typescript_logo_2020.svg.png) | ![React](https://blog.kakaocdn.net/dn/doBY5S/btrlEmJSNSs/qmgj8lzzHRkt2b0WX5nSN1/img.png) | ![s3](https://user-images.githubusercontent.com/2277182/75613896-f24f5800-5b32-11ea-966e-4ed4b41f873a.png) |
-|                                 Figma                                  |                                                              Typescript                                                               |                                          React                                           |                                                   AWS S3                                                   |
+|Design|Language|Framework|Distribution|
+|:---:|:---:|:---:|:---:|
+|<image src="https://cdn2.downdetector.com/static/uploads/logo/figma2.png" width="150px;" />|<image src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/1024px-Typescript_logo_2020.svg.png" width="150px;" />|<image src="https://blog.kakaocdn.net/dn/doBY5S/btrlEmJSNSs/qmgj8lzzHRkt2b0WX5nSN1/img.png" width="150px;" />|<image src="https://user-images.githubusercontent.com/2277182/75613896-f24f5800-5b32-11ea-966e-4ed4b41f873a.png" width="150px;" />|
+|Figma|Typescript|React|AWS S3|
 
 <br />
 
 ## More about
-[Velog 회고록](https://velog.io/@kauthenticity/회고록-밥타-서비스-개발-회고록)
+[프론트엔드 개발 회고록](https://velog.io/@kauthenticity/회고록-밥타-서비스-개발-회고록)
