@@ -24,3 +24,6 @@
 |                                 Figma                                  |                                                              Typescript                                                               |                                          React                                           |                                                   AWS S3                                                   |
 
 <br />
+
+## More about
+[Velog 회고록](https://velog.io/@kauthenticity/회고록-밥타-서비스-개발-회고록)
