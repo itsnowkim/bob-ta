@@ -2,6 +2,8 @@ import React, {useState, useEffect, useContext} from 'react'
 import {ThemeProvider as StyledProvider} from 'styled-components'
 import {QueryClient, QueryClientProvider, useQuery} from '@tanstack/react-query'
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
+import ReactGA from 'react-ga'
+
 import {ThemeContext} from './contexts'
 import {IndexPage, Page404, Create, Result, DetectionError, Test} from './pages'
 import {light, dark} from './styles'
@@ -28,6 +30,10 @@ function App() {
         setIsDarkMode(false)
       }
     })
+
+    ReactGA.initialize(process.env.REACT_APP_GA_STREAM_ID!)
+    ReactGA.set({page: window.location.pathname})
+    ReactGA.pageview(window.location.pathname + window.location.search)
   }, [])
 
   return (

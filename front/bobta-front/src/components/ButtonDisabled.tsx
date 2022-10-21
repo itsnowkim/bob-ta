@@ -5,20 +5,24 @@ import {RoundButtonDisabled} from '../styles'
 type ButtonDisabledProps = {
   label: string
   onClick?: () => void
+  width?: string
 }
 
-export const ButtonDisabled = ({label, onClick}: ButtonDisabledProps) => {
-  return <ButtonDisabledWrapper onClick={onClick}>{label}</ButtonDisabledWrapper>
+export const ButtonDisabled = ({label, onClick, width = '100%'}: ButtonDisabledProps) => {
+  return (
+    <ButtonDisabledWrapper onClick={onClick} width={width}>
+      {label}
+    </ButtonDisabledWrapper>
+  )
 }
 
-const ButtonDisabledWrapper = styled(RoundButtonDisabled)`
+type ButtonDisabledWrapperProps = {
+  width: string
+}
+
+const ButtonDisabledWrapper = styled(RoundButtonDisabled)<ButtonDisabledWrapperProps>`
+  width: ${({width}) => width};
   background-color: ${({theme}) => theme.buttonsDisabled.default.bgColor};
   border-color: ${({theme}) => theme.buttonsDisabled.default.borderColor};
   color: ${({theme}) => theme.buttonsDisabled.default.fontColor};
-  /* &:hover {
-    background-color: ${({theme}) => theme.buttonsDisabled.hovered.bgColor};
-
-    border-color: ${({theme}) => theme.buttonsDisabled.hovered.borderColor};
-    color: ${({theme}) => theme.buttonsDisabled.hovered.fontColor};
-  } */
 `

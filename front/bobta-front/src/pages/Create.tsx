@@ -5,7 +5,7 @@ import {useMutation} from '@tanstack/react-query'
 
 import {RootContainer} from '../styles'
 import * as colors from '../styles/colors'
-import {LogoLinked, Footer, ButtonDisabled, ButtonSolid, InformationModal} from '../components'
+import {LogoLinked, Footer, ButtonDisabled, ButtonSolid} from '../components'
 import {ThemeContext} from '../contexts'
 import {useScrollToTop} from '../utils'
 
@@ -33,7 +33,7 @@ export const Create = () => {
   const createNewMeetQuery = useMutation([queryKeys.image], createNewMeet, {
     onSuccess(data, variables, context) {
       const {unique_url} = data
-      navigate(`/result/${unique_url}`)
+      navigate(`/result/${unique_url}?is_new=1`)
     },
     onError(error, variables, context) {
       navigate('/error')
@@ -138,6 +138,7 @@ export const Create = () => {
         <TimeTableWrapper>
           <TimeTableLabelWrapper>
             <Label>시간표</Label>
+
             <InformationIcon
               src={isDarkMode ? InformationDark : InformationLight}
               onMouseOver={onMouseOverInformationIcon}
@@ -145,13 +146,14 @@ export const Create = () => {
             />
             {informationModalOpen && <InformationImg src={InformationImageSrc} />}
           </TimeTableLabelWrapper>
+          {/* <GuideText>* 에브리타임 어플에서 시간표 테마를 기본 테마로 설정해 주세요</GuideText> */}
 
           {imageUri == '' ? (
             <TimeTableInputWrapper>
               <FileInput type="file" accept="image/*" ref={fileInputRef} onChange={onUploadImage} />
               <AddButtonWrapper onClick={onClickAddButton}>
                 <AddButton src={isDarkMode ? AddIconDark : AddIcon} />
-                <AddButtonText>시간표 업로드</AddButtonText>
+                <AddButtonText>에브리타임 시간표 추가</AddButtonText>
               </AddButtonWrapper>
             </TimeTableInputWrapper>
           ) : (
@@ -176,6 +178,13 @@ export const Create = () => {
   )
 }
 
+const GuideText = styled.p`
+  color: ${colors.primary};
+  margin-block-start: 4px;
+  margin-block-end: 12px;
+  font-size: 12px;
+  line-height: 16px;
+`
 const InformationImg = styled.img`
   position: absolute;
   left: -34px;
@@ -197,10 +206,6 @@ const TimeTableLabelWrapper = styled.div`
   position: relative;
 `
 
-const TimeTableImageWrapper = styled.div`
-  position: relative;
-`
-
 const RemoveButtonImage = styled.img`
   width: 36px;
   height: 36px;
@@ -208,11 +213,13 @@ const RemoveButtonImage = styled.img`
 
 const RemoveButton = styled.button`
   position: absolute;
-  right: -24px;
-  top: -15px;
+  right: -20px;
+  top: -20px;
+  overflow-x: hidden;
   background: none;
   border: none;
   cursor: pointer;
+  z-index: 10;
 `
 
 const TimeTableImage = styled.img`
@@ -248,6 +255,11 @@ const AddButton = styled.img`
   margin-bottom: 12px;
   cursor: pointer;
 `
+
+const TimeTableImageWrapper = styled.div`
+  position: relative;
+  overflow-x: visible;
+`
 const TimeTableInputWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -257,9 +269,7 @@ const TimeTableInputWrapper = styled.div`
   border-style: solid;
   border-radius: 8px;
   border-width: 1px;
-  /* border-color: ${colors.gray300}; */
   border-color: ${({theme}) => theme.colors.gray300};
-  //background-color: 'transparent';
   background-color: ${({theme}) => theme.inputBgColor};
 `
 
