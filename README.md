@@ -5,8 +5,7 @@
 
 - [밥타 구경하러 가기](http://bob-ta.com)
 - [backend readme](https://github.com/itsnowkim/bob-ta/tree/backup/back)
-- [frontend readme](https://github.com/itsnowkim/bob-ta/blob/backup/front/README.md)
-<br>
+- [frontend readme](https://github.com/itsnowkim/bob-ta/blob/backup/front/README.md) <br>
 ![Bob-ta_Logo](/front/bobta-front/public/kakao_share.png)
 
 
