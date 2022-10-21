@@ -13,4 +13,6 @@ export const LogoLinked = () => {
 const A = styled(Link)`
   text-decoration: none;
   margin-bottom: 24px;
+  margin-top: 20px;
+  width: fit-content;
 `

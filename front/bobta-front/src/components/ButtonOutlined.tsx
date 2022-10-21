@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import {RoundButtonOutlined} from '../styles'
+import * as colors from '../styles/colors'
 
 type ButtonProps = {
   label: string
@@ -12,7 +13,7 @@ type ButtonStyleProps = {
   width: string
 }
 
-export const Button = ({label, onClick, width = '100%'}: ButtonProps) => {
+export const ButtonOutlined = ({label, onClick, width = '100%'}: ButtonProps) => {
   return (
     <ButtonWrapper onClick={onClick} width={width}>
       {label}
@@ -22,7 +23,7 @@ export const Button = ({label, onClick, width = '100%'}: ButtonProps) => {
 
 const ButtonWrapper = styled(RoundButtonOutlined)<ButtonStyleProps>`
   width: ${props => props.width};
-  background-color: ${({theme}) => theme.buttons.default.bgColor};
-  border-color: ${({theme}) => theme.buttons.default.borderColor};
-  color: ${({theme}) => theme.buttons.default.fontColor};
+  background-color: transparent;
+  border-color: ${colors.primary};
+  color: ${colors.primary};
 `

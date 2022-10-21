@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
-import {Button} from '../components'
 import {RootContainer} from '../styles'
-import {Footer, ButtonSolid} from '../components'
+import {ButtonSolid} from '../components'
 export const Page404 = () => {
   return (
     <Container>

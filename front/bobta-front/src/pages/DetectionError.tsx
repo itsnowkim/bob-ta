@@ -16,6 +16,10 @@ const ARROW_STYLE = {
   margin: '0 4px',
 }
 
+type GuideTextProps = {
+  marginBlockStart: string
+}
+
 export const DetectionError = () => {
   // ******************** utils ********************
   useScrollToTop()
@@ -32,8 +36,9 @@ export const DetectionError = () => {
       <RootContainer>
         <LogoLinked />
         <TitleContainer>
-          <DetectionErrorTitle>앗, 시간표 탐색에 실패했어요</DetectionErrorTitle>
-          <GuideText>다음 방법을 통해 시간표 이미지를 추출해 주세요.</GuideText>
+          <DetectionErrorTitle>앗, 시간표 탐색 중 에러가 발생했어요</DetectionErrorTitle>
+          <GuideText marginBlockStart="4px">뭔가 잘못된 것 같아요...🥺</GuideText>
+          <GuideText marginBlockStart="0px">다음 방법을 통해 시간표 이미지를 추출해 주세요.</GuideText>
         </TitleContainer>
         <StepContainer>
           <TitleWrapper>
@@ -74,11 +79,11 @@ const Img = styled.img`
   width: 100%;
 `
 
-const GuideText = styled.p`
+const GuideText = styled.p<GuideTextProps>`
   font-family: 'Pretendard-Regular', sans-serif;
   line-height: 20px;
   color: ${({theme}) => theme.colors.gray700};
-  margin-block-start: 4px;
+  margin-block-start: ${({marginBlockStart}) => marginBlockStart};
   margin-block-end: 0;
 `
 const TitleContainer = styled.div`

@@ -1,4 +1,4 @@
-import {useState, useCallback} from 'react'
+import {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {Link, useLocation, useParams, useNavigate} from 'react-router-dom'
 import {useQuery} from '@tanstack/react-query'
@@ -27,9 +27,18 @@ export const Result = () => {
   // ********************* utils *********************
   const {meetId} = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
+  useScrollToTop()
 
+  // 새로 생성된 밥약인지 판단
+  useEffect(() => {
+    const params = new URLSearchParams(location.search)
+    if (params.get('is_new') == '1') {
+      setIsNew(true)
+    }
+  }, [location])
   // ********************* states *********************
-  const [isError, setIsError] = useState<boolean>(false)
+  const [isNew, setIsNew] = useState<boolean>(false) // 새로 생성된 밥약인지
   const [selectedNumber, setSelectedNumber] = useState<number>(1) // 차선책일때 선택된 순위
   const [isImageView, setIsImageView] = useState<boolean>(true)
   const [result, setResult] = useState<ResultType>({
@@ -84,66 +93,14 @@ export const Result = () => {
 
           times[j] = time1 + '-' + time2 // 포맷팅한 시간으로 연결
         }
-
-        // 연속된 시간 찾기
-        var res: string[] = []
-
-        for (var j = 0; j < times.length - 1; j++) {
-          const [front1, front2] = times[j].split('-')
-          const [back1, back2] = times[j + 1].split('-')
-          const diff = timeCalculator(front2, back1) // 시간 차이를 분 단위로 구함
-          const resLength = res.length
-
-          // 다음 시간과 연속되면
-          if (diff == 15) {
-            // 이전 시간과도 연속됐는지를 판단하기 위해 res 배열의 끝 요소를 가져옴
-            if (resLength > 0) {
-              const [last1, last2] = res[resLength - 1].split('-') // res 배열의 끝 요소의 시간
-
-              //if (last2 == back2) continue
-              // 이전 시간과도 연속되면
-              const timeDiff = timeCalculator(last2, back1)
-              if (timeDiff == 15) {
-                res[resLength - 1] = last1 + '-' + back2 //이전 시간과 연결
-              }
-              // 이전 시간과 연속되지 않으면
-              else {
-                res.push(front1 + '-' + back2) // 그냥 현재 시간과 다음 시간만 연결
-              }
-            }
-            // 이전 시간과는 연속되지 않고 다음 시간과만 연속되면
-            else {
-              res.push(front1 + '-' + back2)
-            }
-          }
-          //  다음 시간과 연속되지 않으면
-          else {
-            // 다음 시간과는 연속되지 않지만 이전 시간과는 연속되면
-            if (resLength > 0) {
-              const [last1, last2] = res[resLength - 1].split('-') // res 배열의 끝 요소의 시간
-              if (last2 == front2) {
-                continue
-              } else {
-                res.push(times[j])
-              }
-            } else {
-              res.push(times[j])
-            }
-
-            if (j == times.length - 2) {
-              res.push(times[times.length - 1])
-            }
-          }
-        }
-        data.meets[days[i]] = res
       }
       if (data.meets['월'] && data.meets['화'] && data.meets['수'] && data.meets['목'] && data.meets['금']) {
         if (
-          data.meets['월'][0] == '09:00-20:45' &&
-          data.meets['화'][0] == '09:00-20:45' &&
-          data.meets['수'][0] == '09:00-20:45' &&
-          data.meets['목'][0] == '09:00-20:45' &&
-          data.meets['금'][0] == '09:00-20:45'
+          data.meets['월'][0] == '09:00-21:00' &&
+          data.meets['화'][0] == '09:00-21:00' &&
+          data.meets['수'][0] == '09:00-21:00' &&
+          data.meets['목'][0] == '09:00-21:00' &&
+          data.meets['금'][0] == '09:00-21:00'
         ) {
           navigate('/error')
           return
@@ -154,12 +111,6 @@ export const Result = () => {
     onError(err) {},
   })
 
-  // ********************* callbacks *********************
-  // const onClickRankingButton = useCallback((rankingNumber: number) => {
-  //   setSelectedNumber(rankingNumber)
-  // }, [])
-
-  useScrollToTop()
   return (
     <>
       <RootContainer>
@@ -180,15 +131,7 @@ export const Result = () => {
               </GuideText>
             )}
           </TitleWrapper>
-          {/* {!isBest && (
-            <RankingButtonContainer>
-              {[...Array(5)].map((item, idx) => (
-                <RankingButton key={idx} isSelected={selectedNumber == idx + 1} onClick={() => onClickRankingButton(idx + 1)}>
-                  {idx + 1}순위
-                </RankingButton>
-              ))}
-            </RankingButtonContainer>
-          )} */}
+
           <SelectResultViewContainer>
             <SelectResultView setIsImageView={setIsImageView} />
           </SelectResultViewContainer>
@@ -197,7 +140,7 @@ export const Result = () => {
           <ButtonContainer>
             <KakaoShareButton label="친구에게 추가 요청" meetId={meetId} participants={result.participants} />
             <AddSelfButtonLink to={`/create?meetId=${meetId}`}>
-              <ButtonSolid label="내 시간표 추가하기" />
+              <ButtonSolid label={isNew ? '직접 친구 시간표 추가하기' : '내 시간표 추가하기'} />
             </AddSelfButtonLink>
           </ButtonContainer>
         </Container>
@@ -211,28 +154,28 @@ const SelectResultViewContainer = styled.div`
   margin-bottom: 12px;
 `
 
-const RankingButton = styled.button<RankingButtonProps>`
-  background-color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.bgColor : props.theme.rankingButton.disabled.bgColor)};
+// const RankingButton = styled.button<RankingButtonProps>`
+//   background-color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.bgColor : props.theme.rankingButton.disabled.bgColor)};
 
-  color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.fontColor : props.theme.rankingButton.disabled.fontColor)};
+//   color: ${props => (props.isSelected ? props.theme.rankingButton.enabled.fontColor : props.theme.rankingButton.disabled.fontColor)};
 
-  border-radius: 16px;
-  padding: 4px 14px;
-  margin-right: 8px;
-  border: none;
-  font-family: 'Pretendard-Medium';
-  font-size: 14px;
-  line-height: 20px;
-  cursor: pointer;
-  flex: 0 0 auto;
-`
+//   border-radius: 16px;
+//   padding: 4px 14px;
+//   margin-right: 8px;
+//   border: none;
+//   font-family: 'Pretendard-Medium';
+//   font-size: 14px;
+//   line-height: 20px;
+//   cursor: pointer;
+//   flex: 0 0 auto;
+// `
 
-const RankingButtonContainer = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  margin-bottom: 16px;
-  overflow-x: auto;
-`
+// const RankingButtonContainer = styled.div`
+//   display: flex;
+//   flex-wrap: nowrap;
+//   margin-bottom: 16px;
+//   overflow-x: auto;
+// `
 
 const TitleWrapper = styled.div<TitleWrapperProps>`
   margin-bottom: ${({marginBottom}) => marginBottom};

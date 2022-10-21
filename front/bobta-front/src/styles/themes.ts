@@ -58,6 +58,7 @@ export const light = {
   disabledButtonBgColor: 'transparent',
   disabledButtonFontColor: palette.gray300,
   inputBgColor: 'transparent',
+  boxShadow: '0px 0px 16px rgba(94, 94, 94, 0.16)',
 }
 
 export const dark = {
@@ -120,15 +121,19 @@ export const dark = {
   disabledButtonBgcolor: 'transparent',
   disabledButtonFontColor: palette.darkgray800,
   inputBgColor: palette.darkgray100,
+  boxShadow: '0px 0px 24px rgba(255, 255, 255, 0.3)',
 }
 
 export const RootContainer = styled.div`
+  @media only screen and (max-width: 500px) {
+    width: calc(100vw-40px);
+  }
   max-width: 500px;
   min-width: 200px;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 20px 20px 0 20px;
+  padding: 0px 20px;
   margin: auto;
 `
 
